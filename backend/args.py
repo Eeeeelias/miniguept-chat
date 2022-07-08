@@ -1,6 +1,6 @@
 class Args():
     def __init__(self):
-        self.output_dir = 'output-small-elias'
+        self.output_dir = 'output-big-elias'
         self.model_type = 'gpt2'
         self.model_name_or_path = 'microsoft/DialoGPT-small'
         self.config_name = 'microsoft/DialoGPT-small'
@@ -10,7 +10,7 @@ class Args():
         self.do_train = True
         self.do_eval = True
         self.evaluate_during_training = False
-        self.per_gpu_train_batch_size = 2
+        self.per_gpu_train_batch_size = 1
         self.per_gpu_eval_batch_size = 1
         self.gradient_accumulation_steps = 1
         self.learning_rate = 5e-5
@@ -28,10 +28,10 @@ class Args():
         self.overwrite_output_dir = True
         self.overwrite_cache = True
         # continue from checkpoint
-        self.should_continue = False
+        self.should_continue = True
         self.seed = 42
         self.local_rank = -1
-        self.fp16 = True
+        self.fp16 = False
         self.fp16_opt_level = 'O1'
 
 args = Args()

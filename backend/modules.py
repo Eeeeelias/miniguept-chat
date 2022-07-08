@@ -1,3 +1,9 @@
+##### INFO #####
+# Thanks to rashad101 for providing this code! props for being so smart.
+# I wish I was that smart!
+# Anyway, here's his github repo: https://github.com/rashad101/dialoGPT_fine-tuning
+################
+
 import glob
 import logging
 import os
@@ -420,7 +426,7 @@ if __name__ == "__main__":
 
     args = Args()
 
-    all_convos = pd.read_csv("/home/elias/PycharmProjects/miniguept-chat/backend/data/convos.csv")
+    all_convos = pd.read_csv("/home/elias/PycharmProjects/miniguept-chat/backend/data/telegram_convos.csv")
     contexted = []
     # context depth
     n = 7
@@ -431,16 +437,14 @@ if __name__ == "__main__":
             for j in range(i, prev, -1):
                 row.append(all_convos['line'][j])
             contexted.append(row)
-        if len(contexted) == 1000:
-            break
 
     columns = ['response', 'context'] + [f'context {i}' for i in range(n - 1)]
     df = pd.DataFrame.from_records(contexted, columns=columns)
     print(df.head(5))
-
-    train_df, val_df = train_test_split(df, test_size=0.1)
+    print(len(contexted))
+    train_df, val_df = train_test_split(df, test_size=0.01)
 
     main(train_df, val_df)
 
     stop = timeit.default_timer()
-    logger.info("Program runtime: {} minutes".format(round(stop - start, 2)/60))
+    logger.info("Program runtime: {} minutes".format(round(stop - start, 2) / 60))

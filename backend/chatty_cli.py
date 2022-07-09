@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
 import argparse
+import os
+
 import torch
 from termcolor import colored
 
@@ -16,6 +19,7 @@ args = parser.parse_args()
 
 # setting some default variables
 models = {'elias-sm': 'output-medium-elias',
+          'elias-bg': 'output-big-elias',
           'rick': 'output-trash-rick'}
 allowed_colors = ['grey', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 context_ids = None
@@ -23,7 +27,7 @@ context = 4
 reset_step = False
 name = 'User'
 color = 'cyan'
-chat_model = 'elias-sm'
+chat_model = 'elias-bg'
 
 if __name__ == '__main__':
     try:
@@ -53,13 +57,13 @@ if __name__ == '__main__':
             if reset_step:
                 reset_step = False
 
-            user_text = input("{}: ".format(args.name))
+            user_text = input("{}: ".format(name))
             if user_text == ":q":
                 exit()
             if user_text == ":reset":
                 context_ids = None
                 reset_step = True
-                user_text = input("{}: ".format(args.name))
+                user_text = input("{}: ".format(name))
 
             bot_input_id = chatty.add_context(chatty.tokenize_input(user_text), context_ids, context, reset_step)
             reply = chatty.get_reply(bot_input_id)

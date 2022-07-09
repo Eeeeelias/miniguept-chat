@@ -4,6 +4,8 @@ import chatty
 app = Flask(__name__)
 chatty.set_model('output-big-elias')
 
+model = {"elias": "output-big-elias",
+         "rick": "output-trash-rick"}
 
 def convert_to_tokens(chat_messages):
     chat_ids = []
@@ -21,4 +23,11 @@ def postJsonHandler():
     return jsonify({'bot_reply': reply}), 201
 
 
-app.run(host='0.0.0.0', port=8090)
+@app.route('/<bot>', methods=['GET'])
+def change_model(bot):
+    chatty.set_model(model.get(bot))
+    return "success"
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')

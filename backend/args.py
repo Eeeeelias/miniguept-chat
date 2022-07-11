@@ -1,6 +1,6 @@
 class Args():
     def __init__(self):
-        self.output_dir = 'output-big-elias'
+        self.output_dir = 'output-big-elias-improved'
         self.model_type = 'gpt2'
         self.model_name_or_path = 'microsoft/DialoGPT-small'
         self.config_name = 'microsoft/DialoGPT-small'
@@ -21,14 +21,14 @@ class Args():
         self.max_steps = -1
         self.warmup_steps = 0
         self.logging_steps = 1000
-        self.save_steps = 3500
+        self.save_steps = 10000
         self.save_total_limit = 5
         self.eval_all_checkpoints = False
         self.no_cuda = False
         self.overwrite_output_dir = True
         self.overwrite_cache = True
         # continue from checkpoint
-        self.should_continue = True
+        self.should_continue = False
         self.seed = 42
         self.local_rank = -1
         self.fp16 = False

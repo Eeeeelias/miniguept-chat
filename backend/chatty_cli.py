@@ -20,7 +20,9 @@ args = parser.parse_args()
 # setting some default variables
 models = {'elias-sm': 'output-medium-elias',
           'elias-bg': 'output-big-elias',
+          'elias-smi': 'output-small-elias-improved',
           'rick': 'output-trash-rick'}
+
 allowed_colors = ['grey', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 context_ids = None
 context = 4
@@ -39,12 +41,12 @@ if __name__ == '__main__':
             if args.color in allowed_colors:
                 color = args.color
             else:
-                print(colored('Color not allowed! Using default...', 'red'))
+                print(colored('INFO: Color not allowed! Using default...', 'red'))
         if args.model:
             if args.model in models:
                 chat_model = args.model
             else:
-                print(colored('Model not found! Using {}'.format(chat_model), 'red'))
+                print(colored('INFO: Model not found! Using {}'.format(chat_model), 'red'))
 
         # speeding up the first arguments and such
         import chatty

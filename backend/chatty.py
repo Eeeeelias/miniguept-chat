@@ -49,9 +49,11 @@ def cat_tensors(tensor_list):
     return torch.cat(tensor_list, dim=-1)
 
 
+def len_tensors(tensor):
+    return tensor.size(dim=-1)
+
+
 def get_reply(bot_input_ids):
     reply_id = model.generate(bot_input_ids, max_length=256, pad_token_id=tokenizer.eos_token_id,
                               no_repeat_ngram_size=3, do_sample=True, top_k=100, top_p=0.7, temperature=0.8)
     return tokenizer.decode(reply_id[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
-
-    # bild input auf waifu classifier zugreifen lassen

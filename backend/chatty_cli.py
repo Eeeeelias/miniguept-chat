@@ -68,9 +68,14 @@ if __name__ == '__main__':
                 user_text = input("{}: ".format(name))
 
             bot_input_id = chatty.add_context(chatty.tokenize_input(user_text), context_ids, context, reset_step)
-            reply = chatty.get_reply(bot_input_id)
-            context_ids = torch.cat([bot_input_id, chatty.tokenize_input(reply)], dim=-1)
-            print(colored("MiniguePT: {}".format(reply), color))
+
+            if chatty.len_tensors(bot_input_id) > 256:
+                print(colored("MiniguePT: {}".format("Sorry, this is too much for me to handle right now. Could you"
+                                                     " please summarize this a bit?"), color))
+            else:
+                reply = chatty.get_reply(bot_input_id)
+                context_ids = torch.cat([bot_input_id, chatty.tokenize_input(reply)], dim=-1)
+                print(colored("MiniguePT: {}".format(reply), color))
     except KeyboardInterrupt:
         print('Stopping...')
         exit(0)

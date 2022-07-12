@@ -20,7 +20,7 @@ args = parser.parse_args()
 # setting some default variables
 models = {'elias-sm': 'output-medium-elias',
           'elias-bg': 'output-big-elias',
-          'elias-smi': 'output-small-elias-improved',
+          'elias-bgi': 'output-big-elias-improved',
           'rick': 'output-trash-rick'}
 
 allowed_colors = ['grey', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
@@ -29,7 +29,7 @@ context = 4
 reset_step = False
 name = 'User'
 color = 'cyan'
-chat_model = 'elias-bg'
+chat_model = 'elias-bgi'
 
 if __name__ == '__main__':
     try:
@@ -73,9 +73,10 @@ if __name__ == '__main__':
                 print(colored("MiniguePT: {}".format("Sorry, this is too much for me to handle right now. Could you"
                                                      " please summarize this a bit?"), color))
             else:
-                reply = chatty.get_reply(bot_input_id)
-                context_ids = torch.cat([bot_input_id, chatty.tokenize_input(reply)], dim=-1)
-                print(colored("MiniguePT: {}".format(reply), color))
+                replies = chatty.get_reply(bot_input_id)
+                context_ids = torch.cat([bot_input_id, chatty.tokenize_input(replies)], dim=-1)
+                for reply in chatty.split_reply(replies):
+                    print(colored("MiniguePT: {}".format(reply), color))
     except KeyboardInterrupt:
         print('Stopping...')
         exit(0)

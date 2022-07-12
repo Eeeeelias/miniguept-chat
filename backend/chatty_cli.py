@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import time
 
 import torch
 from termcolor import colored
@@ -29,7 +30,9 @@ context = 4
 reset_step = False
 name = 'User'
 color = 'cyan'
-chat_model = 'elias-bgi'
+chat_model = 'elias-bg'
+
+clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == '__main__':
     try:
@@ -50,10 +53,11 @@ if __name__ == '__main__':
 
         # speeding up the first arguments and such
         import chatty
+
         chatty.set_model(models.get(chat_model))
 
-        print(colored("INFO: use :q to exit the chat and :reset to make MiniguePT forget about the previous "
-                      "conversation", 'red'))
+        print(colored("INFO:\nUse :q to exit the chat,\n:reset to make MiniguePT forget about the previous "
+                      "conversation and\n:c to clear the current text", 'red'))
 
         while True:
             if reset_step:
@@ -66,6 +70,9 @@ if __name__ == '__main__':
                 context_ids = None
                 reset_step = True
                 user_text = input("{}: ".format(name))
+            if user_text == ":c":
+                clear()
+                user_text = input("{}: ".format(name))
 
             bot_input_id = chatty.add_context(chatty.tokenize_input(user_text), context_ids, context, reset_step)
 
@@ -77,6 +84,7 @@ if __name__ == '__main__':
                 context_ids = torch.cat([bot_input_id, chatty.tokenize_input(replies)], dim=-1)
                 for reply in chatty.split_reply(replies):
                     print(colored("MiniguePT: {}".format(reply), color))
+                    time.sleep(0.5)
     except KeyboardInterrupt:
         print('Stopping...')
         exit(0)

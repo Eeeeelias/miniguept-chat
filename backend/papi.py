@@ -12,9 +12,9 @@ model = {"elias": "output-big-elias",
 # change input to array
 def convert_to_tokens(chat_messages):
     chat_ids = []
-    for message in chat_messages.keys():
-        chat_ids.append(chatty.tokenize_input(chat_messages.get(message)))
-    return chat_ids[::-1]
+    for message in chat_messages[::-1]:
+        chat_ids.append(chatty.tokenize_input(message))
+    return chat_ids
 
 
 @app.route('/<bot>', methods=['GET', 'POST'])
@@ -24,7 +24,8 @@ def request_handler(bot):
             chatty.set_model(model.get(bot))
             return "", 204
         except:
-            return "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.redd.it%2Fb8dnk9lu33631.jpg&f=1&nofb=1", 500
+            return "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.redd.it%2Fb8dnk9lu33631.jpg&f=1" \
+                   "&nofb=1", 500
 
     elif request.method == 'POST':
         # Check for model version

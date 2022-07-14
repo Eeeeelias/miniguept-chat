@@ -16,9 +16,9 @@ def valid_message(message):
 
 def optional_period(current_message):
     if current_message[-1] == "." or current_message[-1] == "?" or current_message[-1] == "!":
-        return " "
+        return " # "
     else:
-        return ". "
+        return " # "
 
 
 texts = [['index', 'time', 'from', 'line']]

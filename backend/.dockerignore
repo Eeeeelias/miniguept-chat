@@ -1,6 +1,6 @@
 .gitignore
 args.py
-chatty_cli.py
+# chatty_cli.py
 dataset.py
 dataset_splitter.py
 format_data.py

@@ -7,6 +7,7 @@
 import glob
 import logging
 import os
+import random
 import timeit
 from typing import Dict, List, Tuple
 
@@ -441,8 +442,7 @@ if __name__ == "__main__":
     columns = ['response', 'context'] + [f'context {i}' for i in range(n - 1)]
     df = pd.DataFrame.from_records(contexted, columns=columns)
     print(df.head(5))
-    print(len(contexted))
-    train_df, val_df = train_test_split(df, test_size=0.01)
+    train_df, val_df = train_test_split(df, test_size=args.test_size)
 
     main(train_df, val_df)
 

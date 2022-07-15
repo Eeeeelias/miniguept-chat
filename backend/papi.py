@@ -1,12 +1,11 @@
+import flask
 from flask import Flask, jsonify, request
 import chatty
 
 app = Flask(__name__)
 chatty.set_model('output-big-elias')
 
-model = {"elias": "output-big-elias",
-         "rick": "output-trash-rick",
-         "elias-bgi": "output-big-elias-improved"}
+models = ["elias", "rick", "elias-bgi"]
 
 
 # change input to array
@@ -17,19 +16,16 @@ def convert_to_tokens(chat_messages):
     return chat_ids
 
 
-@app.route('/<bot>', methods=['GET', 'POST'])
+@app.route('/<bot>', methods=['POST'])
 def request_handler(bot):
-    if request.method == 'GET':
-        try:
-            chatty.set_model(model.get(bot))
-            return "", 204
-        except:
-            return "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.redd.it%2Fb8dnk9lu33631.jpg&f=1" \
-                   "&nofb=1", 500
+    # don't forget try except
+    if request.method == 'POST':
+        if bot not in models:
+            return """<img src="https://qph.fs.quoracdn.net/main-qimg-863379f19d3db784b48f4dd78d014c19" 
+            alt="not available">""", 500
 
-    elif request.method == 'POST':
-        # Check for model version
         content = request.get_json()
+
         chat_ids = convert_to_tokens(content['messages'])
         bot_input_ids = chatty.cat_tensors(chat_ids)
 
@@ -38,7 +34,7 @@ def request_handler(bot):
             reply = "CONTENT_TOO_LONG"
             return {'error': reply}, 400
 
-        replies = chatty.split_reply(chatty.get_reply(bot_input_ids))
+        replies = chatty.split_reply(chatty.get_reply(bot_input_ids, bot))
         return jsonify({'messages': replies}), 200
 
 

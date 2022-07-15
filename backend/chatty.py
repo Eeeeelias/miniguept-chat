@@ -2,11 +2,14 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 # Initialize variables
-tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
-model = None
+tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
 eos_token = 50256
+model = None
 step = 1
 
+elias_bgi_model = AutoModelForCausalLM.from_pretrained('output-big-elias-improved')
+elias_bg_model = AutoModelForCausalLM.from_pretrained('output-big-elias')
+rick_model = AutoModelForCausalLM.from_pretrained('output-trash-rick')
 
 def set_model(model_name):
     global model
@@ -53,8 +56,16 @@ def len_tensors(tensor):
     return tensor.size(dim=-1)
 
 
-def get_reply(bot_input_ids):
-    reply_id = model.generate(bot_input_ids, max_length=256, pad_token_id=tokenizer.eos_token_id,
+def get_reply(bot_input_ids, reply_model):
+
+    if reply_model == 'elias-bgi':
+        user_model = elias_bgi_model
+    elif reply_model == 'rick':
+        user_model = rick_model
+    else:
+        user_model = elias_bg_model
+
+    reply_id = user_model.generate(bot_input_ids, max_length=256, pad_token_id=tokenizer.eos_token_id,
                               no_repeat_ngram_size=3, do_sample=True, top_k=100, top_p=0.7, temperature=0.8)
     return tokenizer.decode(reply_id[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
 

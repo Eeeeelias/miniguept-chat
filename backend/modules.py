@@ -422,9 +422,6 @@ if __name__ == "__main__":
 
     start = timeit.default_timer()
 
-    tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
-    model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
-
     args = Args()
 
     all_convos = pd.read_csv("/home/elias/PycharmProjects/miniguept-chat/backend/data/telegram_convos.csv")

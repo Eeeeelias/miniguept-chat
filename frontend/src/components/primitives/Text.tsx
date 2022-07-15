@@ -20,7 +20,7 @@ const getFontSize = (args: Pick<TextProps, "size">) => {
 }
 
 export const getTextStyles = (args: ThemeProp & TextProps) => `
-  font-size: ${getFontSize};
+  font-size: ${getFontSize(args)};
   font-weight: ${args.bold ? "700" : "400"};
   color: ${args.theme?.().fg.base};
 `

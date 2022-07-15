@@ -3,7 +3,7 @@ import { createMemo } from "solid-js"
 import { keyframes, styled } from "solid-styled-components"
 
 import { useThemeMode } from "../../theme"
-import { VisuallyHidden } from "../base"
+import { VisuallyHidden, focusOutline } from "../base"
 import { Icon } from "../primitives"
 import { Moon, Sun } from "../primitives/icons"
 
@@ -41,7 +41,8 @@ const Button = styled.button`
     border-radius: 0.5rem;
 
     &:focus-visible {
-      outline: 2px solid ${args.theme?.().accent.base};
+      
+      ${focusOutline(args)}
     }
   `}
 `

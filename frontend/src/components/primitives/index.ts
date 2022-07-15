@@ -1,1 +1,5 @@
 export * from "./Icon"
+export * from "./Link"
+export * from "./Spacing"
+export * from "./Text"
+export * from "./icons"

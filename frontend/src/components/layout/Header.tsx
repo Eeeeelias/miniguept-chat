@@ -6,6 +6,7 @@ import { routes } from "../../pages/Routes"
 import { tokens } from "../../theme"
 import { ThemeToggle } from "../inputs"
 import { Link } from "../primitives/Link"
+import { surfaceStyles } from "./surfaceStyles"
 
 const Layout = styled.header`
   display: flex;
@@ -14,15 +15,12 @@ const Layout = styled.header`
 `
 
 const Navigation = styled.nav`
-  ${args => `
-    display: flex;
-    align-items: center;
-    gap: ${tokens.space.large};
-    padding: ${tokens.space.medium} ${tokens.space.large};
-    border-radius: ${tokens.space.medium};
-    background-color: ${args.theme?.().bg.surface};
-    box-shadow: ${tokens.shadow.medium(args.theme?.().bg.base)};
-  `}
+  display: flex;
+  align-items: center;
+  gap: ${tokens.space.large};
+  padding: ${tokens.space.medium} ${tokens.space.large};
+  border-radius: ${tokens.borderRadius};
+  ${surfaceStyles}
 `
 
 export const Header = () => (

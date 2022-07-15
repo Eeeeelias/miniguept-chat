@@ -1,0 +1,16 @@
+version: "3.8"
+
+# $ docker compose up -d
+
+services:
+  client:
+    build: ./frontend
+    ports:
+      - "8080:80"
+
+#
+# Put your shit here
+#  service:
+#    build: ./backend
+#    ports:
+#      - "8000:8000"

@@ -1,4 +1,13 @@
 export type { FeatherIcon } from "./Icon"
 
+export { Camera } from "./Camera"
+export { Heart } from "./Heart"
+export { MessageCircle } from "./MessageCircle"
 export { Moon } from "./Moon"
+export { Plus } from "./Plus"
+export { Send } from "./Send"
+export { Share } from "./Share"
+export { Smile } from "./Smile"
 export { Sun } from "./Sun"
+export { ThumbsDown } from "./ThumbsDown"
+export { ThumbsUp } from "./ThumbsUp"

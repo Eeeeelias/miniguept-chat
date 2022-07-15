@@ -5,8 +5,13 @@ import { styled } from "solid-styled-components"
 import { routes } from "../../pages/Routes"
 import { tokens } from "../../theme"
 import { ThemeToggle } from "../inputs"
+import { Github, Icon, Spacing } from "../primitives"
 import { Link } from "../primitives/Link"
 import { surfaceStyles } from "./surfaceStyles"
+
+const Flex = styled.div`
+  flex: 1;
+`
 
 const Layout = styled.header`
   display: flex;
@@ -34,6 +39,9 @@ export const Header = () => (
         )}
       </For>
     </Navigation>
+    <Flex />
+    <Icon icon={Github} />
+    <Spacing right="medium" />
     <ThemeToggle />
   </Layout>
 )

@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  chatty_backend:
+      ports:
+         - '7722:7722'
+      volumes:
+         - './output-big-elias:/python-docker/output-big-elias'
+         - './output-trash-rick:/python-docker/output-trash-rick'
+      container_name: chatty
+      image: chatty_backend

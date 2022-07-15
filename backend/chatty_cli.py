@@ -53,10 +53,8 @@ if __name__ == '__main__':
         # speeding up the first arguments and such
         import chatty
 
-        #chatty.set_model(models.get(chat_model))
-
-        print(colored("INFO:\n:q - exit the chat\n:reset - make MiniguePT forget about the previous "
-                      "conversation\n:c - clear the current text", 'red'))
+        print(colored("INFO:\n:q\t\texit the chat\n:reset\tmake MiniguePT forget about the previous "
+                      "conversation\n:c\t\tclear the current text\n:i\t\tshow current bot", 'red'))
 
         while True:
             if reset_step:
@@ -71,6 +69,9 @@ if __name__ == '__main__':
                 user_text = input("{}: ".format(name))
             if user_text == ":c":
                 clear()
+                user_text = input("{}: ".format(name))
+            if user_text == ":i":
+                print(colored("INFO: The bot you are messaging with right now is {}.".format(chat_model), 'red'))
                 user_text = input("{}: ".format(name))
 
             bot_input_id = chatty.add_context(chatty.tokenize_input(user_text), context_ids, context, reset_step)

@@ -15,8 +15,8 @@ const StyledIcon = styled("span")<Omit<IconProps, "icon">>`
   align-items: center;
   justify-content: center;
 
-  color: ${props =>
-    props.inheritColor ? "inherit" : props.theme?.().color.fg.base};
+  color: ${args =>
+    args.inheritColor ? "inherit" : args.theme?.().color.fg.base};
 
   &,
   > svg {

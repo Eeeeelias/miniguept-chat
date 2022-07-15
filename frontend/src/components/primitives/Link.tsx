@@ -2,9 +2,9 @@ import { NavLink } from "solid-app-router"
 import { styled } from "solid-styled-components"
 
 export const Link = styled(NavLink)`
-  ${props => `
+  ${args => `
     display: inline-block;
-    color: ${props.theme?.().color.fg.base};
+    color: ${args.theme?.().color.fg.base};
     position: relative;
     &:after{
       content: "";
@@ -20,14 +20,14 @@ export const Link = styled(NavLink)`
       opacity: 0.5;
     }
     &[aria-current] {
-      color: ${props.theme?.().color.accent.alt};
+      color: ${args.theme?.().color.accent.alt};
       &:after {
         right: 0.5rem;
         left: 0.5rem;
       }
     }
     &:hover, &:focus-visible {
-      color: ${props.theme?.().color.accent.base};
+      color: ${args.theme?.().color.accent.base};
       &:after {
         right: 0.25rem;
         left: 0.25rem;

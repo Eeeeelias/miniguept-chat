@@ -2,25 +2,27 @@ import { Router } from "solid-app-router"
 import { styled } from "solid-styled-components"
 
 import { Header } from "./components/layout"
+import { Spacing } from "./components/primitives/Spacing"
+import { Routes } from "./pages/Routes"
 import { ThemeProvider } from "./theme"
 
 const Wrapper = styled.div`
-  ${props => `
+  ${args => `
 		height: 100%;
 		width: 100%;
-		padding: ${props.theme?.().space.largest};
-		padding-top: ${props.theme?.().space.medium};
-		background-color: ${props.theme?.().color.bg.base};
-		color: ${props.theme?.().color.fg.base};
+		padding: ${args.theme?.().space.largest};
+		padding-top: ${args.theme?.().space.medium};
+		background-color: ${args.theme?.().color.bg.base};
+		color: ${args.theme?.().color.fg.base};
 	`}
 `
 
 const Layout = styled.div`
-  ${props => `
+  ${args => `
 		max-width: 1000px;
 		max-height: 100%;
 		margin: 0 auto;
-		background-color: ${props.theme?.().color.bg.base};
+		background-color: ${args.theme?.().color.bg.base};
 	`}
 `
 
@@ -30,6 +32,9 @@ export const App = () => (
       <Router>
         <Layout>
           <Header />
+          <Spacing top="medium" bottom="medium">
+            <Routes />
+          </Spacing>
         </Layout>
       </Router>
     </Wrapper>

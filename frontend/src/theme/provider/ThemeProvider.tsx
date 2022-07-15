@@ -9,11 +9,9 @@ import {
 
 import { ThemeProvider as StyledTheme } from "solid-styled-components"
 
-import { Theme } from "../@types/styled.d"
-import { dark, light, ThemeName } from "./color"
+import { Theme } from "../../@types/styled.d"
+import { shadow, space, dark, light, ThemeName } from "../design"
 import { GlobalStyles } from "./GlobalStyles"
-import { shadow } from "./shadow"
-import { space } from "./space"
 
 type ThemeModeState = readonly [Accessor<ThemeName>, () => void]
 
@@ -29,7 +27,6 @@ const getTheme = (mode: ThemeName): Theme => ({
 export const ThemeProvider = (props: ParentProps) => {
   const [mode, setMode] = createSignal<ThemeName>("dark")
   const [theme, setTheme] = createSignal<Theme>(getTheme("dark"))
-  //const theme = createMemo(() => getTheme(mode()))
 
   const store = [
     mode,

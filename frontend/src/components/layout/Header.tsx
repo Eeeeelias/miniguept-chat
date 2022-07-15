@@ -13,14 +13,14 @@ const Layout = styled.header`
 `
 
 const Navigation = styled.nav`
-  ${props => `
+  ${args => `
     display: flex;
     align-items: center;
-    gap: ${props.theme?.().space.large};
-    padding: ${props.theme?.().space.medium};
-    border-radius: ${props.theme?.().space.medium};
-    background-color: ${props.theme?.().color.bg.surface};
-    box-shadow: ${props.theme?.().shadow.medium(props.theme?.().color.bg.base)};
+    gap: ${args.theme?.().space.large};
+    padding: ${args.theme?.().space.medium} ${args.theme?.().space.large};
+    border-radius: ${args.theme?.().space.medium};
+    background-color: ${args.theme?.().color.bg.surface};
+    box-shadow: ${args.theme?.().shadow.medium(args.theme?.().color.bg.base)};
   `}
 `
 

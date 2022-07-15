@@ -24,10 +24,8 @@ export const routes = [
   },
 ]
 
-export const Routes = () => {
-  return (
-    <SolidRoutes>
-      <For each={routes}>{route => <Route {...route} />}</For>
-    </SolidRoutes>
-  )
-}
+export const Routes = () => (
+  <SolidRoutes>
+    <For each={routes}>{route => <Route {...route} />}</For>
+  </SolidRoutes>
+)

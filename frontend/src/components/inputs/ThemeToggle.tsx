@@ -24,7 +24,7 @@ const animateOut = keyframes`
 `
 
 const Button = styled.button`
-  ${props => `
+  ${args => `
     position: relative;
     width: 2rem;
     height: 2rem;
@@ -34,14 +34,14 @@ const Button = styled.button`
     justify-content: center;
 
     overflow: hidden;
-    background-color: ${props.theme?.().color.bg.base};
+    background-color: ${args.theme?.().color.bg.base};
     border: none;
     outline: none;
     cursor: pointer;
     border-radius: 0.5rem;
 
     &:focus-visible {
-      outline: 2px solid ${props.theme?.().color.accent.base};
+      outline: 2px solid ${args.theme?.().color.accent.base};
     }
   `}
 `
@@ -58,13 +58,13 @@ const getAnimation = (active: boolean) => {
 }
 
 const Axis = styled.span<{ active: boolean }>`
-  ${props => `
+  ${args => `
     position: absolute;
     bottom: -10px;
     display: flex;
     justify-content: space-between;
     width: 50px;
-    ${getAnimation(props.active)}
+    ${getAnimation(args.active)}
   `}
 `
 

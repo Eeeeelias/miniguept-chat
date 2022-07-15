@@ -1,4 +1,4 @@
-import { hsla } from "./utils/hsla"
+import { hsla } from "../utils/hsla"
 
 // Nord colors: https://www.nordtheme.com/
 

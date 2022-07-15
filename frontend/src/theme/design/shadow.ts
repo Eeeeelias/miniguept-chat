@@ -1,4 +1,4 @@
-import { createShadow, GetShadowOptions } from "./utils/createShadow"
+import { createShadow, GetShadowOptions } from "../utils/createShadow"
 
 type ShadowGetter = (color: string, options?: GetShadowOptions) => string
 

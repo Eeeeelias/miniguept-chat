@@ -1,9 +1,8 @@
 import { Accessor } from "solid-js"
 
 import "solid-styled-components"
-import { Colors } from "../theme/color"
-import { Shadows } from "../theme/shadow"
-import { Spacing } from "../theme/space"
+import { Shadows, Spacing } from "../theme/design"
+import { Colors } from "../theme/design/color"
 
 /**
  declare module 'solid-styled-components' {

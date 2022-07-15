@@ -2,21 +2,19 @@ import { splitProps } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { ThemeProp } from "../base/ThemeProp"
+import { tokens } from "../../theme"
 import { FeatherIcon } from "./icons"
 
 type SizeProp = { size?: "medium" | "large" | "largest" }
 
-const getSize = ({ theme, size }: ThemeProp & SizeProp) =>
-  theme?.().space[size || "medium"]
+const getSize = ({ size }: SizeProp) => tokens.space[size || "medium"]
 
 const StyledIcon = styled("span")<Omit<IconProps, "icon">>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  color: ${args =>
-    args.inheritColor ? "inherit" : args.theme?.().color.fg.base};
+  color: ${args => (args.inheritColor ? "inherit" : args.theme?.().fg.base)};
 
   &,
   > svg {

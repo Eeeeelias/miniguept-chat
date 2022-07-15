@@ -2,7 +2,7 @@ import { ParentProps } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { Theme } from "../../@types/styled.d"
+import { tokens } from "../../theme"
 import { ThemeProp } from "../base/ThemeProp"
 
 type TextSize = "small" | "medium" | "large"
@@ -13,16 +13,16 @@ export interface TextProps {
   title?: string
 }
 
-const getFontSize = (args: Theme & Pick<TextProps, "size">) => {
-  if (args.size === "small") return `calc(${args.space.medium} * 0.75)`
-  if (args.size === "large") return `calc(${args.space.medium} * 2)`
-  return args.space.medium
+const getFontSize = (args: Pick<TextProps, "size">) => {
+  if (args.size === "small") return `calc(${tokens.space.medium} * 0.75)`
+  if (args.size === "large") return `calc(${tokens.space.medium} * 2)`
+  return tokens.space.medium
 }
 
 export const getTextStyles = (args: ThemeProp & TextProps) => `
   font-size: ${getFontSize};
   font-weight: ${args.bold ? "700" : "400"};
-  color: ${args.theme?.().color.fg.base};
+  color: ${args.theme?.().fg.base};
 `
 
 const Font = styled.span<TextProps>`

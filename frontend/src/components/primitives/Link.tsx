@@ -4,7 +4,7 @@ import { styled } from "solid-styled-components"
 export const Link = styled(NavLink)`
   ${args => `
     display: inline-block;
-    color: ${args.theme?.().color.fg.base};
+    color: ${args.theme?.().fg.base};
     position: relative;
     &:after{
       content: "";
@@ -20,14 +20,14 @@ export const Link = styled(NavLink)`
       opacity: 0.5;
     }
     &[aria-current] {
-      color: ${args.theme?.().color.accent.alt};
+      color: ${args.theme?.().accent.alt};
       &:after {
         right: 0.5rem;
         left: 0.5rem;
       }
     }
     &:hover, &:focus-visible {
-      color: ${args.theme?.().color.accent.base};
+      color: ${args.theme?.().accent.base};
       &:after {
         right: 0.25rem;
         left: 0.25rem;

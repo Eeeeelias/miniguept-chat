@@ -3,6 +3,7 @@ import { For } from "solid-js"
 import { styled } from "solid-styled-components"
 
 import { routes } from "../../pages/Routes"
+import { tokens } from "../../theme"
 import { ThemeToggle } from "../inputs"
 import { Link } from "../primitives/Link"
 
@@ -16,11 +17,11 @@ const Navigation = styled.nav`
   ${args => `
     display: flex;
     align-items: center;
-    gap: ${args.theme?.().space.large};
-    padding: ${args.theme?.().space.medium} ${args.theme?.().space.large};
-    border-radius: ${args.theme?.().space.medium};
-    background-color: ${args.theme?.().color.bg.surface};
-    box-shadow: ${args.theme?.().shadow.medium(args.theme?.().color.bg.base)};
+    gap: ${tokens.space.large};
+    padding: ${tokens.space.medium} ${tokens.space.large};
+    border-radius: ${tokens.space.medium};
+    background-color: ${args.theme?.().bg.surface};
+    box-shadow: ${tokens.shadow.medium(args.theme?.().bg.base)};
   `}
 `
 

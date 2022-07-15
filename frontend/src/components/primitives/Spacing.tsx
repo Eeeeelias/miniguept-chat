@@ -1,9 +1,10 @@
 import { styled } from "solid-styled-components"
 
-import { Theme } from "../../@types/styled.d"
+import { tokens } from "../../theme"
+import { Spacing as SpacingType } from "../../theme/design"
 import { ThemeProp } from "../base/ThemeProp"
 
-type SpaceKey = keyof Theme["space"]
+type SpaceKey = keyof SpacingType
 type Side = "left" | "right" | "top" | "bottom"
 type SpacingProps = {
   top?: SpaceKey
@@ -20,15 +21,14 @@ type SpacingProps = {
 
 const getSpace = (side: Side, props: SpacingProps & ThemeProp) => {
   const explicit = props[side]
-  if (explicit) return props.theme?.().space[explicit]
+  if (explicit) return tokens.space[explicit]
 
   const isXSide = side === "left" || side === "right"
-  if (isXSide && props.horizontal)
-    return props.theme?.().space[props.horizontal]
+  if (isXSide && props.horizontal) return tokens.space[props.horizontal]
   const isYSide = side === "top" || side === "bottom"
-  if (isYSide && props.vertical) return props.theme?.().space[props.vertical]
+  if (isYSide && props.vertical) return tokens.space[props.vertical]
 
-  if (props.each) return props.theme?.().space[props.each]
+  if (props.each) return tokens.space[props.each]
 
   return 0
 }

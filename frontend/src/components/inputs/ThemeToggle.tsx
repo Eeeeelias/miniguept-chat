@@ -34,14 +34,14 @@ const Button = styled.button`
     justify-content: center;
 
     overflow: hidden;
-    background-color: ${args.theme?.().color.bg.base};
+    background-color: ${args.theme?.().bg.base};
     border: none;
     outline: none;
     cursor: pointer;
     border-radius: 0.5rem;
 
     &:focus-visible {
-      outline: 2px solid ${args.theme?.().color.accent.base};
+      outline: 2px solid ${args.theme?.().accent.base};
     }
   `}
 `

@@ -18,6 +18,7 @@ export const GlobalStyles = createGlobalStyles`
   *::before,
   *::after {
     box-sizing: border-box;
+    outline: none;
   }
 
   input,

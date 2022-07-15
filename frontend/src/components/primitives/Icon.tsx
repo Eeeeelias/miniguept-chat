@@ -1,11 +1,11 @@
 import { splitProps } from "solid-js"
 
-import { styled, DefaultTheme } from "solid-styled-components"
+import { styled } from "solid-styled-components"
 
+import { ThemeProp } from "../base/ThemeProp"
 import { FeatherIcon } from "./icons"
 
 type SizeProp = { size?: "medium" | "large" | "largest" }
-type ThemeProp = { theme?: DefaultTheme }
 
 const getSize = ({ theme, size }: ThemeProp & SizeProp) =>
   theme?.().space[size || "medium"]

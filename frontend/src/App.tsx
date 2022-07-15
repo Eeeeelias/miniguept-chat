@@ -1,6 +1,7 @@
+import { Router } from "solid-app-router"
 import { styled } from "solid-styled-components"
 
-import { ThemeToggle } from "./components"
+import { Header } from "./components/layout"
 import { ThemeProvider } from "./theme"
 
 const Wrapper = styled.div`
@@ -26,9 +27,11 @@ const Layout = styled.div`
 export const App = () => (
   <ThemeProvider>
     <Wrapper>
-      <Layout>
-        <ThemeToggle />
-      </Layout>
+      <Router>
+        <Layout>
+          <Header />
+        </Layout>
+      </Router>
     </Wrapper>
   </ThemeProvider>
 )

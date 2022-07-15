@@ -40,8 +40,8 @@ const Button = styled.button`
     cursor: pointer;
     border-radius: 0.5rem;
 
-    :focus-visible {
-      outline: 1px solid ${props.theme?.().color.fg.base};
+    &:focus-visible {
+      outline: 2px solid ${props.theme?.().color.accent.base};
     }
   `}
 `

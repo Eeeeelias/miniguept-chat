@@ -1,5 +1,5 @@
-import { normalize } from "./helpers"
 import { clamp } from "../../clamp"
+import { normalize } from "./helpers"
 
 export const shadowColor = (
   backgroundHsl: [number, number, number],

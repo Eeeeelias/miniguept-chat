@@ -1,7 +1,8 @@
 import { splitProps } from "solid-js"
-import { styled, DefaultTheme } from "solid-styled-components"
-import { FeatherIcon } from "./icons"
 
+import { styled, DefaultTheme } from "solid-styled-components"
+
+import { FeatherIcon } from "./icons"
 
 type SizeProp = { size?: "medium" | "large" | "largest" }
 type ThemeProp = { theme?: DefaultTheme }
@@ -14,9 +15,8 @@ const StyledIcon = styled("span")<Omit<IconProps, "icon">>`
   align-items: center;
   justify-content: center;
 
-  color: ${(props) => props.inheritColor
-    ? "inherit"
-    : props.theme?.().color.fg.base};
+  color: ${props =>
+    props.inheritColor ? "inherit" : props.theme?.().color.fg.base};
 
   &,
   > svg {
@@ -31,7 +31,7 @@ export interface IconProps extends SizeProp {
 }
 
 export const Icon = (props: IconProps) => {
-  const [{ icon: Icon }, delegated] = splitProps(props, ["icon"]);
+  const [{ icon: Icon }, delegated] = splitProps(props, ["icon"])
   return (
     <StyledIcon {...delegated}>
       <Icon />

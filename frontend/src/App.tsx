@@ -1,10 +1,10 @@
-import {styled} from "solid-styled-components"
-import { ThemeToggle } from "./components";
-import { Searchbar } from './Searchbar';
-import { ThemeProvider } from "./theme";
+import { styled } from "solid-styled-components"
+
+import { ThemeToggle } from "./components"
+import { ThemeProvider } from "./theme"
 
 const Wrapper = styled.div`
-	${(props) => `
+  ${props => `
 		height: 100%;
 		width: 100%;
 		padding: ${props.theme?.().space.largest};
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `
 
 const Layout = styled.div`
-	${(props) => `
+  ${props => `
 		max-width: 1000px;
 		max-height: 100%;
 		margin: 0 auto;
@@ -24,12 +24,11 @@ const Layout = styled.div`
 `
 
 export const App = () => (
-	<ThemeProvider>
-		<Wrapper>
-			<Layout>
-				<ThemeToggle/>
-				<Searchbar />
-			</Layout>
-		</Wrapper>
-	</ThemeProvider>
-);
+  <ThemeProvider>
+    <Wrapper>
+      <Layout>
+        <ThemeToggle />
+      </Layout>
+    </Wrapper>
+  </ThemeProvider>
+)

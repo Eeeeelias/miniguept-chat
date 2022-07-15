@@ -1,10 +1,11 @@
-import { Moon, Sun } from "../primitives/icons"
+import { createMemo } from "solid-js"
+
 import { keyframes, styled } from "solid-styled-components"
 
+import { useThemeMode } from "../../theme"
 import { VisuallyHidden } from "../base"
 import { Icon } from "../primitives"
-import { useThemeMode } from "../../theme"
-import { createMemo } from "solid-js"
+import { Moon, Sun } from "../primitives/icons"
 
 const animateIn = keyframes`
   from {
@@ -23,7 +24,7 @@ const animateOut = keyframes`
 `
 
 const Button = styled.button`
-  ${(props) => `
+  ${props => `
     position: relative;
     width: 2rem;
     height: 2rem;
@@ -57,7 +58,7 @@ const getAnimation = (active: boolean) => {
 }
 
 const Axis = styled.span<{ active: boolean }>`
-  ${(props) => `
+  ${props => `
     position: absolute;
     bottom: -10px;
     display: flex;

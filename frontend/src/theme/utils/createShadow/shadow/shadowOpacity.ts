@@ -1,5 +1,5 @@
-import { normalize, roundTo } from "./helpers"
 import { clamp } from "../../clamp"
+import { normalize, roundTo } from "./helpers"
 import { CrispyArg, LayerArgs, OomphArg } from "./types"
 
 interface ShadowOpacityArgs extends OomphArg, CrispyArg, LayerArgs {

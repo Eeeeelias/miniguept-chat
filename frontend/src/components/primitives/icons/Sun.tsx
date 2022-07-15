@@ -1,4 +1,4 @@
-import { createIcon } from "./Icon";
+import { createIcon } from "./Icon"
 
 export const Sun = createIcon(
   <>

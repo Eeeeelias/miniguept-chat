@@ -2,55 +2,55 @@ import { hsla } from "./utils/hsla"
 
 // Nord colors: https://www.nordtheme.com/
 
-const nord_darkest = "#242933";
-const nord0 = "#2e3440";
+const nord_darkest = "#242933"
+const nord0 = "#2e3440"
 const nord1 = "#3b4252"
-const nord2 = "#434c5e";
-const nord3 = "#4c566a";
+const nord2 = "#434c5e"
+const nord3 = "#4c566a"
 
 const nord4 = "#d8dee9"
 const nord5 = "#e5e9f0"
-const nord6 = "#eceff4";
-const nord_bright = "#f2f4f8";
-const nord_brightest = "#ffffff";
+const nord6 = "#eceff4"
+const nord_bright = "#f2f4f8"
+const nord_brightest = "#ffffff"
 
-const nord7 = "#8fbcbb";
-const nord8 = "#88c0d0";
-const nord9 = "#81a1c1";
-const nord10 = "#5e81ac";
+const nord7 = "#8fbcbb"
+const nord8 = "#88c0d0"
+const nord9 = "#81a1c1"
+const nord10 = "#5e81ac"
 
-const nord11 = "#bf616a";
-const nord12 = "#d08770";
-const nord13 = "#ebcb8b";
-const nord14 = "#a3be8c";
-const nord15 = "#b48ead";
+const nord11 = "#bf616a"
+const nord12 = "#d08770"
+const nord13 = "#ebcb8b"
+const nord14 = "#a3be8c"
+const nord15 = "#b48ead"
 
-export type ThemeName = "light" | "dark";
+export type ThemeName = "light" | "dark"
 
 export interface Colors {
-  name: ThemeName,
+  name: ThemeName
   bg: {
-    base: string,
-    surface: string,
-    input: string,
-    highlight: string,
-    colored: string,
-  },
+    base: string
+    surface: string
+    input: string
+    highlight: string
+    colored: string
+  }
   fg: {
-    base: string,
-    muted: string,
-  },
+    base: string
+    muted: string
+  }
   accent: {
-    base: string,
-    alt: string,
-    special: string, 
-  },
+    base: string
+    alt: string
+    special: string
+  }
   alert: {
-    error: string,
-    danger: string,
-    warning: string,
-    success: string,
-  },
+    error: string
+    danger: string
+    warning: string
+    success: string
+  }
 }
 
 const alert: Colors["alert"] = {
@@ -63,7 +63,7 @@ const alert: Colors["alert"] = {
 const accent: Colors["accent"] = {
   base: nord8,
   alt: nord7,
-  special: nord15, 
+  special: nord15,
 }
 
 export const dark: Colors = {
@@ -80,7 +80,7 @@ export const dark: Colors = {
     muted: hsla(nord4, 0.5),
   },
   accent,
-  alert
+  alert,
 }
 
 export const light: Colors = {
@@ -97,5 +97,5 @@ export const light: Colors = {
     muted: hsla(nord3, 0.5),
   },
   accent,
-  alert
+  alert,
 }

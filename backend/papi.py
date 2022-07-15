@@ -22,7 +22,7 @@ def request_handler(bot):
     if request.method == 'POST':
         if bot not in models:
             return """<img src="https://qph.fs.quoracdn.net/main-qimg-863379f19d3db784b48f4dd78d014c19" 
-            alt="not available">""", 500
+            alt="not available">""", 400
 
         content = request.get_json()
 

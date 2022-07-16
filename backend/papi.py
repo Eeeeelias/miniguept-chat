@@ -7,7 +7,6 @@ app = Flask(__name__)
 models = ["elias", "rick", "elias-bgi"]
 
 
-# change input to array
 def convert_to_tokens(chat_messages):
     chat_ids = []
     for message in chat_messages[::-1]:

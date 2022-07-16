@@ -1,5 +1,3 @@
-import os
-
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
@@ -15,15 +13,19 @@ step = 1
 prev_model = "elias"
 user_model = AutoModelForCausalLM.from_pretrained(models.get('elias'))
 
+
+# changes model
 def set_model(model_name):
     global user_model
     user_model = AutoModelForCausalLM.from_pretrained(model_name)
 
 
+# encodes text to tokens
 def tokenize_input(user_input):
     return tokenizer.encode(user_input + tokenizer.eos_token, return_tensors='pt')
 
 
+# adds context to an input
 def add_context(user_input_id, context_ids, context, reset_step=False):
     global step
 
@@ -52,14 +54,17 @@ def add_context(user_input_id, context_ids, context, reset_step=False):
     return bot_input_ids
 
 
+# concatenates a list of tensors
 def cat_tensors(tensor_list):
     return torch.cat(tensor_list, dim=-1)
 
 
+# returns length of tensor
 def len_tensors(tensor):
     return tensor.size(dim=-1)
 
 
+# returns a reply for a given context
 def get_reply(bot_input_ids, reply_model):
     # user_model gets updated with each function call -> causes referenced before assignment error
     global prev_model
@@ -74,13 +79,13 @@ def get_reply(bot_input_ids, reply_model):
     return tokenizer.decode(reply_id[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
 
 
+# splitting replies when split token found
 def split_reply(reply):
     k = 0
     replies = []
     for i in range(len(reply)):
         if reply[i] == '#':
             replies.append(reply[k:i])
-            # change to +2 for deleting heading space?
             k = i + 2
     if len(replies) == 0:
         replies.append(reply)

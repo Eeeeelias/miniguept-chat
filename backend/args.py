@@ -1,6 +1,8 @@
 class Args():
     def __init__(self):
-        self.output_dir = 'output-else'
+        self.your_name = '<your_name>'
+        self.input_csv = '<data/your-file.csv>'
+        self.output_dir = '<models/output-your-name>'
         self.model_type = 'gpt2'
         self.model_name_or_path = 'microsoft/DialoGPT-small'
         self.config_name = 'microsoft/DialoGPT-small'
@@ -30,7 +32,7 @@ class Args():
         self.test_size = 0.001
         # continue from checkpoint
         self.should_continue = False
-        self.seed = 41
+        self.seed = 42
         self.local_rank = -1
         self.fp16 = False
         self.fp16_opt_level = 'O1'

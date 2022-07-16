@@ -424,12 +424,12 @@ if __name__ == "__main__":
 
     args = Args()
 
-    all_convos = pd.read_csv("/home/elias/PycharmProjects/miniguept-chat/backend/data/telegram_convos.csv")
+    all_convos = pd.read_csv(args.input_csv)
     contexted = []
     # context depth
     n = 7
     for i in range(n, len(all_convos['line'])):
-        if all_convos['from'][i] == 'Elias':
+        if all_convos['from'][i] == args.your_name:
             row = []
             prev = i - 1 - n
             for j in range(i, prev, -1):

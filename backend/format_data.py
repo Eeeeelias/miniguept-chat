@@ -77,7 +77,7 @@ def whatsapp_chats(chat, i):
                     cou += 1
         elif not re.search('[0-9]+.+[0-9]+', line):
             lines[cou-i-1][3] = lines[cou-i-1][3] + line.rstrip()
-    index = len(lines)
+    index += len(lines)
     return lines
 
 

@@ -11,6 +11,7 @@ export interface TextProps {
   size?: TextSize
   bold?: boolean
   title?: string
+  muted?: boolean
 }
 
 const getFontSize = (args: Pick<TextProps, "size">) => {
@@ -22,7 +23,7 @@ const getFontSize = (args: Pick<TextProps, "size">) => {
 export const getTextStyles = (args: ThemeProp & TextProps) => `
   font-size: ${getFontSize(args)};
   font-weight: ${args.bold ? "700" : "400"};
-  color: ${args.theme?.().fg.base};
+  color: ${args.muted ? args.theme?.().fg.muted : args.theme?.().fg.base};
 `
 
 const Font = styled.span<TextProps>`

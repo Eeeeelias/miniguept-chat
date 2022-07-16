@@ -4,7 +4,7 @@ import { tokens } from "../../theme"
 import { focusOutline } from "../base"
 
 const Input = styled.input`
-  height: ${tokens.space.largest};
+  height: 2.5rem;
   padding: 0 ${tokens.space.medium};
   background: ${args => args.theme?.().bg.input};
   border-radius: ${tokens.space.small};

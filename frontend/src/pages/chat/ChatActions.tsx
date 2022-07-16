@@ -14,7 +14,6 @@ import { tokens } from "../../theme"
 const Layout = styled.div`
   display: flex;
   align-items: center;
-  height: ${tokens.space.largest};
   width: 100%;
   gap: ${tokens.space.medium};
 `

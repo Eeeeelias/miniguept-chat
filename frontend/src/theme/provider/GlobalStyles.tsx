@@ -27,6 +27,9 @@ export const GlobalStyles = createGlobalStyles`
   textarea,
   select {
     font: inherit;
+    background-color: transparent;
+    border: none;
+    outline: none;
   }
   
   a {
@@ -34,9 +37,6 @@ export const GlobalStyles = createGlobalStyles`
   }
   
   button {
-    background-color: transparent;
-    border: none;
-    outline: none;
     cursor: pointer;
     padding: 0;
   }

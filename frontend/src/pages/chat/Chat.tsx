@@ -2,6 +2,7 @@ import { styled } from "solid-styled-components"
 
 import { Main } from "../../components"
 import { tokens } from "../../theme"
+import { ChatActions } from "./ChatActions"
 import { ChatBar } from "./ChatBar"
 
 const Layout = styled.div`
@@ -11,9 +12,19 @@ const Layout = styled.div`
   gap: ${tokens.space.medium};
 `
 
+const Content = styled(Main)`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: ${tokens.space.medium};
+`
+
 export const Chat = () => (
   <Layout>
     <ChatBar />
-    <Main>Chat</Main>
+    <Content>
+      Chat
+      <ChatActions />
+    </Content>
   </Layout>
 )

@@ -9,6 +9,8 @@ const Button = styled.button`
   position: relative;
   height: ${tokens.space.large};
   width: ${tokens.space.large};
+  min-height: ${tokens.space.large};
+  min-width: ${tokens.space.large};
 
   display: inline-flex;
   align-items: center;
@@ -20,6 +22,8 @@ const Button = styled.button`
 
   ${Icon.styled.class} {
     z-index: 2;
+    filter: ${args =>
+      tokens.shadow.low(args.theme?.().bg.base, { usage: "drop-shadow" })};
   }
   &:focus-visible {
     ${focusOutline}

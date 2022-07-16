@@ -1,4 +1,4 @@
-import { Component, JSX, splitProps } from "solid-js"
+import { Component, ParentProps, splitProps } from "solid-js"
 
 export interface IconProps {
   color?: string
@@ -8,9 +8,7 @@ export interface IconProps {
 
 export type FeatherIcon = Component<IconProps>
 
-type IconFactory = (paths: JSX.Element) => FeatherIcon
-
-export const createIcon: IconFactory = paths => props => {
+export const GenericIcon = (props: IconProps & ParentProps) => {
   const [{ color = "currentColor", size = "24" }, rest] = splitProps(props, [
     "color",
     "size",
@@ -28,7 +26,7 @@ export const createIcon: IconFactory = paths => props => {
       stroke-linejoin="round"
       {...rest}
     >
-      {paths}
+      {props.children}
     </svg>
   )
 }

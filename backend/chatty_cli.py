@@ -19,9 +19,9 @@ parser.add_argument('-k', dest='color', help="If for some reason the default col
 args = parser.parse_args()
 
 # setting some default variables
-models = {'elias-bg': 'output-big-elias',
-          'elias-bgi': 'output-big-elias-improved',
-          'rick': 'output-trash-rick'}
+models = {'elias-bg': 'models/output-big-elias',
+          'elias-bgi': 'models/output-big-elias-improved',
+          'rick': 'models/output-trash-rick'}
 
 allowed_colors = ['grey', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 context_ids = None

@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import chatty
 
 app = Flask(__name__)
-chatty.set_model('output-big-elias')
+chatty.set_model('models/output-big-elias')
 
 models = ["elias", "rick", "elias-bgi"]
 

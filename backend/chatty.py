@@ -9,9 +9,9 @@ eos_token = 50256
 model = None
 step = 1
 
-models = {'elias': 'output-big-elias',
-          'elias-bgi': 'output-big-elias-improved',
-          'rick': 'output-trash-rick'}
+models = {'elias': 'models/output-big-elias',
+          'elias-bgi': 'models/output-big-elias-improved',
+          'rick': 'models/output-trash-rick'}
 
 
 def set_model(model_name):

@@ -5,12 +5,14 @@ version: "3.8"
 services:
   client:
     build: ./frontend
+    container_name: chatty_frontend
     ports:
       - "8080:80"
 
-#
-# Put your shit here
-#  service:
-#    build: ./backend
-#    ports:
-#      - "8000:8000"
+  service:
+    build: ./backend
+    container_name: chatty_backend
+    ports:
+      - '7722:7722'
+    volumes:
+      - './models:/python-docker/models'

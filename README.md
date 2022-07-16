@@ -30,5 +30,5 @@ docker exec -it chatty bash
 ```
 and when you're in the container you can execute chatty_cli.py:
 ```bash
-python chatty_cli.py -n <your_name>
+python chatty_cli.py -n <your_name> -m <elias-bgi|elias-bg|rick>
 ```

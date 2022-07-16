@@ -15,6 +15,4 @@ services:
     ports:
       - '7722:7722'
     volumes:
-      - './models/output-big-elias:/python-docker/output-big-elias'
-      - './models/output-big-elias-improved:/python-docker/output-big-elias-improved'
-      - './models/output-trash-rick:/python-docker/output-trash-rick'
+      - './models:/python-docker/models'

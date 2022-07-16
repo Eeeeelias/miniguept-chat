@@ -6,5 +6,5 @@ dataset_splitter.py
 format_data.py
 modules.py
 docker-compose*
-output*
+models
 Dockerfile

@@ -15,4 +15,4 @@ services:
     ports:
       - '7722:7722'
     volumes:
-      - './models:/python-docker/models'
+      - './backend/models:/python-docker/models'

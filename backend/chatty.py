@@ -3,20 +3,21 @@ import os
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
+models = {'elias': 'models/output-big-elias',
+          'elias-bgi': 'models/output-big-elias-improved',
+          'rick': 'models/output-trash-rick'}
+
 # Initialize variables
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
 eos_token = 50256
 model = None
 step = 1
-
-models = {'elias': 'models/output-big-elias',
-          'elias-bgi': 'models/output-big-elias-improved',
-          'rick': 'models/output-trash-rick'}
-
+prev_model = "elias"
+user_model = AutoModelForCausalLM.from_pretrained(models.get('elias'))
 
 def set_model(model_name):
-    global model
-    model = AutoModelForCausalLM.from_pretrained(model_name)
+    global user_model
+    user_model = AutoModelForCausalLM.from_pretrained(model_name)
 
 
 def tokenize_input(user_input):
@@ -60,12 +61,16 @@ def len_tensors(tensor):
 
 
 def get_reply(bot_input_ids, reply_model):
-    user_model = AutoModelForCausalLM.from_pretrained(models.get(reply_model))
+    # user_model gets updated with each function call -> causes referenced before assignment error
+    global prev_model
+    global user_model
+    if reply_model != prev_model:
+        user_model = AutoModelForCausalLM.from_pretrained(models.get(reply_model))
+        prev_model = reply_model
 
     reply_id = user_model.generate(bot_input_ids, max_length=256, pad_token_id=tokenizer.eos_token_id,
                                    no_repeat_ngram_size=3, do_sample=True, top_k=100, top_p=0.7, temperature=0.8)
 
-    user_model = None
     return tokenizer.decode(reply_id[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
 
 

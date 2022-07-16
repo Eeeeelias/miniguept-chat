@@ -19,9 +19,7 @@ parser.add_argument('-k', dest='color', help="If for some reason the default col
 args = parser.parse_args()
 
 # setting some default variables
-models = {'elias-bg': 'models/output-big-elias',
-          'elias-bgi': 'models/output-big-elias-improved',
-          'rick': 'models/output-trash-rick'}
+models = ['elias', 'elias-bgi', 'rick']
 
 allowed_colors = ['grey', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 context_ids = None
@@ -29,7 +27,7 @@ context = 4
 reset_step = False
 name = 'User'
 color = 'cyan'
-chat_model = 'elias-bg'
+chat_model = 'elias'
 
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 

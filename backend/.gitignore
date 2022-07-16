@@ -2,11 +2,6 @@ apex
 apex_repo
 cached
 data
-output-medium-elias
-output-small-elias
-output-trash-rick
 runs
 venv
-output-big-elias
-output-small-elias-improved
-output-big-elias-improved
+models/

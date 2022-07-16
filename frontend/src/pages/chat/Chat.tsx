@@ -1,4 +1,4 @@
-import { For } from "solid-js"
+import { For, onMount } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
@@ -37,7 +37,7 @@ const dummyData: MessageProps[] = [
 ]
 
 const Layout = styled.div`
-  height: 100%;
+  height: calc(100% - 4rem);
 
   display: flex;
   gap: ${tokens.space.medium};
@@ -47,15 +47,34 @@ const Content = styled(Main)`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  gap: ${tokens.space.large};
+`
+const ScrollContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: ${tokens.space.medium};
+  overflow-y: scroll;
+  margin: -0.5rem;
+  padding: 0.5rem;
+  margin-right: -1.5rem;
+  padding-right: 1.5rem;
 `
 
-export const Chat = () => (
-  <Layout>
-    <ChatBar />
-    <Content>
-      <For each={dummyData}>{props => <Message {...props} />}</For>
-      <ChatActions />
-    </Content>
-  </Layout>
-)
+const scrollToBottom = (ref: HTMLElement) => ref.scrollTo(0, ref.scrollHeight)
+
+export const Chat = () => {
+  let ref: HTMLDivElement
+  onMount(() => scrollToBottom(ref))
+
+  return (
+    <Layout>
+      <ChatBar />
+      <Content>
+        <ScrollContainer ref={r => (ref = r)}>
+          <For each={dummyData}>{props => <Message {...props} />}</For>
+        </ScrollContainer>
+        <ChatActions />
+      </Content>
+    </Layout>
+  )
+}

@@ -12,13 +12,11 @@ import {
 import { tokens } from "../../theme"
 
 const Center = styled.div`
-  ${args => `
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: ${args.theme?.().fg.muted};
-  `}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: ${args => args.theme?.().fg.muted};
 `
 const Divider = styled.div`
   height: 1px;
@@ -27,20 +25,30 @@ const Divider = styled.div`
 `
 const Header = () => (
   <Center>
-    <Spacing vertical="small">
+    <Spacing vertical="smallest">
       <Icon size="large" icon={MessageCircle} inheritColor />
     </Spacing>
     <Divider />
   </Center>
 )
+const ScrollContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${tokens.space.medium};
+  overflow-y: scroll;
+  margin-right: -0.5rem;
+  padding-right: 0.5rem;
+`
 
 export const ChatBar = () => {
   return (
     <Sidebar>
       <Header />
-      <AvatarButton src={minigue} name="minigue" />
-      <AvatarButton src={rick} name="rick" />
-      <AvatarButton src={""} name="jonny" />
+      <ScrollContainer>
+        <AvatarButton src={minigue} name="minigue" />
+        <AvatarButton src={rick} name="rick" />
+        <AvatarButton src={""} name="jonny" />
+      </ScrollContainer>
     </Sidebar>
   )
 }

@@ -7,7 +7,12 @@ import { IconProp } from "../types/IconProp"
 
 type SizeProp = { size?: "medium" | "large" | "largest" }
 
-const getSize = ({ size }: SizeProp) => tokens.space[size || "medium"]
+const getSize = ({ size = "medium" }: SizeProp) =>
+  size === "largest"
+    ? tokens.space.large
+    : size === "large"
+    ? "1.5rem"
+    : tokens.space.medium
 
 const StyledIcon = styled("span")<Omit<IconProps, "icon">>`
   display: inline-flex;

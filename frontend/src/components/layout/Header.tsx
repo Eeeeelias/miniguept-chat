@@ -15,16 +15,19 @@ const Flex = styled.div`
 `
 
 const Layout = styled.header`
+  min-height: ${tokens.space.largest};
+  height: ${tokens.space.largest};
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
 const Navigation = styled.nav`
+  height: 100%;
   display: flex;
   align-items: center;
   gap: ${tokens.space.large};
-  padding: ${tokens.space.medium} ${tokens.space.large};
+  padding: 0 ${tokens.space.large};
   border-radius: ${tokens.borderRadius};
   ${surfaceStyles}
 `

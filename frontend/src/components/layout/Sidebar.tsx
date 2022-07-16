@@ -6,7 +6,7 @@ import { surfaceStyles } from "./surfaceStyles"
 export const Sidebar = styled.aside`
   ${surfaceStyles}
   height: 100%;
-  width: 5.5rem;
+  min-width: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

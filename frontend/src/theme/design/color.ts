@@ -6,7 +6,7 @@ const nord_darkest = "#242933"
 const nord0 = "#2e3440"
 const nord1 = "#3b4252"
 const nord2 = "#434c5e"
-const nord3 = "#4c566a"
+//const nord3 = "#4c566a"
 
 const nord4 = "#d8dee9"
 const nord5 = "#e5e9f0"
@@ -16,8 +16,8 @@ const nord_brightest = "#ffffff"
 
 const nord7 = "#8fbcbb"
 const nord8 = "#88c0d0"
-const nord9 = "#81a1c1"
-const nord10 = "#5e81ac"
+//const nord9 = "#81a1c1"
+//const nord10 = "#5e81ac"
 
 const nord11 = "#bf616a"
 const nord12 = "#d08770"
@@ -73,11 +73,11 @@ export const dark: Colors = {
     surface: nord0,
     input: nord1,
     highlight: nord2,
-    colored: nord10,
+    colored: "hsl(213, 32%, 40%)", // || "#5376a2" || nord10,
   },
   fg: {
     base: nord6,
-    muted: hsla(nord4, 0.5),
+    muted: hsla(nord6, 0.7),
   },
   accent,
   alert,
@@ -90,11 +90,11 @@ export const light: Colors = {
     surface: nord_brightest,
     input: nord5,
     highlight: nord4,
-    colored: nord9,
+    colored: "hsl(213, 42%, 80%)", // || nord9 || "#A1B5CE",
   },
   fg: {
     base: nord1,
-    muted: hsla(nord3, 0.5),
+    muted: hsla(nord1, 0.7),
   },
   accent,
   alert,

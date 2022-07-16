@@ -1,7 +1,7 @@
 import { styled } from "solid-styled-components"
 
-import minigue from "../../assets/minigue.jpg"
-import rick from "../../assets/rick.jpg"
+import minigue from "../../assets/minigue.webp"
+import rick from "../../assets/rick.webp"
 import {
   Icon,
   Sidebar,

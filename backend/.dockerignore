@@ -8,3 +8,4 @@ modules.py
 docker-compose*
 models
 Dockerfile
+test

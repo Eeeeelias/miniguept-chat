@@ -3,32 +3,35 @@ Chatbot trained on Eeeeelias' chat data.
 
 # Build in docker
 
-First, go to backend/ and build the Dockerfile using: 
-
-````bash
-docker build -t chatty_backend .
-````
-After that's done, you can use the docker-compose.yml and put in the paths of the model folders
+Just execute the docker-compose.yml file and you're good to go!
+(Make sure you have the models locally on your computer)
 
 ```yaml
-version: '3.3'
+version: "3.8"
+
+# $ docker compose up -d
+
 services:
-  chatty_backend:
+  client:
+    build: ./frontend
+    container_name: chatty_frontend
+    ports:
+      - "8080:80"
+
+  service:
+    build: ./backend
+    container_name: chatty_backend
     ports:
       - '7722:7722'
     volumes:
-      - '/<your>/<path>/<here>/output-big-elias:/python-docker/output-big-elias'
-      - '/<your>/<path>/<here>/output-trash-rick:/python-docker/output-trash-rick'
-      - '/<your>/<path>/<here>/output-big-elias-improved:/python-docker/output-big-elias-improved'
-    container_name: chatty
-    image: chatty_backend
+      - './backend/models:/python-docker/models'
 ```
 
-If you then want to try the chatbot for yourself in terminal, you can do that! Just type in
+If you want to try the chatbot for yourself in terminal, you can do that! Just type in
 ```bash
-docker exec -it chatty bash
+docker exec -it chatty_backend bash
 ```
 and when you're in the container you can execute chatty_cli.py:
 ```bash
-python chatty_cli.py -n <your_name> -m <elias-bgi|elias-bg|rick>
+python chatty_cli.py [-n <your_name>] [-m <elias-bgi|elias|rick>] [-c <context>] [-k <color>]
 ```

@@ -3,8 +3,8 @@ import { styled } from "solid-styled-components"
 import { focusOutline, ThemeProp, VisuallyHidden } from "../base"
 
 export interface AvatarButtonProps {
-  caption?: string
-  src?: string
+  name: string
+  src: string
   onClick?: () => void
 }
 
@@ -50,7 +50,7 @@ const Button = styled.button<AvatarButtonProps>`
 `
 
 export const AvatarButton = (props: AvatarButtonProps) => (
-  <Button title={props.caption} {...props}>
-    <VisuallyHidden>{props.caption}</VisuallyHidden>
+  <Button {...props} title={props.name}>
+    <VisuallyHidden>Start chatting with {props.name}</VisuallyHidden>
   </Button>
 )

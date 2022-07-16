@@ -5,7 +5,8 @@ import { styled } from "solid-styled-components"
 import { routes } from "../../pages/Routes"
 import { tokens } from "../../theme"
 import { ThemeToggle } from "../inputs"
-import { Github, Icon, Spacing } from "../primitives"
+import { IconButton } from "../inputs/IconButton"
+import { Github, Spacing } from "../primitives"
 import { Link } from "../primitives/Link"
 import { surfaceStyles } from "./surfaceStyles"
 
@@ -40,7 +41,7 @@ export const Header = () => (
       </For>
     </Navigation>
     <Flex />
-    <Icon icon={Github} />
+    <IconButton icon={Github} caption="Open github repository" />
     <Spacing right="medium" />
     <ThemeToggle />
   </Layout>

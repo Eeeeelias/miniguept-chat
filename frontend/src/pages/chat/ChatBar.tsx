@@ -27,7 +27,7 @@ const Divider = styled.div`
 `
 const Header = () => (
   <Center>
-    <Spacing vertical="smallest">
+    <Spacing vertical="small">
       <Icon size="large" icon={MessageCircle} inheritColor />
     </Spacing>
     <Divider />
@@ -38,9 +38,9 @@ export const ChatBar = () => {
   return (
     <Sidebar>
       <Header />
-      <AvatarButton src={minigue} caption="Chat with minigue" />
-      <AvatarButton src={rick} caption="Chat with rick" />
-      <AvatarButton src={""} caption="Chat with jonny" />
+      <AvatarButton src={minigue} name="minigue" />
+      <AvatarButton src={rick} name="rick" />
+      <AvatarButton src={""} name="jonny" />
     </Sidebar>
   )
 }

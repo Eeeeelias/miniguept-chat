@@ -19,6 +19,7 @@ export const GlobalStyles = createGlobalStyles`
   *::after {
     box-sizing: border-box;
     outline: none;
+    color: inherit;
   }
 
   input,
@@ -27,16 +28,21 @@ export const GlobalStyles = createGlobalStyles`
   select {
     font: inherit;
   }
-
+  
   a {
     text-decoration: none;
-    color: inherit;
   }
-
+  
   button {
     background-color: transparent;
     border: none;
     outline: none;
     cursor: pointer;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
   }
 `

@@ -2,7 +2,7 @@ import { styled } from "solid-styled-components"
 
 import { tokens } from "../../theme"
 import { Spacing as SpacingType } from "../../theme/design"
-import { ThemeProp } from "../base/ThemeProp"
+import { ThemeProp } from "../types/ThemeProp"
 
 type SpaceKey = keyof SpacingType
 type Side = "left" | "right" | "top" | "bottom"

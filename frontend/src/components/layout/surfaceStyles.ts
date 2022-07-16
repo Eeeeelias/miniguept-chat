@@ -1,5 +1,5 @@
 import { tokens } from "../../theme"
-import { ThemeProp } from "../base/ThemeProp"
+import { ThemeProp } from "../types/ThemeProp"
 
 export const surfaceStyles = (args: ThemeProp) => `
   border-radius: ${tokens.borderRadius};

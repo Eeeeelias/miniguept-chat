@@ -3,9 +3,10 @@ import { createMemo } from "solid-js"
 import { keyframes, styled } from "solid-styled-components"
 
 import { useThemeMode } from "../../theme"
-import { VisuallyHidden, focusOutline } from "../base"
+import { VisuallyHidden } from "../base"
 import { Icon } from "../primitives"
 import { Moon, Sun } from "../primitives/icons"
+import { IconButton } from "./IconButton"
 
 const animateIn = keyframes`
   from {
@@ -23,31 +24,7 @@ const animateOut = keyframes`
   }
 `
 
-const Button = styled.button`
-  ${args => `
-    position: relative;
-    width: 2rem;
-    height: 2rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-    background-color: ${args.theme?.().bg.base};
-    border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 0.5rem;
-
-    &:focus-visible {
-      
-      ${focusOutline(args)}
-    }
-  `}
-`
-
-const getAnimation = (active: boolean) => {
+const getAnimation = ({ active }: { active: boolean }) => {
   const outer = active ? animateIn : animateOut
   const inner = active ? animateOut : animateIn
   return `
@@ -59,14 +36,12 @@ const getAnimation = (active: boolean) => {
 }
 
 const Axis = styled.span<{ active: boolean }>`
-  ${args => `
-    position: absolute;
-    bottom: -10px;
-    display: flex;
-    justify-content: space-between;
-    width: 50px;
-    ${getAnimation(args.active)}
-  `}
+  position: absolute;
+  bottom: -0.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 3rem;
+  ${getAnimation}
 `
 
 export const ThemeToggle = () => {
@@ -74,7 +49,7 @@ export const ThemeToggle = () => {
   const isDark = createMemo(() => mode() === "dark")
 
   return (
-    <Button
+    <IconButton.styled
       role="switch"
       aria-checked={!isDark()}
       onClick={toggle}
@@ -89,6 +64,6 @@ export const ThemeToggle = () => {
       <VisuallyHidden>
         Toggle to {isDark() ? "light" : "dark"} colors
       </VisuallyHidden>
-    </Button>
+    </IconButton.styled>
   )
 }

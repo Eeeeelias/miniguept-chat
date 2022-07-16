@@ -3,7 +3,7 @@ import { splitProps } from "solid-js"
 import { styled } from "solid-styled-components"
 
 import { tokens } from "../../theme"
-import { FeatherIcon } from "./icons"
+import { IconProp } from "../types/IconProp"
 
 type SizeProp = { size?: "medium" | "large" | "largest" }
 
@@ -23,12 +23,11 @@ const StyledIcon = styled("span")<Omit<IconProps, "icon">>`
   }
 `
 
-export interface IconProps extends SizeProp {
-  icon: FeatherIcon
+export interface IconProps extends SizeProp, IconProp {
   inheritColor?: boolean
 }
 
-export const Icon = (props: IconProps) => {
+const IconComp = (props: IconProps) => {
   const [{ icon: Icon }, delegated] = splitProps(props, ["icon"])
   return (
     <StyledIcon {...delegated}>
@@ -36,3 +35,5 @@ export const Icon = (props: IconProps) => {
     </StyledIcon>
   )
 }
+
+export const Icon = Object.assign(IconComp, { styled: StyledIcon })

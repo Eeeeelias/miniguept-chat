@@ -3,7 +3,7 @@ import { ParentProps } from "solid-js"
 import { styled } from "solid-styled-components"
 
 import { tokens } from "../../theme"
-import { ThemeProp } from "../base/ThemeProp"
+import { ThemeProp } from "../types/ThemeProp"
 
 type TextSize = "small" | "medium" | "large"
 

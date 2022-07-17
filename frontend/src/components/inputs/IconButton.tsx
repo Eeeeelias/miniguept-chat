@@ -2,15 +2,24 @@ import { styled } from "solid-styled-components"
 
 import { tokens } from "../../theme"
 import { focusOutline, VisuallyHidden } from "../base"
-import { Icon } from "../primitives"
+import { Icon, IconSizeProp } from "../primitives"
 import { CaptionProp, IconProp } from "../types"
 
-const Button = styled.button`
+const getButtonSize = ({ size = "medium" }: IconSizeProp) => {
+  const value = `calc(${tokens.space[size]} + ${tokens.space.medium})`
+  return `
+  height: ${value};
+  width: ${value};
+  min-height: ${value};
+  min-width: ${value};
+`
+}
+
+const IconClass = Icon.styled.class as unknown as string
+
+const Button = styled.button<IconSizeProp>`
+  ${getButtonSize}
   position: relative;
-  height: ${tokens.space.large};
-  width: ${tokens.space.large};
-  min-height: ${tokens.space.large};
-  min-width: ${tokens.space.large};
 
   display: inline-flex;
   align-items: center;
@@ -20,7 +29,7 @@ const Button = styled.button`
   overflow: hidden;
   isolation: isolate;
 
-  ${Icon.styled.class} {
+  ${IconClass} {
     z-index: 2;
     filter: ${args =>
       tokens.shadow.low(args.theme?.().bg.base, { usage: "drop-shadow" })};
@@ -44,13 +53,13 @@ const Button = styled.button`
   }
 `
 
-export interface IconButtonProps extends IconProp, CaptionProp {
+export interface IconButtonProps extends IconProp, CaptionProp, IconSizeProp {
   onClick?: () => void
 }
 
 export const IconButtonComp = (props: IconButtonProps) => (
-  <Button onClick={props.onClick}>
-    <Icon icon={props.icon} />
+  <Button onClick={props.onClick} size={props.size}>
+    <Icon icon={props.icon} size={props.size} />
     <VisuallyHidden>{props.caption}</VisuallyHidden>
   </Button>
 )

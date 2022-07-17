@@ -23,7 +23,7 @@ const Button = styled.button<AvatarButtonProps>`
   opacity: 0.8;
   cursor: pointer;
   color: inherit;
-  border: 2px solid currentColor;
+  border: 2px solid ${args => args.theme?.().fg.base};
 
   &:focus-visible {
     ${focusOutline}

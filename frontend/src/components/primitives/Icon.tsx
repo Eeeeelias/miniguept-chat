@@ -5,9 +5,9 @@ import { styled } from "solid-styled-components"
 import { tokens } from "../../theme"
 import { IconProp } from "../types/IconProp"
 
-type SizeProp = { size?: "medium" | "large" | "largest" }
+export type IconSizeProp = { size?: "medium" | "large" | "largest" }
 
-const getSize = ({ size = "medium" }: SizeProp) =>
+const getSize = ({ size = "medium" }: IconSizeProp) =>
   size === "largest"
     ? tokens.space.large
     : size === "large"
@@ -28,7 +28,7 @@ const StyledIcon = styled("span")<Omit<IconProps, "icon">>`
   }
 `
 
-export interface IconProps extends SizeProp, IconProp {
+export interface IconProps extends IconSizeProp, IconProp {
   inheritColor?: boolean
 }
 

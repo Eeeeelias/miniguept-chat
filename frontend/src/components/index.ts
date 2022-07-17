@@ -1,5 +1,5 @@
 export * from "./base"
-export * from "./data"
+export * from "./display"
 export * from "./inputs"
 export * from "./primitives"
 export * from "./layout"

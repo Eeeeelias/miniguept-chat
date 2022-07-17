@@ -64,13 +64,6 @@ const Position = styled.div`
   position: relative;
 `
 
-interface Boundaries {
-  x: number
-  y: number
-  width: number
-  height: number
-}
-
 export interface TooltipProps extends ParentProps {
   Content: Component
   open: boolean
@@ -79,22 +72,40 @@ export interface TooltipProps extends ParentProps {
   // align?: "start" | "center" | "end"
 }
 
-const getBoundaryStyles = ({ height, width, x, y }: Boundaries) => `
-  top: ${y}px;
-  left: ${x}px;
-  width: ${width}px;
-  height: ${height}px;
-`
+const getBoundaryStyles = (
+  boundaries: DOMRect | null,
+  position?: TooltipProps["position"]
+) => {
+  if (!boundaries) return ""
+  const { height, width, top, right, bottom, left } = boundaries
+  switch (position) {
+    case "top":
+      return `
+        top: ${top}px;
+        left: ${left + width / 2}px;
+      `
+    case "bottom":
+      return `
+        top: ${bottom}px;
+        left: ${left + width / 2}px;
+      `
+    case "left":
+      return `
+        top: ${top + height / 2}px;
+        left: ${left}px;
+      `
+    case "right":
+      return `
+        top: ${top + height / 2}px;
+        left: ${right}px;
+      `
+  }
+}
 
 export const Tooltip = (props: TooltipProps) => {
   let outerRef: HTMLDivElement
   const [resizer, setResizer] = createSignal<ResizeObserver | null>(null)
-  const [boundaries, setBoundaries] = createSignal({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  })
+  const [boundaries, setBoundaries] = createSignal<DOMRect | null>(null)
 
   const updateBoundaries = () => setBoundaries(outerRef.getBoundingClientRect())
 
@@ -112,7 +123,10 @@ export const Tooltip = (props: TooltipProps) => {
     <Position ref={r => (outerRef = r)}>
       <Show when={props.open}>
         <Portal>
-          <Caret style={getBoundaryStyles(boundaries())} {...props}>
+          <Caret
+            style={getBoundaryStyles(boundaries(), props.position)}
+            {...props}
+          >
             <Popover {...props} />
           </Caret>
         </Portal>

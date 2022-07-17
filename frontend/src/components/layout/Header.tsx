@@ -32,6 +32,9 @@ const Navigation = styled.nav`
   ${surfaceStyles}
 `
 
+const openRepository = () =>
+  window.open("https://github.com/Eeeeelias/miniguept-chat", "_blank")
+
 export const Header = () => (
   <Layout>
     <Navigation>
@@ -44,7 +47,11 @@ export const Header = () => (
       </For>
     </Navigation>
     <Flex />
-    <IconButton icon={Github} caption="Open github repository" />
+    <IconButton
+      onClick={openRepository}
+      icon={Github}
+      caption="Open github repository"
+    />
     <Spacing right="medium" />
     <ThemeToggle />
   </Layout>

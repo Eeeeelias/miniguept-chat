@@ -13,15 +13,16 @@ Your `input` can be either a single file or a folder with .txt files (for your e
 WhatsApp chats). If you use the `-a` option, it will append your input to an existing output file.
 With this .csv file you can then move on to train your own chatbot.
 
-# Training a chatbot [MAY NOT WORK YET]
+# Training a chatbot
 
 For training your chatbot you need to modify the backend/args.py file to suit 
-your needs. There are only 3 params that you *have* to change, namely `your_name`, `input_csv`
-and `output_dir`. `your_name` should be the name that is in your dataset for the messages that 
-you sent (make sure it's the same all the time). `input_csv` is your dataset. `output_dir` makes the
-output directory of your model. 
+your needs. There is only one param that you *have* to change, namely `your_name`. `your_name` should be the name that is in your dataset for the messages that 
+you sent (make sure it's the same all the time).
+```bash
+$ vim backend/args.py
+```
 
-When all that is set you need to make sure that you have all the dependencies installed.
+When that is set you need to make sure that you have all the dependencies installed.
 You can easily do that by using the `requirements.txt`.
 ```bash
 $ pip install -r requirements.txt
@@ -31,7 +32,7 @@ dataset this *will* take a while.
 ```bash
 $ python3 ./backend/modules.py
 ```
-After that, your model is saved in the `output_dir` and you can use it for your chatbot!
+After that, your model is saved in `models/my-awesome-chatbot` and you can use it for your chatbot!
 
 # Build in docker
 
@@ -41,7 +42,7 @@ Just execute the docker-compose.yml file and you're good to go!
 ```yaml
 version: "3.8"
 
-# $ docker compose up -d
+# $ docker-compose up --build
 
 services:
   client:

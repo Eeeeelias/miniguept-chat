@@ -1,8 +1,8 @@
 class Args():
     def __init__(self):
         self.your_name = '<your_name>'
-        self.input_csv = '<data/your-file.csv>'
-        self.output_dir = '<models/output-your-name>'
+        self.input_csv = 'data/formatted_convos.csv'
+        self.output_dir = 'models/my-awesome-chatbot'
         self.model_type = 'gpt2'
         self.model_name_or_path = 'microsoft/DialoGPT-small'
         self.config_name = 'microsoft/DialoGPT-small'

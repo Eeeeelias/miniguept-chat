@@ -23,7 +23,7 @@ def valid_message(message):
 
 
 def message_concat():
-        return " # "
+    return " # "
 
 
 def telegram_chats(data, i):
@@ -69,14 +69,14 @@ def whatsapp_chats(chat, i):
         matches = re.search('([0-9]+.+[0-9]+) - (.*): (.*)', line)
         if matches:
             if not re.search('<[A-Za-z ]*>', line):
-                if not_first and matches.group(2) == lines[cou-i-1][2]:
-                    lines[cou-i-1][3] = lines[cou-i-1][3] + message_concat() + matches.group(3)
+                if not_first and matches.group(2) == lines[cou - i - 1][2]:
+                    lines[cou - i - 1][3] = lines[cou - i - 1][3] + message_concat() + matches.group(3)
                 else:
                     not_first = True
                     lines.append([cou, matches.group(1).split(',')[0], matches.group(2), matches.group(3)])
                     cou += 1
         elif not re.search('[0-9]+.+[0-9]+', line):
-            lines[cou-i-1][3] = lines[cou-i-1][3] + line.rstrip()
+            lines[cou - i - 1][3] = lines[cou - i - 1][3] + line.rstrip()
     index += len(lines)
     return lines
 

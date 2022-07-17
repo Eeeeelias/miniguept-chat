@@ -5,4 +5,4 @@ data
 runs
 venv
 models/
-test/
+models/output-test/

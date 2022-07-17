@@ -1,10 +1,9 @@
-import flask
 from flask import Flask, jsonify, request
 import chatty
 
 app = Flask(__name__)
 
-models = ["elias", "rick", "elias-bgi"]
+models = []
 
 
 def convert_to_tokens(chat_messages):
@@ -16,10 +15,9 @@ def convert_to_tokens(chat_messages):
 
 @app.route('/<bot>', methods=['POST'])
 def request_handler(bot):
-    # don't forget try except
     if request.method == 'POST':
         if bot not in models:
-            return """<img src="https://qph.fs.quoracdn.net/main-qimg-863379f19d3db784b48f4dd78d014c19" 
+            return """<img src="https://qph.fs.quoracdn.net/main-qimg-863379f19d3db784b48f4dd78d014c19"
             alt="not available">""", 400
 
         content = request.get_json()
@@ -37,4 +35,7 @@ def request_handler(bot):
 
 
 if __name__ == '__main__':
+    models = chatty.collect_models('models')
+    print('Available models are: ', [mod for mod in models])
     app.run(host='0.0.0.0', port=7722)
+

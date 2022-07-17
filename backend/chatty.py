@@ -1,3 +1,6 @@
+import os
+import re
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
@@ -12,6 +15,15 @@ model = None
 step = 1
 prev_model = "elias"
 user_model = AutoModelForCausalLM.from_pretrained(models.get('elias'))
+
+
+def collect_models(path):
+    global models
+    for pa in os.listdir(path):
+        if all(n not in pa for n in ('elias', 'rick')):
+            model_name = re.search("(?<=output-).*", pa.split('/')[-1]).group()
+            models[model_name] = path + "/" + pa
+    return [key for key in models.keys()]
 
 
 # changes model

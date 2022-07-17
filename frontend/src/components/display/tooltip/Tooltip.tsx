@@ -76,7 +76,7 @@ export interface TooltipProps extends ParentProps {
   open: boolean
   onClose: () => void
   position?: "top" | "bottom" | "left" | "right"
-  align?: "start" | "center" | "end"
+  // align?: "start" | "center" | "end"
 }
 
 const getBoundaryStyles = ({ height, width, x, y }: Boundaries) => `

@@ -19,10 +19,9 @@ export const Popover = (props: TooltipProps) => {
   let preventInitialClose = true
 
   const close = (e: MouseEvent | FocusEvent) => {
-    console.log(e.target)
     if (!preventInitialClose)
       !innerRef.contains(e.target as Node) && props.onClose()
-    preventInitialClose = false
+    else preventInitialClose = false
   }
 
   onMount(() => {

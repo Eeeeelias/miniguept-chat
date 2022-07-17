@@ -74,7 +74,6 @@ export const ChatBar = () => {
           open={open()}
           onClose={() => setOpen(o => !o)}
           position="right"
-          align="start"
         >
           <Center>
             <IconButton

@@ -24,13 +24,17 @@ export const Actions = () => {
   }
 
   const send = createMemo(() => () => {
+    if (ref.value === "") return
     sendMessage(ref.value)
     ref.value = ""
   })
 
   return (
     <Layout>
-      <TextInput ref={r => (ref = r)} />
+      <TextInput
+        ref={r => (ref = r)}
+        onKeyDown={key => key === "Enter" && send()()}
+      />
       <Emojis addEmoji={addEmoji} />
       <IconButton onClick={send()} icon={Send} caption="Send message" />
       <More />

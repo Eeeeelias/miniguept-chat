@@ -23,14 +23,19 @@ export interface TextInputProps {
   ref?: (ref: HTMLInputElement) => void
   placeholder?: string
   onChange?: (value: string) => void
+  onKeyDown?: (key: string) => void
 }
 
 export const TextInput = (props: TextInputProps) => {
-  const [{ onChange }, rest] = splitProps(props, ["onChange"])
+  const [{ onChange, onKeyDown }, rest] = splitProps(props, [
+    "onChange",
+    "onKeyDown",
+  ])
   return (
     <Input
       type="text"
       onChange={e => onChange?.(e.currentTarget.value)}
+      onKeyDown={e => onKeyDown?.(e.key)}
       {...rest}
     />
   )

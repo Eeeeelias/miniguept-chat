@@ -66,6 +66,13 @@ export const ChatProvider = (props: ChatProviderProps) => {
   const addInstance = (bot: string) =>
     setChats(chats => [...chats, createInstance(bot)])
 
+  const removeInstance = (id: string) =>
+    setChats(chats => {
+      const newChats = chats.filter(chat => chat.id !== id)
+      if (instance().id === id) setInstance(newChats[0])
+      return newChats
+    })
+
   const changeInstance = (id: string) => {
     const instance = chats().find(chat => chat.id === id)
     setInstance(instance || chats()[0])
@@ -95,6 +102,7 @@ export const ChatProvider = (props: ChatProviderProps) => {
     chats,
     instance,
     addInstance,
+    removeInstance,
     setInstance: changeInstance,
     sendMessage,
   }

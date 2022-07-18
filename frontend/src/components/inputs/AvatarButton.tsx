@@ -1,10 +1,48 @@
-import { createSignal, ParentComponent } from "solid-js"
+import { createSignal, ParentComponent, Show } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
+import { tokens } from "../../theme"
 import { focusOutline, ThemeProp, VisuallyHidden } from "../base"
 import { Tooltip } from "../display"
-import { Text } from "../primitives"
+import { Icon, Text, X } from "../primitives"
+
+const CloseButton = styled.button`
+  opacity: 0;
+  div:hover > &,
+  button:focus + &,
+  &:focus {
+    opacity: 1;
+  }
+
+  position: absolute;
+  z-index: 2;
+  top: -0.25rem;
+  right: -0.25rem;
+  height: ${tokens.space.medium};
+  width: ${tokens.space.medium};
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background-color: ${args => args.theme?.().fg.muted};
+  svg {
+    color: ${args => args.theme?.().bg.input};
+    stroke-width: 3;
+  }
+
+  &:focus-visible,
+  &:hover {
+    background-color: ${args => args.theme?.().alert.danger};
+  }
+  &:focus-visible {
+    ${focusOutline}
+    outline-color: ${args => args.theme?.().alert.warning};
+    outline-offset: 1px;
+  }
+`
 
 export interface AvatarButtonProps {
   active?: boolean
@@ -12,6 +50,7 @@ export interface AvatarButtonProps {
   name: string
   src?: string
   onClick?: () => void
+  onClose?: () => void
 }
 
 const fallbackGradient = (args: ThemeProp) => `
@@ -22,6 +61,7 @@ const fallbackGradient = (args: ThemeProp) => `
 
 const Button = styled.button<AvatarButtonProps>`
   position: relative;
+  z-index: 1;
   overflow: hidden;
   min-width: 3.5rem;
   min-height: 3.5rem;
@@ -70,6 +110,12 @@ export const AvatarButton = (props: AvatarButtonProps) => {
   const close = () => setOpen(false)
   const open = () => setOpen(true)
 
+  const handleKeyEvent = (e: KeyboardEvent) => {
+    if (e.key === "Escape" || e.key === "Delete") {
+      props.onClose?.()
+    }
+  }
+
   // eslint-disable-next-line solid/reactivity
   const ConditionalTooltip: ParentComponent = !props.tooltip
     ? args => <>{args.children}</>
@@ -89,9 +135,20 @@ export const AvatarButton = (props: AvatarButtonProps) => {
 
   return (
     <ConditionalTooltip>
-      <Button {...props} onMouseEnter={open} onMouseLeave={close}>
+      <Button
+        {...props}
+        onMouseEnter={open}
+        onMouseLeave={close}
+        onKeyDown={handleKeyEvent}
+      >
         <VisuallyHidden>Start chatting with {props.name}</VisuallyHidden>
       </Button>
+      <Show when={!!props.onClose}>
+        <CloseButton onClick={() => props.onClose?.()}>
+          <Icon icon={X} size={"small"} />
+          <VisuallyHidden>Close chat with {props.name}</VisuallyHidden>
+        </CloseButton>
+      </Show>
     </ConditionalTooltip>
   )
 }

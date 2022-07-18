@@ -124,7 +124,7 @@ const getBot = (name: string) => {
 }
 
 export const ChatBar = () => {
-  const { chats, setInstance, instance } = useChat()
+  const { chats, setInstance, instance, removeInstance } = useChat()
   return (
     <Sidebar>
       <Header />
@@ -135,6 +135,9 @@ export const ChatBar = () => {
               active={instance().id === id}
               tooltip
               onClick={() => setInstance(id)}
+              onClose={
+                chats().length > 1 ? () => removeInstance(id) : undefined
+              }
               {...getBot(bot)}
             />
           )}

@@ -17,6 +17,7 @@ export interface ChatState {
   instance: Accessor<BotInstance>
   addInstance: (bot: string) => void
   setInstance: (instanceId: string) => void
+  removeInstance: (instanceId: string) => void
   sendMessage: (message: string) => void
 }
 
@@ -31,6 +32,7 @@ const initialState: ChatState = {
   instance: () => emptyInstance,
   addInstance: () => null,
   setInstance: () => null,
+  removeInstance: () => null,
   sendMessage: () => null,
 }
 

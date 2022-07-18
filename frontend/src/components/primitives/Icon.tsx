@@ -5,13 +5,15 @@ import { styled } from "solid-styled-components"
 import { tokens } from "../../theme"
 import { IconProp } from "../types/IconProp"
 
-export type IconSizeProp = { size?: "medium" | "large" | "largest" }
+export type IconSizeProp = { size?: "small" | "medium" | "large" | "largest" }
 
 const getSize = ({ size = "medium" }: IconSizeProp) =>
   size === "largest"
     ? tokens.space.large
     : size === "large"
     ? "1.5rem"
+    : size === "small"
+    ? "0.75rem"
     : tokens.space.medium
 
 const StyledIcon = styled("span")<Omit<IconProps, "icon">>`

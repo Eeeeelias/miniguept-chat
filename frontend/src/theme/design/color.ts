@@ -14,9 +14,9 @@ const nord6 = "#eceff4"
 const nord_bright = "#f2f4f8"
 const nord_brightest = "#ffffff"
 
-const nord7 = "#8fbcbb"
+//const nord7 = "#8fbcbb"
 const nord8 = "#88c0d0"
-//const nord9 = "#81a1c1"
+const nord9 = "#81a1c1"
 //const nord10 = "#5e81ac"
 
 const nord11 = "#bf616a"
@@ -62,7 +62,7 @@ const alert: Colors["alert"] = {
 
 const accent: Colors["accent"] = {
   base: nord8,
-  alt: nord7,
+  alt: nord9,
   special: nord15,
 }
 

@@ -1,6 +1,8 @@
 import { Router } from "solid-app-router"
 import { styled } from "solid-styled-components"
 
+import br from "./assets/blob-left.svg"
+import bl from "./assets/blob-right.svg"
 import Waves from "./assets/waves.svg"
 import { Header } from "./components/layout"
 import { getTextStyles } from "./components/primitives/Text"
@@ -38,6 +40,7 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  display: none;
 `
 
 const Image = styled.img`
@@ -45,6 +48,21 @@ const Image = styled.img`
   height: 100%;
   width: 100%;
   object-fit: cover;
+`
+
+const ImageLeft = styled.img`
+  position: fixed;
+  height: 40%;
+  right: 0;
+  top: 0;
+  transform: rotate(-90deg);
+`
+const ImageRight = styled.img`
+  position: fixed;
+  height: 40%;
+  bottom: 0;
+  left: 0;
+  transform: rotate(-90deg);
 `
 
 export const App = () => (
@@ -59,6 +77,8 @@ export const App = () => (
       <Container>
         <Image src={Waves} />
       </Container>
+      <ImageLeft src={bl} />
+      <ImageRight src={br} />
     </Wrapper>
   </ThemeProvider>
 )

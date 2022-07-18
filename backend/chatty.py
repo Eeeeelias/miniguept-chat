@@ -4,9 +4,9 @@ import re
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
-models = {'elias': 'models/output-big-elias',
-          'elias-bgi': 'models/output-big-elias-improved',
-          'rick': 'models/output-trash-rick'}
+models = {'elias': 'models/output-minigue',
+          'elias-bgi': 'models/output-minigue-bgi',
+          'rick': 'models/output-rick'}
 
 # Initialize variables
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")

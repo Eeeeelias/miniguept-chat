@@ -1,10 +1,14 @@
+import { createSignal } from "solid-js"
+
 import { styled } from "solid-styled-components"
 
 import { focusOutline, ThemeProp, VisuallyHidden } from "../base"
+import { Tooltip } from "../display"
+import { Text } from "../primitives"
 
 export interface AvatarButtonProps {
   name: string
-  src: string
+  src?: string
   onClick?: () => void
 }
 
@@ -49,8 +53,20 @@ const Button = styled.button<AvatarButtonProps>`
   }
 `
 
-export const AvatarButton = (props: AvatarButtonProps) => (
-  <Button {...props} title={props.name}>
-    <VisuallyHidden>Start chatting with {props.name}</VisuallyHidden>
-  </Button>
-)
+export const AvatarButton = (props: AvatarButtonProps) => {
+  const [isOpen, setOpen] = createSignal(false)
+  const close = () => setOpen(false)
+  const open = () => setOpen(true)
+
+  return (
+    <Tooltip
+      Content={() => <Text.Medium noWrap>{props.name}</Text.Medium>}
+      open={isOpen()}
+      position="right"
+    >
+      <Button {...props} onMouseEnter={open} onMouseLeave={close}>
+        <VisuallyHidden>Start chatting with {props.name}</VisuallyHidden>
+      </Button>
+    </Tooltip>
+  )
+}

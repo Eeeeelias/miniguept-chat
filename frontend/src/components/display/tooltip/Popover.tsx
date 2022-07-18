@@ -7,7 +7,7 @@ import { opositePosition } from "./opositePosition"
 import { TooltipProps } from "./Tooltip"
 
 const Content = styled.div<TooltipProps>`
-  ${opositePosition}: calc(100% + 1rem);
+  ${opositePosition}: calc(100% + 0.9rem);
   position: absolute;
   padding: ${tokens.space.small};
   background-color: ${args => args.theme?.().bg.input};
@@ -20,7 +20,7 @@ export const Popover = (props: TooltipProps) => {
 
   const close = (e: MouseEvent | FocusEvent) => {
     if (!preventInitialClose)
-      !innerRef.contains(e.target as Node) && props.onClose()
+      !innerRef.contains(e.target as Node) && props.onClose?.()
     else preventInitialClose = false
   }
 

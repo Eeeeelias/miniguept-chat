@@ -1,9 +1,8 @@
-import { createSignal } from "solid-js"
+import { createEffect, createSignal, For } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import minigue from "../../assets/minigue.webp"
-import rick from "../../assets/rick.webp"
+import { bots } from "../../assets/bots"
 import {
   Icon,
   Sidebar,
@@ -15,6 +14,7 @@ import {
   IconButton,
 } from "../../components"
 import { tokens } from "../../theme"
+import { useChat } from "./provider/useChat"
 const Center = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,38 +52,75 @@ const TooltipContent = styled.div`
   gap: ${tokens.space.small};
 `
 
-const AllAvatars = () => (
-  <TooltipContent>
-    <AvatarButton src={minigue} name="minigue" />
-    <AvatarButton src={rick} name="rick" />
-    <AvatarButton src={""} name="jonny" />
-  </TooltipContent>
-)
+const AllAvatars = () => {
+  const { addInstance } = useChat()
+  return (
+    <TooltipContent>
+      <For each={bots}>
+        {({ avatar, name }) => (
+          <AvatarButton
+            src={avatar}
+            name={name}
+            onClick={() => addInstance(name)}
+          />
+        )}
+      </For>
+    </TooltipContent>
+  )
+}
+
+const AddChat = () => {
+  const { chats } = useChat()
+  const [open, setOpen] = createSignal(false)
+  const toggle = () => setOpen(open => !open)
+  let chatLength = chats().length
+
+  createEffect(() => {
+    if (chatLength !== chats().length) {
+      toggle()
+      chatLength = chats().length
+    }
+  })
+
+  return (
+    <Tooltip
+      Content={AllAvatars}
+      open={open()}
+      onClose={toggle}
+      position="right"
+    >
+      <Center>
+        <IconButton
+          size="large"
+          icon={Plus}
+          onClick={toggle}
+          caption="Start new chat"
+        />
+      </Center>
+    </Tooltip>
+  )
+}
+
+const getBot = (name: string) => {
+  const bot = bots.find(bot => bot.name === name)
+  return {
+    src: bot?.avatar,
+    name: bot?.name || "minigue",
+  }
+}
 
 export const ChatBar = () => {
-  const [open, setOpen] = createSignal(false)
+  const { chats, setInstance } = useChat()
   return (
     <Sidebar>
       <Header />
       <ScrollContainer>
-        <AvatarButton src={minigue} name="minigue" />
-        <AvatarButton src={rick} name="rick" />
-        <AvatarButton src={""} name="jonny" />
-        <Tooltip
-          Content={AllAvatars}
-          open={open()}
-          onClose={() => setOpen(o => !o)}
-          position="right"
-        >
-          <Center>
-            <IconButton
-              size="large"
-              icon={Plus}
-              onClick={() => setOpen(o => !o)}
-              caption="Start new chat"
-            />
-          </Center>
-        </Tooltip>
+        <For each={chats()}>
+          {({ bot, id }) => (
+            <AvatarButton {...getBot(bot)} onClick={() => setInstance(id)} />
+          )}
+        </For>
+        <AddChat />
       </ScrollContainer>
     </Sidebar>
   )

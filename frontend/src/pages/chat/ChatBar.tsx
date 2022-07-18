@@ -12,6 +12,7 @@ import {
   Tooltip,
   Plus,
   IconButton,
+  Text,
 } from "../../components"
 import { tokens } from "../../theme"
 import { useChat } from "./provider/useChat"
@@ -52,17 +53,30 @@ const TooltipContent = styled.div`
   gap: ${tokens.space.small};
 `
 
+const AddAvatar = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${tokens.space.small};
+  padding-right: ${tokens.space.medium};
+  border-radius: 50vh;
+  cursor: pointer;
+  &:hover {
+    background-color: ${args => args.theme?.().bg.highlight};
+  }
+`
+
 const AllAvatars = () => {
   const { addInstance } = useChat()
   return (
     <TooltipContent>
       <For each={bots}>
         {({ avatar, name }) => (
-          <AvatarButton
-            src={avatar}
-            name={name}
-            onClick={() => addInstance(name)}
-          />
+          <AddAvatar onClick={() => addInstance(name)}>
+            <AvatarButton src={avatar} name={name} />
+            <Text.Medium maxWidth="6.5rem" noWrap>
+              {name}
+            </Text.Medium>
+          </AddAvatar>
         )}
       </For>
     </TooltipContent>
@@ -110,14 +124,19 @@ const getBot = (name: string) => {
 }
 
 export const ChatBar = () => {
-  const { chats, setInstance } = useChat()
+  const { chats, setInstance, instance } = useChat()
   return (
     <Sidebar>
       <Header />
       <ScrollContainer>
         <For each={chats()}>
           {({ bot, id }) => (
-            <AvatarButton {...getBot(bot)} onClick={() => setInstance(id)} />
+            <AvatarButton
+              active={instance().id === id}
+              tooltip
+              onClick={() => setInstance(id)}
+              {...getBot(bot)}
+            />
           )}
         </For>
         <AddChat />

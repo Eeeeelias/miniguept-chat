@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js"
+import { createSignal, ParentComponent } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
@@ -7,6 +7,8 @@ import { Tooltip } from "../display"
 import { Text } from "../primitives"
 
 export interface AvatarButtonProps {
+  active?: boolean
+  tooltip?: boolean
   name: string
   src?: string
   onClick?: () => void
@@ -21,13 +23,23 @@ const fallbackGradient = (args: ThemeProp) => `
 const Button = styled.button<AvatarButtonProps>`
   position: relative;
   overflow: hidden;
-  width: 3.5rem;
+  min-width: 3.5rem;
   min-height: 3.5rem;
   border-radius: 50%;
   opacity: 0.8;
   cursor: pointer;
   color: inherit;
   border: 2px solid ${args => args.theme?.().fg.base};
+
+  ${args =>
+    args.active
+      ? `
+        ${focusOutline(args)}
+        outline-color: ${args.theme?.().accent.special};
+        outline-offset: 2px;
+        opacity: 1;
+      `
+      : ""};
 
   &:focus-visible {
     ${focusOutline}
@@ -58,15 +70,28 @@ export const AvatarButton = (props: AvatarButtonProps) => {
   const close = () => setOpen(false)
   const open = () => setOpen(true)
 
+  // eslint-disable-next-line solid/reactivity
+  const ConditionalTooltip: ParentComponent = !props.tooltip
+    ? args => <>{args.children}</>
+    : args => (
+        <Tooltip
+          Content={() => (
+            <Text.Medium maxWidth="6.5rem" noWrap>
+              {props.name}
+            </Text.Medium>
+          )}
+          open={isOpen()}
+          position="right"
+        >
+          {args.children}
+        </Tooltip>
+      )
+
   return (
-    <Tooltip
-      Content={() => <Text.Medium noWrap>{props.name}</Text.Medium>}
-      open={isOpen()}
-      position="right"
-    >
+    <ConditionalTooltip>
       <Button {...props} onMouseEnter={open} onMouseLeave={close}>
         <VisuallyHidden>Start chatting with {props.name}</VisuallyHidden>
       </Button>
-    </Tooltip>
+    </ConditionalTooltip>
   )
 }

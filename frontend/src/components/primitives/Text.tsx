@@ -13,6 +13,7 @@ export interface TextProps {
   title?: string
   muted?: boolean
   noWrap?: boolean
+  maxWidth?: string
 }
 
 const getFontSize = (args: Pick<TextProps, "size">) => {
@@ -26,11 +27,21 @@ export const getTextStyles = (args: ThemeProp & TextProps) => `
   font-weight: ${args.bold ? "700" : "400"};
   color: ${args.muted ? args.theme?.().fg.muted : args.theme?.().fg.base};
   white-space: ${args.noWrap ? "nowrap" : "initial"};
-`
+  `
 
 const Font = styled.span<TextProps>`
   ${getTextStyles}
   margin: 0;
+
+  ${args =>
+    args.maxWidth
+      ? `
+        display: inline-block;
+        max-width: ${args.maxWidth};
+        overflow: hidden;
+        text-overflow: ellipsis;
+      `
+      : ""}
 `
 
 type SizedTextProps = ParentProps<Omit<TextProps, "size">> & {

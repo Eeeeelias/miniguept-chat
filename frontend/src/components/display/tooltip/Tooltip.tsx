@@ -44,6 +44,7 @@ const getCaretPosition = ({ position = "top" }: TooltipProps) =>
     `
 
 const Caret = styled.div<TooltipProps>`
+  z-index: 999;
   position: fixed;
   display: flex;
   align-items: center;
@@ -67,7 +68,7 @@ const Position = styled.div`
 export interface TooltipProps extends ParentProps {
   Content: Component
   open: boolean
-  onClose: () => void
+  onClose?: () => void
   position?: "top" | "bottom" | "left" | "right"
   // align?: "start" | "center" | "end"
 }
@@ -79,16 +80,6 @@ const getBoundaryStyles = (
   if (!boundaries) return ""
   const { height, width, top, right, bottom, left } = boundaries
   switch (position) {
-    case "top":
-      return `
-        top: ${top}px;
-        left: ${left + width / 2}px;
-      `
-    case "bottom":
-      return `
-        top: ${bottom}px;
-        left: ${left + width / 2}px;
-      `
     case "left":
       return `
         top: ${top + height / 2}px;
@@ -99,6 +90,17 @@ const getBoundaryStyles = (
         top: ${top + height / 2}px;
         left: ${right}px;
       `
+    case "bottom":
+      return `
+        top: ${bottom}px;
+        left: ${left + width / 2}px;
+        `
+    case "top":
+    default:
+      return `
+            top: ${top}px;
+            left: ${left + width / 2}px;
+          `
   }
 }
 

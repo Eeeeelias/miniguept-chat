@@ -2,7 +2,7 @@ import { Accessor, createContext } from "solid-js"
 
 export interface Message {
   message: string
-  timestamp: Date
+  timestamp: string
   origin: "user" | "bot"
 }
 

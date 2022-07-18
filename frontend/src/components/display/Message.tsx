@@ -1,11 +1,12 @@
 import { styled } from "solid-styled-components"
 
+import { Message as MessageProps } from "../../pages/chat/provider/ChatContext"
 import { tokens } from "../../theme"
 import { ThemeProp } from "../base"
 import { Text } from "../primitives"
 
-const formatTime = (date: Date) =>
-  date.toLocaleTimeString(undefined, {
+const formatTime = (date: string) =>
+  new Date(date).toLocaleTimeString(undefined, {
     timeStyle: "short",
   })
 
@@ -62,12 +63,6 @@ const Layout = styled.div<OriginProp>`
     ${triangle}
   }
 `
-
-export interface MessageProps {
-  message: string | string[]
-  timestamp: Date
-  origin: "user" | "bot"
-}
 
 export const Message = (props: MessageProps) => (
   <Layout origin={props.origin}>

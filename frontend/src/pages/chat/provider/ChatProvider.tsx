@@ -1,39 +1,40 @@
-import { createEffect, createSignal, ParentProps } from "solid-js"
+import { createEffect, ParentProps } from "solid-js"
 
 import { bots } from "../../../assets/bots"
+import { createStorageSignal } from "../../../components/utils/createStorageSignal"
 import { BotInstance, ChatContext, Message } from "./ChatContext"
 
 const dummyData: Message[] = [
   {
     message: "Hello, how are you?",
-    timestamp: new Date("2020-02-25T19:19:00.000Z"),
+    timestamp: new Date("2020-02-25T19:19:00.000Z").toISOString(),
     origin: "user",
   },
   {
     message: "I'm fine, thank you!",
-    timestamp: new Date("2020-02-25T19:20:00.000Z"),
+    timestamp: new Date("2020-02-25T19:20:00.000Z").toISOString(),
     origin: "bot",
   },
   {
     message: "Why u asking?",
-    timestamp: new Date("2020-02-25T19:20:00.000Z"),
+    timestamp: new Date("2020-02-25T19:20:00.000Z").toISOString(),
     origin: "bot",
   },
   {
     message: "I'm bored... :/",
-    timestamp: new Date("2020-02-25T20:36:00.000Z"),
+    timestamp: new Date("2020-02-25T20:36:00.000Z").toISOString(),
     origin: "user",
   },
   {
     message:
       "Just play some Elden Ring fellow tarnished, its such a great game you should really try it out!",
-    timestamp: new Date("2020-02-25T20:37:00.000Z"),
+    timestamp: new Date("2020-02-25T20:37:00.000Z").toISOString(),
     origin: "bot",
   },
   {
     message:
       "You got me, I am a Malenia simp. Voices in my head won't shut up. Malenia is a good boss yeah yeah, maybe my favorite boss in the game?Yeah sure. THE BEST FROMSOFT BOSS? Fuck it's a good fight why the hell not, the character is cool, the lore too the design as well. The problem is my simp cortex gets activated and thinks 'I could fix her'.",
-    timestamp: new Date("2020-02-25T20:38:00.000Z"),
+    timestamp: new Date("2020-02-25T20:38:00.000Z").toISOString(),
     origin: "user",
   },
 ]
@@ -48,13 +49,19 @@ const createInstance = (bot: string): BotInstance => ({
   messages: [],
 })
 
-const initialInstance = { ...createInstance(bots[0].name), messages: dummyData }
+const initialInstance: BotInstance = {
+  ...createInstance(bots[0].name),
+  messages: dummyData,
+}
 
 interface ChatProviderProps extends ParentProps {}
 
 export const ChatProvider = (props: ChatProviderProps) => {
-  const [chats, setChats] = createSignal<BotInstance[]>([initialInstance])
-  const [instance, setInstance] = createSignal(initialInstance)
+  const [chats, setChats] = createStorageSignal("chat", [initialInstance])
+  const [instance, setInstance] = createStorageSignal(
+    "active-chat",
+    initialInstance
+  )
 
   const addInstance = (bot: string) =>
     setChats(chats => [...chats, createInstance(bot)])
@@ -68,7 +75,7 @@ export const ChatProvider = (props: ChatProviderProps) => {
     const newMessage: Message = {
       message,
       origin: "user",
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     }
     const newInstance = { ...instance() }
     newInstance.messages.push(newMessage)

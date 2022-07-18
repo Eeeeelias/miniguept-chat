@@ -6,7 +6,6 @@ import {
   createSignal,
 } from "solid-js"
 
-import { Portal } from "solid-js/web"
 import { styled } from "solid-styled-components"
 
 import { tokens } from "../../../theme"
@@ -123,17 +122,15 @@ export const Tooltip = (props: TooltipProps) => {
 
   return (
     <Position ref={r => (outerRef = r)}>
-      <Show when={props.open}>
-        <Portal>
-          <Caret
-            style={getBoundaryStyles(boundaries(), props.position)}
-            {...props}
-          >
-            <Popover {...props} />
-          </Caret>
-        </Portal>
-      </Show>
       {props.children}
+      <Show when={props.open}>
+        <Caret
+          style={getBoundaryStyles(boundaries(), props.position)}
+          {...props}
+        >
+          <Popover {...props} />
+        </Caret>
+      </Show>
     </Position>
   )
 }

@@ -26,11 +26,9 @@ export const Popover = (props: TooltipProps) => {
 
   onMount(() => {
     window.addEventListener("click", close)
-    window.addEventListener("focusin", close)
   })
   onCleanup(() => {
     window.removeEventListener("click", close)
-    window.removeEventListener("focusin", close)
   })
 
   return (

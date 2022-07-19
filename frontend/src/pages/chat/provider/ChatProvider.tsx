@@ -6,6 +6,7 @@ import {
   createStorageSignal,
   dummyData,
 } from "../../../components/utils"
+import { chat } from "../../../service/chat"
 import { BotInstance, ChatContext, Message } from "./ChatContext"
 
 const createInstance = (bot: string): BotInstance => ({
@@ -22,8 +23,11 @@ const initialInstance: BotInstance = {
 const findChat = (chats: BotInstance[], id: string) =>
   chats.find(chat => chat.id === id)
 
-const createMessage = (message: string): Message => ({
-  origin: "user",
+const createMessage = (
+  origin: Message["origin"],
+  message: string
+): Message => ({
+  origin,
   message,
   timestamp: new Date().toISOString(),
 })
@@ -63,18 +67,42 @@ export const ChatProvider = (props: ParentProps) => {
     )
   }
 
-  const sendMessage = (message: string) => {
-    const current = instance()
-    const activeId = active()
+  const pushChatMessage = ({
+    id,
+    message,
+    origin,
+  }: {
+    id: string
+    origin: "user" | "bot"
+    message: string
+  }) => {
+    const instance = findChat(chats(), id)
+    if (!instance) return
     setChats(chats =>
       chats.map(chat => {
-        if (chat.id !== activeId) return chat
+        if (chat.id !== id) return chat
         return {
-          ...current,
-          messages: [...current.messages, createMessage(message)],
+          ...chat,
+          messages: [...chat.messages, createMessage(origin, message)],
         }
       })
     )
+  }
+
+  const requestAnswer = (id: string) => {
+    const instance = findChat(chats(), id)
+    if (!instance) return
+    const { bot, messages } = instance
+    const context = messages.map(({ message }) => message)
+    chat(bot, context).then(reply =>
+      reply.forEach(message => pushChatMessage({ id, message, origin: "bot" }))
+    )
+  }
+
+  const sendMessage = (message: string) => {
+    const current = instance()
+    pushChatMessage({ id: current.id, message, origin: "user" })
+    requestAnswer(current.id)
   }
 
   const store = {

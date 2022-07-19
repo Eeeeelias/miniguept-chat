@@ -4,8 +4,8 @@ import re
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
-models = {'elias': 'models/output-minigue',
-          'elias-bgi': 'models/output-minigue-bgi',
+models = {'minigue': 'models/output-minigue',
+          'minigue-bgi': 'models/output-minigue-bgi',
           'rick': 'models/output-rick'}
 
 # Initialize variables
@@ -14,13 +14,13 @@ eos_token = 50256
 model = None
 step = 1
 prev_model = "elias"
-user_model = AutoModelForCausalLM.from_pretrained(models.get('elias'))
+user_model = AutoModelForCausalLM.from_pretrained(models.get('minigue'))
 
 
 def collect_models(path):
     global models
     for pa in os.listdir(path):
-        if all(n not in pa for n in ('elias', 'rick')):
+        if all(n not in pa for n in ('minigue', 'rick')):
             model_name = re.search("(?<=output-).*", pa.split('/')[-1]).group()
             models[model_name] = path + "/" + pa
     return [key for key in models.keys()]

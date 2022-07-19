@@ -15,27 +15,29 @@ def convert_to_tokens(chat_messages):
 
 @app.route('/<bot>', methods=['POST'])
 def request_handler(bot):
-    if request.method == 'POST':
-        if bot not in models:
-            return """<img src="https://qph.fs.quoracdn.net/main-qimg-863379f19d3db784b48f4dd78d014c19"
-            alt="not available">""", 400
+    try:
+        if request.method == 'POST':
+            if bot not in models:
+                return jsonify({'error': 'MODEL_NOT_FOUND'}), 400
 
-        content = request.get_json()
+            content = request.get_json()
 
-        chat_ids = convert_to_tokens(content['messages'])
-        bot_input_ids = chatty.cat_tensors(chat_ids)
+            chat_ids = convert_to_tokens(content['messages'])
+            bot_input_ids = chatty.cat_tensors(chat_ids)
 
-        if chatty.len_tensors(bot_input_ids) > 256:
-            # reply = "Sorry, this is too much for me to handle right now. Could you please summarize this a bit?"
-            reply = "CONTENT_TOO_LONG"
-            return {'error': reply}, 400
+            if chatty.len_tensors(bot_input_ids) > 256:
+                # reply = "Sorry, this is too much for me to handle right now. Could you please summarize this a bit?"
+                reply = "CONTENT_TOO_LONG"
+                return {'error': reply}, 400
 
-        replies = chatty.split_reply(chatty.get_reply(bot_input_ids, bot))
-        return jsonify({'messages': replies}), 200
+            replies = chatty.split_reply(chatty.get_reply(bot_input_ids, bot))
+            return jsonify({'messages': replies}), 200
+    except:
+        return """<img src="https://qph.fs.quoracdn.net/main-qimg-863379f19d3db784b48f4dd78d014c19"
+            alt="not available">""", 500
 
 
 if __name__ == '__main__':
     models = chatty.collect_models('models')
     print('Available models are: ', [mod for mod in models])
     app.run(host='0.0.0.0', port=7722)
-

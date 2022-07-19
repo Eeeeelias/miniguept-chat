@@ -57,11 +57,22 @@ const initialInstance: BotInstance = {
 interface ChatProviderProps extends ParentProps {}
 
 export const ChatProvider = (props: ChatProviderProps) => {
-  const [chats, setChats] = createStorageSignal("chat", [initialInstance])
+  const [chats, setChats] = createStorageSignal("chat", [initialInstance], {
+    sync: true,
+  })
   const [instance, setInstance] = createStorageSignal(
     "active-chat",
     initialInstance
   )
+
+  const findChat = (id: string) => chats().find(chat => chat.id === id)
+
+  createEffect(() => {
+    const chatInstance = findChat(instance().id)
+    if (!chatInstance) setInstance(chats()[0])
+    else if (chatInstance?.messages.length !== instance().messages.length)
+      setInstance(chatInstance)
+  })
 
   const addInstance = (bot: string) =>
     setChats(chats => [...chats, createInstance(bot)])
@@ -92,11 +103,6 @@ export const ChatProvider = (props: ChatProviderProps) => {
       chats.map(chat => (chat.id === newInstance.id ? newInstance : chat))
     )
   }
-
-  createEffect(() => {
-    console.log(chats())
-    console.log(instance())
-  })
 
   const store = {
     chats,

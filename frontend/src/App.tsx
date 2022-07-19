@@ -1,13 +1,16 @@
+import { Show } from "solid-js"
+
 import { Router } from "solid-app-router"
 import { styled } from "solid-styled-components"
 
-import br from "./assets/blob-left.svg"
-import bl from "./assets/blob-right.svg"
-import Waves from "./assets/waves.svg"
+import blobLeftDark from "./assets/blob-left-dark.svg"
+import blobLeftLight from "./assets/blob-left-light.svg"
+import blobRightDark from "./assets/blob-right-dark.svg"
+import blobRightLight from "./assets/blob-right-light.svg"
 import { Header } from "./components/layout"
 import { getTextStyles } from "./components/primitives/Text"
 import { Routes } from "./pages/Routes"
-import { ThemeProvider, tokens } from "./theme"
+import { ThemeProvider, tokens, useThemeMode } from "./theme"
 
 const Wrapper = styled.div`
   ${getTextStyles}
@@ -34,36 +37,34 @@ const Layout = styled.div`
   gap: ${tokens.space.medium};
 `
 
-const Container = styled.div`
-  position: absolute;
-  height: 20%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: none;
-`
-
-const Image = styled.img`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-`
-
-const ImageLeft = styled.img`
+const ImageRight = styled.img`
   position: fixed;
   height: 40%;
   right: 0;
   top: 0;
-  transform: rotate(-90deg);
 `
-const ImageRight = styled.img`
+const ImageLeft = styled.img`
   position: fixed;
   height: 40%;
   bottom: 0;
   left: 0;
-  transform: rotate(-90deg);
 `
+
+const Blobs = () => {
+  const [mode] = useThemeMode()
+  return (
+    <>
+      <Show when={mode() === "light"}>
+        <ImageLeft src={blobLeftLight} alt="" />
+        <ImageRight src={blobRightLight} alt="" />
+      </Show>
+      <Show when={mode() === "dark"}>
+        <ImageLeft src={blobLeftDark} alt="" />
+        <ImageRight src={blobRightDark} alt="" />
+      </Show>
+    </>
+  )
+}
 
 export const App = () => (
   <ThemeProvider>
@@ -74,11 +75,7 @@ export const App = () => (
           <Routes />
         </Layout>
       </Router>
-      <Container>
-        <Image src={Waves} />
-      </Container>
-      <ImageLeft src={bl} />
-      <ImageRight src={br} />
+      <Blobs />
     </Wrapper>
   </ThemeProvider>
 )

@@ -1,47 +1,12 @@
-import { createEffect, ParentProps } from "solid-js"
+import { createEffect, createMemo, ParentProps } from "solid-js"
 
 import { bots } from "../../../assets/bots"
-import { createStorageSignal } from "../../../components/utils/createStorageSignal"
+import {
+  createId,
+  createStorageSignal,
+  dummyData,
+} from "../../../components/utils"
 import { BotInstance, ChatContext, Message } from "./ChatContext"
-
-const dummyData: Message[] = [
-  {
-    message: "Hello, how are you?",
-    timestamp: new Date("2020-02-25T19:19:00.000Z").toISOString(),
-    origin: "user",
-  },
-  {
-    message: "I'm fine, thank you!",
-    timestamp: new Date("2020-02-25T19:20:00.000Z").toISOString(),
-    origin: "bot",
-  },
-  {
-    message: "Why u asking?",
-    timestamp: new Date("2020-02-25T19:20:00.000Z").toISOString(),
-    origin: "bot",
-  },
-  {
-    message: "I'm bored... :/",
-    timestamp: new Date("2020-02-25T20:36:00.000Z").toISOString(),
-    origin: "user",
-  },
-  {
-    message:
-      "Just play some Elden Ring fellow tarnished, its such a great game you should really try it out!",
-    timestamp: new Date("2020-02-25T20:37:00.000Z").toISOString(),
-    origin: "bot",
-  },
-  {
-    message:
-      "You got me, I am a Malenia simp. Voices in my head won't shut up. Malenia is a good boss yeah yeah, maybe my favorite boss in the game?Yeah sure. THE BEST FROMSOFT BOSS? Fuck it's a good fight why the hell not, the character is cool, the lore too the design as well. The problem is my simp cortex gets activated and thinks 'I could fix her'.",
-    timestamp: new Date("2020-02-25T20:38:00.000Z").toISOString(),
-    origin: "user",
-  },
-]
-
-const createId = () =>
-  Math.random().toString(36).slice(-7, -1) +
-  Date.now().toString(36).slice(-5, -1)
 
 const createInstance = (bot: string): BotInstance => ({
   id: createId(),
@@ -54,53 +19,61 @@ const initialInstance: BotInstance = {
   messages: dummyData,
 }
 
-interface ChatProviderProps extends ParentProps {}
+const findChat = (chats: BotInstance[], id: string) =>
+  chats.find(chat => chat.id === id)
 
-export const ChatProvider = (props: ChatProviderProps) => {
+const createMessage = (message: string): Message => ({
+  origin: "user",
+  message,
+  timestamp: new Date().toISOString(),
+})
+
+export const ChatProvider = (props: ParentProps) => {
   const [chats, setChats] = createStorageSignal("chat", [initialInstance], {
     sync: true,
   })
-  const [instance, setInstance] = createStorageSignal(
+  const [active, setActive] = createStorageSignal(
     "active-chat",
-    initialInstance
+    initialInstance.id
   )
 
-  const findChat = (id: string) => chats().find(chat => chat.id === id)
+  const instance = createMemo(() => {
+    const instance = findChat(chats(), active())
+    return instance || chats()[0]
+  })
 
   createEffect(() => {
-    const chatInstance = findChat(instance().id)
-    if (!chatInstance) setInstance(chats()[0])
+    const chatInstance = findChat(chats(), active())
+    if (!chatInstance) setActive(chats()[0].id)
     else if (chatInstance?.messages.length !== instance().messages.length)
-      setInstance(chatInstance)
+      setActive(chatInstance.id)
   })
 
   const addInstance = (bot: string) =>
     setChats(chats => [...chats, createInstance(bot)])
 
-  const removeInstance = (id: string) =>
-    setChats(chats => {
-      const newChats = chats.filter(chat => chat.id !== id)
-      if (instance().id === id) setInstance(newChats[0])
-      return newChats
-    })
-
-  const changeInstance = (id: string) => {
-    const instance = chats().find(chat => chat.id === id)
-    setInstance(instance || chats()[0])
+  const removeInstance = (id: string) => {
+    const activeId = active()
+    setChats(chats =>
+      chats.filter(chat => {
+        if (chat.id !== id) return true
+        if (chat.id === activeId) setActive(chats[0].id)
+        return false
+      })
+    )
   }
 
   const sendMessage = (message: string) => {
-    const newMessage: Message = {
-      message,
-      origin: "user",
-      timestamp: new Date().toISOString(),
-    }
-    const newInstance = { ...instance() }
-    newInstance.messages.push(newMessage)
-
-    setInstance(newInstance)
+    const current = instance()
+    const activeId = active()
     setChats(chats =>
-      chats.map(chat => (chat.id === newInstance.id ? newInstance : chat))
+      chats.map(chat => {
+        if (chat.id !== activeId) return chat
+        return {
+          ...current,
+          messages: [...current.messages, createMessage(message)],
+        }
+      })
     )
   }
 
@@ -109,7 +82,7 @@ export const ChatProvider = (props: ChatProviderProps) => {
     instance,
     addInstance,
     removeInstance,
-    setInstance: changeInstance,
+    setInstance: setActive,
     sendMessage,
   }
 

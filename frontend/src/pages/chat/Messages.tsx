@@ -21,7 +21,7 @@ const scrollToBottom = (ref: HTMLElement) => ref.scrollTo(0, ref.scrollHeight)
 
 export const Messages = () => {
   let ref: HTMLDivElement
-  const { instance } = useChat()
+  const { instance, deleteMessage } = useChat()
   onMount(() => scrollToBottom(ref))
 
   createEffect(() => {
@@ -30,7 +30,9 @@ export const Messages = () => {
 
   return (
     <ScrollContainer ref={r => (ref = r)}>
-      <For each={instance()?.messages}>{props => <Message {...props} />}</For>
+      <For each={instance()?.messages}>
+        {props => <Message {...props} onDelete={() => deleteMessage(props)} />}
+      </For>
     </ScrollContainer>
   )
 }

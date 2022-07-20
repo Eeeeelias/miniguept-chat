@@ -53,8 +53,11 @@ export const ChatProvider = (props: ParentProps) => {
       setActive(chatInstance.id)
   })
 
-  const addInstance = (bot: string) =>
-    setChats(chats => [...chats, createInstance(bot)])
+  const addInstance = (bot: string) => {
+    const newInstance = createInstance(bot)
+    setChats(chats => [...chats, newInstance])
+    setActive(newInstance.id)
+  }
 
   const removeInstance = (id: string) => {
     const activeId = active()
@@ -105,6 +108,22 @@ export const ChatProvider = (props: ParentProps) => {
     requestAnswer(current.id, message)
   }
 
+  const deleteMessage = (message: Message) => {
+    setChats(chats =>
+      chats.map(chat => {
+        if (chat.id !== active()) return chat
+        return {
+          ...chat,
+          messages: chat.messages.filter(
+            msg =>
+              msg.timestamp !== message.timestamp &&
+              msg.message !== message.message
+          ),
+        }
+      })
+    )
+  }
+
   const store = {
     chats,
     instance,
@@ -112,6 +131,7 @@ export const ChatProvider = (props: ParentProps) => {
     removeInstance,
     setInstance: setActive,
     sendMessage,
+    deleteMessage,
   }
 
   return (

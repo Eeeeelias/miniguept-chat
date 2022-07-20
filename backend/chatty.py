@@ -1,3 +1,4 @@
+import gc
 import os
 import re
 
@@ -82,6 +83,8 @@ def get_reply(bot_input_ids, reply_model):
     global prev_model
     global user_model
     if reply_model != prev_model:
+        del user_model
+        gc.collect()
         user_model = AutoModelForCausalLM.from_pretrained(models.get(reply_model))
         prev_model = reply_model
 

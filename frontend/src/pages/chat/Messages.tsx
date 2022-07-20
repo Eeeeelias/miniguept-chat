@@ -10,7 +10,7 @@ const ScrollContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${tokens.space.medium};
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: -0.5rem;
   padding: 0.5rem;
   margin-right: -1.5rem;

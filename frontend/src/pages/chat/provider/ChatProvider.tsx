@@ -89,12 +89,12 @@ export const ChatProvider = (props: ParentProps) => {
     )
   }
 
-  const requestAnswer = (id: string) => {
+  const requestAnswer = (id: string, message: string) => {
     const instance = findChat(chats(), id)
     if (!instance) return
     const { bot, messages } = instance
     const context = messages.map(({ message }) => message)
-    chat(bot, context).then(reply =>
+    chat(bot, [...context, message]).then(reply =>
       reply.forEach(message => pushChatMessage({ id, message, origin: "bot" }))
     )
   }
@@ -102,7 +102,7 @@ export const ChatProvider = (props: ParentProps) => {
   const sendMessage = (message: string) => {
     const current = instance()
     pushChatMessage({ id: current.id, message, origin: "user" })
-    requestAnswer(current.id)
+    requestAnswer(current.id, message)
   }
 
   const store = {

@@ -14,7 +14,7 @@ eos_token = 50256
 model = None
 step = 1
 prev_model = "elias"
-user_model = AutoModelForCausalLM.from_pretrained(models.get('minigue'))
+user_model = None  # AutoModelForCausalLM.from_pretrained(models.get('minigue'))
 
 
 def collect_models(path):
@@ -102,3 +102,10 @@ def split_reply(reply):
     if len(replies) == 0:
         replies.append(reply)
     return replies
+
+
+def set_none():
+    global user_model
+    global prev_model
+    prev_model = ""
+    user_model = None

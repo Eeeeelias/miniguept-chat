@@ -1,19 +1,22 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 import chatty
 
 app = Flask(__name__)
+CORS(app, resources={"/*": {"origins": "*"}})
 
-models = []
+models = chatty.collect_models('models')
 
 
 def convert_to_tokens(chat_messages):
     chat_ids = []
-    for message in chat_messages[::-1]:
+    for message in chat_messages:
         chat_ids.append(chatty.tokenize_input(message))
     return chat_ids
 
 
 @app.route('/<bot>', methods=['POST'])
+@cross_origin()
 def request_handler(bot):
     try:
         if request.method == 'POST':
@@ -22,6 +25,7 @@ def request_handler(bot):
 
             content = request.get_json()
 
+            #app.logger.info('message:', [co for co in content['messages']])
             chat_ids = convert_to_tokens(content['messages'])
             bot_input_ids = chatty.cat_tensors(chat_ids)
 
@@ -38,6 +42,5 @@ def request_handler(bot):
 
 
 if __name__ == '__main__':
-    models = chatty.collect_models('models')
     print('Available models are: ', [mod for mod in models])
-    app.run(host='0.0.0.0', port=7722)
+    app.run()

@@ -10,6 +10,7 @@ import {
 import { ThemeProvider as StyledTheme } from "solid-styled-components"
 
 import { Theme } from "../../@types/styled.d"
+import { createStorageSignal } from "../../components/utils"
 import { dark, light, ThemeName } from "../design"
 import { GlobalStyles } from "./GlobalStyles"
 
@@ -21,7 +22,9 @@ export const useThemeMode = () => useContext(ModeContext)
 const getTheme = (mode: ThemeName): Theme => (mode === "light" ? light : dark)
 
 export const ThemeProvider = (props: ParentProps) => {
-  const [mode, setMode] = createSignal<ThemeName>("dark")
+  const [mode, setMode] = createStorageSignal<ThemeName>("theme-mode", "dark", {
+    sync: true,
+  })
   const [theme, setTheme] = createSignal<Theme>(getTheme("dark"))
 
   const store = [

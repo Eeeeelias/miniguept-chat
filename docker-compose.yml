@@ -17,3 +17,4 @@ services:
       - '7722:7722'
     volumes:
       - './backend/models:/python-docker/models'
+      - './backend/data:/python-docker/data'

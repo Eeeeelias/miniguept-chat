@@ -11,7 +11,7 @@ parser.add_argument("-i", dest='input', help='the input file')
 parser.add_argument("-t", dest='type', help='the type of chat you want to format. supported are: telegram')
 parser.add_argument("-a", dest='append', action='store_true', help='append to the existing convos.csv file')
 
-text_header = [['index', 'time', 'from', 'line']]
+text_header = [['index', 'time', 'origin', 'line']]
 index = 0
 
 

@@ -429,7 +429,7 @@ if __name__ == "__main__":
     # context depth
     n = 7
     for i in range(n, len(all_convos['line'])):
-        if all_convos['from'][i] == args.your_name:
+        if all_convos['origin'][i] == args.your_name:
             row = []
             prev = i - 1 - n
             for j in range(i, prev, -1):

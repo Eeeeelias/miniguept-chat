@@ -116,7 +116,7 @@ export const ChatProvider = (props: ParentProps) => {
           ...chat,
           messages: chat.messages.filter(
             msg =>
-              msg.timestamp !== message.timestamp &&
+              msg.timestamp !== message.timestamp ||
               msg.message !== message.message
           ),
         }

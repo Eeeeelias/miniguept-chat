@@ -1,4 +1,4 @@
-import { createMemo } from "solid-js"
+import { createEffect, createMemo } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
@@ -17,17 +17,26 @@ const Layout = styled.div`
 
 export const Actions = () => {
   let ref: HTMLInputElement
-  const { sendMessage } = useChat()
+  const { sendMessage, instance } = useChat()
 
-  const addEmoji = (emoji: string) => {
-    ref.value += emoji
-  }
+  let instanceId = instance().id
+  createEffect(() => {
+    const id = instance().id
+    if (instanceId !== id) {
+      ref.focus()
+      instanceId = id
+    }
+  })
 
   const send = createMemo(() => () => {
     if (ref.value === "") return
     sendMessage(ref.value)
     ref.value = ""
   })
+
+  const addEmoji = (emoji: string) => {
+    ref.value += emoji
+  }
 
   return (
     <Layout>

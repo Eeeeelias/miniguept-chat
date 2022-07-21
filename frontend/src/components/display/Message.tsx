@@ -1,16 +1,17 @@
 import { styled } from "solid-styled-components"
 
-import { Message as MessageProps } from "../../pages/chat/provider/ChatContext"
+import { Message as MessageData } from "../../pages/chat/provider/ChatContext"
 import { tokens } from "../../theme"
 import { ThemeProp } from "../base"
-import { Text } from "../primitives"
+import { IconButton } from "../inputs"
+import { Text, Trash } from "../primitives"
 
 const formatTime = (date: string) =>
   new Date(date).toLocaleTimeString(undefined, {
     timeStyle: "short",
   })
 
-type OriginProp = Pick<MessageProps, "origin">
+type OriginProp = Pick<MessageData, "origin">
 
 const getOriginStyles = (args: OriginProp & ThemeProp) =>
   args.origin === "bot"
@@ -64,11 +65,35 @@ const Layout = styled.div<OriginProp>`
   }
 `
 
+const Actions = styled.div<OriginProp>`
+  position: absolute;
+  ${args => (args.origin === "user" ? "left: -1.5rem;" : "right: -1.5rem;")}
+
+  bottom: 0px;
+  padding: 0.25rem;
+
+  display: none;
+  :hover > & {
+    display: block;
+  }
+`
+
+interface MessageProps extends MessageData {
+  onDelete?: () => void
+}
+
 export const Message = (props: MessageProps) => (
   <Layout origin={props.origin}>
     <Text.Medium>{props.message}</Text.Medium>
     <Text.Small muted noWrap>
       {formatTime(props.timestamp)}
     </Text.Small>
+    <Actions origin={props.origin}>
+      <IconButton
+        onClick={props.onDelete}
+        icon={Trash}
+        caption="Delete this message"
+      />
+    </Actions>
   </Layout>
 )

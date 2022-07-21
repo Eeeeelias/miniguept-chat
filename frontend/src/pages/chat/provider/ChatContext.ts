@@ -19,6 +19,7 @@ export interface ChatState {
   setInstance: (instanceId: string) => void
   removeInstance: (instanceId: string) => void
   sendMessage: (message: string) => void
+  deleteMessage: (message: Message) => void
 }
 
 const emptyInstance = {
@@ -34,6 +35,7 @@ const initialState: ChatState = {
   setInstance: () => null,
   removeInstance: () => null,
   sendMessage: () => null,
+  deleteMessage: () => null,
 }
 
 export const ChatContext = createContext<ChatState>(initialState)

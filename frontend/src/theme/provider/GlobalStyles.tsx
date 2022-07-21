@@ -1,6 +1,21 @@
 import { createGlobalStyles } from "solid-styled-components"
 
 export const GlobalStyles = createGlobalStyles`
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0 , 0.3);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0 , 0.5);
+  }
+
   html,
   body,
   #root {

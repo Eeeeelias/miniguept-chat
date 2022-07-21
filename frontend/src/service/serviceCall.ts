@@ -1,5 +1,7 @@
-//const baseUrl = "http://localhost:7722"
-const baseUrl = "https://api.rhostruct.de"
+import.meta.env.DEV
+const baseUrl = import.meta.env.DEV
+  ? "http://localhost:7722"
+  : "https://api.rhostruct.de"
 
 export const serviceCall = <ReqBody, ResBody>(
   method: string,

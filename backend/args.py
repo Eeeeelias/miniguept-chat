@@ -1,5 +1,6 @@
 class Args():
     def __init__(self):
+        # put in your name here (must be the same as the name found in your dataset)
         self.your_name = '<your_name>'
         self.input_csv = 'data/formatted_convos.csv'
         self.output_dir = 'models/my-awesome-chatbot'
@@ -30,7 +31,7 @@ class Args():
         self.overwrite_output_dir = True
         self.overwrite_cache = True
         self.test_size = 0.001
-        # continue from checkpoint
+        # continue from checkpoint, if you so desire
         self.should_continue = False
         self.seed = 42
         self.local_rank = -1

@@ -1,6 +1,6 @@
 version: "3.8"
 
-# $ docker compose up -d
+# $ docker compose up -d --build
 
 services:
   client:
@@ -12,6 +12,7 @@ services:
   service:
     build: ./backend
     container_name: chatty_backend
+    # mem_limit: 2g # memory limit so container doesn't hog too much memory
     ports:
       - '7722:7722'
     volumes:

@@ -8,6 +8,7 @@ CORS(app, resources={"/*": {"origins": "*"}})
 models = chatty.collect_models('models')
 
 
+# converting the incoming message array to tokens
 def convert_to_tokens(chat_messages):
     chat_ids = []
     for message in chat_messages:
@@ -25,7 +26,6 @@ def request_handler(bot):
 
             content = request.get_json()
 
-            #app.logger.info('message:', [co for co in content['messages']])
             chat_ids = convert_to_tokens(content['messages'])
             bot_input_ids = chatty.cat_tensors(chat_ids)
 

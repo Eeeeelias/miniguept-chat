@@ -18,5 +18,9 @@
   "help4": {
     "title": "What are you doing with my chat inputs?",
     "text": "Except for generating a response from MiniguePT - nothing. We have no idea what you are messaging the bot and we don't care either."
+  },
+  "help5": {
+    "title": "What about when I like/dislike a certain conversation?",
+    "text": "When you like/dislike a conversation we save the last few messages you exchanged with Minigue and use it to improve the bot in the future!"
   }
 }

@@ -30,7 +30,9 @@ export const Collapsible = (props: CollapsibleProps) => {
   return (
     <div>
       <AccordionButton open={open()} onClick={toggle} {...titleArgs}>
-        <Text.Medium noWrap>{props.title}</Text.Medium>
+        <Text.Medium noWrap maxWidth="100%">
+          {props.title}
+        </Text.Medium>
         <Icon icon={ChevronLeft} size="large" />
       </AccordionButton>
       <Panel ref={r => (panel = r)} inert={!open()} {...contentArgs}>

@@ -1,12 +1,14 @@
+import { Show } from "solid-js"
+
 import { styled } from "solid-styled-components"
 
 import { Message as MessageData } from "../../pages/chat/provider/ChatContext"
 import { tokens } from "../../theme"
-import { ThemeProp } from "../base"
 import { IconButton } from "../inputs"
 import { Text, Trash } from "../primitives"
+import { ThemeProp } from "../types"
 
-const formatTime = (date: string) =>
+const formatTime = (date: string = "") =>
   new Date(date).toLocaleTimeString(undefined, {
     timeStyle: "short",
   })
@@ -78,22 +80,29 @@ const Actions = styled.div<OriginProp>`
   }
 `
 
-interface MessageProps extends MessageData {
+interface MessageProps extends Omit<MessageData, "timestamp"> {
   onDelete?: () => void
+  timestamp?: string
 }
 
 export const Message = (props: MessageProps) => (
   <Layout origin={props.origin}>
     <Text.Medium>{props.message}</Text.Medium>
-    <Text.Small muted noWrap>
-      {formatTime(props.timestamp)}
-    </Text.Small>
-    <Actions origin={props.origin}>
-      <IconButton
-        onClick={props.onDelete}
-        icon={Trash}
-        caption="Delete this message"
-      />
-    </Actions>
+
+    <Show when={props.timestamp}>
+      <Text.Small muted noWrap>
+        {formatTime(props.timestamp)}
+      </Text.Small>
+    </Show>
+
+    <Show when={props.onDelete}>
+      <Actions origin={props.origin}>
+        <IconButton
+          onClick={props.onDelete}
+          icon={Trash}
+          caption="Delete this message"
+        />
+      </Actions>
+    </Show>
   </Layout>
 )

@@ -1,21 +1,7 @@
 import { createEffect, For, onMount } from "solid-js"
 
-import { styled } from "solid-styled-components"
-
-import { Message } from "../../components"
-import { tokens } from "../../theme"
+import { Main, Message } from "../../components"
 import { useChat } from "./provider/useChat"
-
-const ScrollContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${tokens.space.medium};
-  overflow-y: auto;
-  margin: -0.5rem;
-  padding: 0.5rem;
-  margin-right: -1.5rem;
-  padding-right: 1.5rem;
-`
 
 const scrollToBottom = (ref: HTMLElement) => ref.scrollTo(0, ref.scrollHeight)
 
@@ -29,10 +15,10 @@ export const Messages = () => {
   })
 
   return (
-    <ScrollContainer ref={r => (ref = r)}>
+    <Main.ScrollArea ref={r => (ref = r)}>
       <For each={instance()?.messages}>
         {props => <Message {...props} onDelete={() => deleteMessage(props)} />}
       </For>
-    </ScrollContainer>
+    </Main.ScrollArea>
   )
 }

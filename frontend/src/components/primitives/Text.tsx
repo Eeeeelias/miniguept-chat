@@ -18,7 +18,7 @@ export interface TextProps {
 
 const getFontSize = (args: Pick<TextProps, "size">) => {
   if (args.size === "small") return `calc(${tokens.space.medium} * 0.75)`
-  if (args.size === "large") return `calc(${tokens.space.medium} * 2)`
+  if (args.size === "large") return tokens.space.large
   return tokens.space.medium
 }
 

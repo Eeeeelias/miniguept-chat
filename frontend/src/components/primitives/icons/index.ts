@@ -1,6 +1,7 @@
 export type { FeatherIcon } from "./Icon"
 
 export { Camera } from "./Camera"
+export { ChevronLeft } from "./ChevronLeft"
 export { Github } from "./Github"
 export { Heart } from "./Heart"
 export { MessageCircle } from "./MessageCircle"

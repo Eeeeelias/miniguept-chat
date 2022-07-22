@@ -1,26 +1,26 @@
-{
-  "help0": {
-	"title": "Minigues German is bad, nothing he says makes sense",
-	"text": "Minigue is still new to German and chatting in English will make it easier for both of you ;)"	  
+[
+  {
+    "title": "Minigues German is bad, nothing he says makes sense",
+    "text": "Minigue is still new to German and chatting in English will make it easier for both of you ;)"	  
   },
-  "help1": {
+  {
     "title": "MiniguePT randomly started speaking German",
     "text": "Like the creator, MiniguePT seems to be somewhat bilingual. If you keep using English, it’ll switch back quickly."
   },
-  "help2": {
+  {
     "title": "MiniguePTs replies are nonsensical and/or it only replies to itself",
     "text": "It’s best to just delete Minigues reply and your question and then ask again, worded differently!"
   },
-  "help3": {
+  {
     "title": "I found some quirk in MiniguePT",
     "text": "Feel free to share it! We’d be very happy to hear about it. Either message us on GitHub or via direct message."
   },
-  "help4": {
+  {
     "title": "What are you doing with my chat inputs?",
     "text": "Except for generating a response from MiniguePT - nothing. We have no idea what you are messaging the bot and we don't care either."
   },
-  "help5": {
+  {
     "title": "What about when I like/dislike a certain conversation?",
     "text": "When you like/dislike a conversation we save the last few messages you exchanged with Minigue and use it to improve the bot in the future!"
   }
-}
+]

@@ -1,2 +1,3 @@
 export * from "./Message"
-export * from "./tooltip/Tooltip"
+export * from "./tooltip"
+export * from "./collapsible"

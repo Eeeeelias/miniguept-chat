@@ -37,17 +37,19 @@ export const Collapsible = (props: CollapsibleProps) => {
 
   return (
     <div>
-      <AccordionButton
-        ref={r => (control = r)}
-        open={open()}
-        onClick={handleToggle()}
-        {...controlArgs}
-      >
-        <Text.Medium noWrap maxWidth="100%">
-          {props.title}
-        </Text.Medium>
-        <Icon icon={ChevronLeft} size="large" />
-      </AccordionButton>
+      <h2>
+        <AccordionButton
+          ref={r => (control = r)}
+          open={open()}
+          onClick={handleToggle()}
+          {...controlArgs}
+        >
+          <Text.Medium noWrap maxWidth="100%">
+            {props.title}
+          </Text.Medium>
+          <Icon icon={ChevronLeft} size="large" />
+        </AccordionButton>
+      </h2>
       <Panel ref={r => (panel = r)} {...contentArgs}>
         <Spacing each="medium">{props.children}</Spacing>
       </Panel>

@@ -13,7 +13,7 @@ export default () => (
         Telegram chat messages of the author cut down to 80.000 usable messages
         of pure text with available context. Messages containing pictures, links
         or audio files were excluded. Using PyTorch, DialoGPT was then
-        fine-tuned for two epochs and evaluated on a small test set , with a
+        fine-tuned for two epochs and evaluated on a small test set, with a
         resulting perplexity of 8.4. <br />
         For the exact parameters used to train the model visit the&nbsp;
         <a href="https://github.com/Eeeeelias/miniguept-chat">GitHub page</a>

@@ -1,6 +1,9 @@
+import assets from "../assets"
+
 export default () => (
   <>
     <h1>About MiniguePT and its creation</h1>
+    <img src={assets.minigue} alt="" />
     <section>
       <h2>Model</h2>
       <p>
@@ -11,10 +14,10 @@ export default () => (
         of pure text with available context. Messages containing pictures, links
         or audio files were excluded. Using PyTorch, DialoGPT was then
         fine-tuned for two epochs and evaluated on a small test set , with a
-        resulting perplexity of 8.4. For the exact parameters used to train the
-        model visit the
+        resulting perplexity of 8.4. <br />
+        For the exact parameters used to train the model visit the&nbsp;
         <a href="https://github.com/Eeeeelias/miniguept-chat">GitHub page</a>
-        with the source code.
+        &nbsp;with the source code.
       </p>
     </section>
     <section>
@@ -28,12 +31,14 @@ export default () => (
         not be included in the dataset. Using placeholders for these messages
         would result in the model replying with these placeholders when it feels
         it’s appropriate which would case more problems.
-        <br />
+      </p>
+      <p>
         This directly implies the next limitation: random answers. Sometimes the
         model seems to give completely unrelated replies to what was being said
         before. This is probably due to the context being incorrect in the
         dataset with the actual chat having images or links in between.
-        <br />
+      </p>
+      <p>
         Lastly, like other chatbots, this one, too, is very susceptible to
         suggestive text. It is rather simple to nudge the chatbot into the
         direction the user wants to go. This risks users exploiting the chatbot

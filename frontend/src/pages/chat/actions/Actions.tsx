@@ -1,8 +1,9 @@
-import { createEffect, createMemo } from "solid-js"
+import { createEffect } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
 import { IconButton, TextInput, Send } from "../../../components"
+import { createCallback } from "../../../components/utils/createCallback"
 import { tokens } from "../../../theme"
 import { useChat } from "../provider/useChat"
 import { Emojis } from "./Emojis"
@@ -28,7 +29,7 @@ export const Actions = () => {
     }
   })
 
-  const send = createMemo(() => () => {
+  const send = createCallback(() => {
     if (ref.value === "") return
     sendMessage(ref.value)
     ref.value = ""

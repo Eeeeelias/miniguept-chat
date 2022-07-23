@@ -4,7 +4,6 @@ export const applyInert = (element: HTMLElement, inert?: boolean) => {
   // @ts-ignore
   if (inert) element.inert = true
   else element.attributes.removeNamedItem("inert")
-  console.log("applyInert", element, inert)
 }
 
 interface InertProps extends JSX.HTMLAttributes<HTMLDivElement> {

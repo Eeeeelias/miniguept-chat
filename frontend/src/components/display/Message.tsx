@@ -1,4 +1,4 @@
-import { Show } from "solid-js"
+import { ParentProps, Show } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
@@ -80,14 +80,14 @@ const Actions = styled.div<OriginProp>`
   }
 `
 
-interface MessageProps extends Omit<MessageData, "timestamp"> {
+interface MessageProps extends OriginProp, ParentProps {
   onDelete?: () => void
   timestamp?: string
 }
 
 export const Message = (props: MessageProps) => (
   <Layout origin={props.origin}>
-    <Text.Medium>{props.message}</Text.Medium>
+    <Text.Medium>{props.children}</Text.Medium>
 
     <Show when={props.timestamp}>
       <Text.Small muted noWrap>

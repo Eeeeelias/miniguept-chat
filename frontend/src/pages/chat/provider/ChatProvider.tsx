@@ -1,4 +1,4 @@
-import { createEffect, createMemo, ParentProps } from "solid-js"
+import { createEffect, createMemo, createSignal, ParentProps } from "solid-js"
 
 import { createId, createStorageSignal } from "../../../components"
 import { bots } from "../../../data/bots"
@@ -30,6 +30,7 @@ const createMessage = (
 })
 
 export const ChatProvider = (props: ParentProps) => {
+  const [waiting, setWaiting] = createSignal(false)
   const [chats, setChats] = createStorageSignal("chat", [initialInstance], {
     sync: true,
   })
@@ -94,14 +95,19 @@ export const ChatProvider = (props: ParentProps) => {
     if (!instance) return
     const { bot, messages } = instance
     const context = messages.map(({ message }) => message)
-    chat(bot, [...context, message]).then(reply =>
-      reply.forEach(message => pushChatMessage({ id, message, origin: "bot" }))
-    )
+    chat(bot, [...context, message])
+      .then(reply =>
+        reply.forEach(message =>
+          pushChatMessage({ id, message, origin: "bot" })
+        )
+      )
+      .finally(() => setWaiting(false))
   }
 
   const sendMessage = (message: string) => {
     const current = instance()
     pushChatMessage({ id: current.id, message, origin: "user" })
+    setWaiting(true)
     requestAnswer(current.id, message)
   }
 
@@ -124,6 +130,7 @@ export const ChatProvider = (props: ParentProps) => {
   const store = {
     chats,
     instance,
+    waiting,
     addInstance,
     removeInstance,
     setInstance: setActive,

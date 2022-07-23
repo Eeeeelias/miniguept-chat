@@ -1,10 +1,10 @@
 import { styled } from "solid-styled-components"
 
 import { tokens } from "../../../theme"
-import { focusOutline } from "../../base"
+import { focusOutline, inputShadow } from "../../base"
 
 export const AccordionButton = styled.button<{ open: boolean }>`
-  box-shadow: ${args => tokens.shadow.low(args.theme?.().bg.surface)};
+  ${inputShadow}
   background-color: ${args => args.theme?.().bg.input};
   width: 100%;
   height: ${tokens.space.largest};

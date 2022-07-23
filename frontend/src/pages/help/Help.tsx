@@ -18,7 +18,7 @@ export const Help = () => (
         {({ title, text }) => (
           <Collapsible title={title}>
             <AnswerPosition>
-              <Message message={text} origin="user" />
+              <Message origin="user">{text}</Message>
             </AnswerPosition>
           </Collapsible>
         )}

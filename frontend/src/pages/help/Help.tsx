@@ -6,8 +6,8 @@ import { Collapsible, Main, Message, Text } from "../../components"
 import help from "../../data/help"
 
 const AnswerPosition = styled.div`
-  display: flex;
-  flex-direction: column;
+  max-width: 70%;
+  margin-left: auto;
 `
 
 export const Help = () => (

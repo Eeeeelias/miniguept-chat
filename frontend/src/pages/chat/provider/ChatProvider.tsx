@@ -4,6 +4,7 @@ import { createId, createStorageSignal } from "../../../components"
 import { bots } from "../../../data/bots"
 import { dummyData } from "../../../data/dummyData"
 import { chat } from "../../../service/chat"
+import { feedback } from "../../../service/feedback"
 import { BotInstance, ChatContext, Message } from "./ChatContext"
 
 const createInstance = (bot: string): BotInstance => ({
@@ -127,6 +128,42 @@ export const ChatProvider = (props: ParentProps) => {
     )
   }
 
+  const resetTo = (timestamp: string) => {
+    const current = { ...instance() }
+    let message: Message | null = null
+
+    while (!message) {
+      const msg = current.messages.pop()
+      if (!msg) break
+      if (msg?.timestamp === timestamp) message = msg
+    }
+
+    const isUser = message?.origin === "user"
+
+    setChats(chats =>
+      chats.map(chat => {
+        if (chat.id !== current.id) return chat
+        if (!message || isUser) return current
+        current.messages.push(message)
+        return current
+      })
+    )
+
+    if (message && message.origin === "user") sendMessage(message.message)
+  }
+
+  const vote = (timestamp: string, vote: boolean) => {
+    const stamp = new Date(timestamp).valueOf()
+    const current = { ...instance() }
+
+    const messages = current.messages.filter(
+      msg => new Date(msg.timestamp).valueOf() <= stamp
+    )
+
+    if (messages.length)
+      feedback({ messages, feedback: vote, model: current.bot })
+  }
+
   const store = {
     chats,
     instance,
@@ -136,6 +173,8 @@ export const ChatProvider = (props: ParentProps) => {
     setInstance: setActive,
     sendMessage,
     deleteMessage,
+    resetTo,
+    vote,
   }
 
   return (

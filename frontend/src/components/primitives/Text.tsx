@@ -27,6 +27,7 @@ export const getTextStyles = (args: ThemeProp & TextProps) => `
   font-weight: ${args.bold ? "700" : "400"};
   color: ${args.muted ? args.theme?.().fg.muted : args.theme?.().fg.base};
   white-space: ${args.noWrap ? "nowrap" : "initial"};
+  word-break: ${args.noWrap ? "keep-all" : "break-word"};
   `
 
 const Font = styled.span<TextProps>`

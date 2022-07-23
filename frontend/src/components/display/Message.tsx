@@ -4,8 +4,7 @@ import { styled } from "solid-styled-components"
 
 import { Message as MessageData } from "../../pages/chat/provider/ChatContext"
 import { tokens } from "../../theme"
-import { IconButton } from "../inputs"
-import { Text, Trash } from "../primitives"
+import { Text } from "../primitives"
 import { ThemeProp } from "../types"
 
 const formatTime = (date: string = "") =>
@@ -49,16 +48,19 @@ const triangle = (args: OriginProp & ThemeProp) =>
 
 const Layout = styled.div<OriginProp>`
   position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+  width: fit-content;
+  min-width: 9rem;
   padding: ${tokens.space.medium};
   border-radius: ${tokens.borderRadius};
   gap: ${tokens.space.small};
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
   filter: ${args =>
     tokens.shadow.low(args.theme?.().bg.surface, { usage: "drop-shadow" })};
 
-  max-width: 70%;
   ${getOriginStyles}
   &::before {
     content: "";
@@ -67,21 +69,7 @@ const Layout = styled.div<OriginProp>`
   }
 `
 
-const Actions = styled.div<OriginProp>`
-  position: absolute;
-  ${args => (args.origin === "user" ? "left: -1.5rem;" : "right: -1.5rem;")}
-
-  bottom: 0px;
-  padding: 0.25rem;
-
-  display: none;
-  :hover > & {
-    display: block;
-  }
-`
-
 interface MessageProps extends OriginProp, ParentProps {
-  onDelete?: () => void
   timestamp?: string
 }
 
@@ -93,16 +81,6 @@ export const Message = (props: MessageProps) => (
       <Text.Small muted noWrap>
         {formatTime(props.timestamp)}
       </Text.Small>
-    </Show>
-
-    <Show when={props.onDelete}>
-      <Actions origin={props.origin}>
-        <IconButton
-          onClick={props.onDelete}
-          icon={Trash}
-          caption="Delete this message"
-        />
-      </Actions>
     </Show>
   </Layout>
 )

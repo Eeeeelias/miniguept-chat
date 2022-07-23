@@ -2,8 +2,13 @@ import { createSignal } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { IconButton, Camera, Share, MoreVertical } from "../../../components"
-import { Tooltip } from "../../../components/display/tooltip/Tooltip"
+import {
+  IconButton,
+  Camera,
+  Share,
+  MoreVertical,
+  Tooltip,
+} from "../../../components"
 import { tokens } from "../../../theme"
 
 const TooltipContent = styled.div`

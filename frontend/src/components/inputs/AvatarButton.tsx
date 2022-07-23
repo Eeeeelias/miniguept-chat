@@ -3,9 +3,10 @@ import { createSignal, ParentComponent, Show } from "solid-js"
 import { styled } from "solid-styled-components"
 
 import { tokens } from "../../theme"
-import { focusOutline, ThemeProp, VisuallyHidden } from "../base"
+import { focusOutline, VisuallyHidden } from "../base"
 import { Tooltip } from "../display"
 import { Icon, Text, X } from "../primitives"
+import { ThemeProp } from "../types"
 
 const CloseButton = styled.button`
   opacity: 0;

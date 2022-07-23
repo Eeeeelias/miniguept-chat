@@ -1,11 +1,7 @@
 import { createEffect, createMemo, ParentProps } from "solid-js"
 
 import { bots } from "../../../assets/bots"
-import {
-  createId,
-  createStorageSignal,
-  dummyData,
-} from "../../../components/utils"
+import { createId, createStorageSignal, dummyData } from "../../../components"
 import { chat } from "../../../service/chat"
 import { BotInstance, ChatContext, Message } from "./ChatContext"
 

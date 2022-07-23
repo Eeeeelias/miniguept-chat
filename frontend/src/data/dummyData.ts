@@ -1,4 +1,4 @@
-import { Message } from "../../pages/chat/provider/ChatContext"
+import { Message } from "../pages/chat/provider/ChatContext"
 
 export const dummyData: Message[] = [
   {

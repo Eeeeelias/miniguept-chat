@@ -2,7 +2,7 @@ import { createEffect, createSignal, For } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { bots } from "../../assets/bots"
+import { bots } from "../../data/bots"
 import {
   Icon,
   Sidebar,

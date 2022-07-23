@@ -2,8 +2,8 @@ import { For } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import help from "../../assets/help.json"
 import { Collapsible, Main, Message, Text } from "../../components"
+import help from "../../data/help"
 
 const AnswerPosition = styled.div`
   display: flex;

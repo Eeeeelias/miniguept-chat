@@ -16,6 +16,10 @@ export const GlobalStyles = createGlobalStyles`
     background-color: rgba(0, 0, 0 , 0.5);
   }
 
+  html {
+    overflow: hidden;
+  }
+
   html,
   body,
   #root {

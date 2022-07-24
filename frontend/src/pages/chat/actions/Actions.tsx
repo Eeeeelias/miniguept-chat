@@ -18,7 +18,7 @@ const Layout = styled.div`
 
 export const Actions = () => {
   let ref: HTMLInputElement
-  const { sendMessage, instance } = useChat()
+  const { sendMessage, instance, waiting } = useChat()
 
   let instanceId = instance().id
   createEffect(() => {
@@ -44,6 +44,7 @@ export const Actions = () => {
       <TextInput
         ref={r => (ref = r)}
         onKeyDown={key => key === "Enter" && send()()}
+        disabled={waiting()}
       />
       <Emojis addEmoji={addEmoji} />
       <IconButton onClick={send()} icon={Send} caption="Send message" />

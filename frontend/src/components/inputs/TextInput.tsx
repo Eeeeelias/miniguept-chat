@@ -17,6 +17,11 @@ const Input = styled.input`
   &:focus-visible {
     ${focusOutline}
   }
+
+  &[disabled] {
+    opacity: 0.1;
+    background: ${args => args.theme?.().fg.muted};
+  }
 `
 
 export interface TextInputProps {
@@ -24,6 +29,7 @@ export interface TextInputProps {
   placeholder?: string
   onChange?: (value: string) => void
   onKeyDown?: (key: string) => void
+  disabled?: boolean
 }
 
 export const TextInput = (props: TextInputProps) => {

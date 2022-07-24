@@ -2,35 +2,31 @@ import { Message } from "../pages/chat/provider/ChatContext"
 
 export const dummyData: Message[] = [
   {
-    message: "Hello, how are you?",
-    timestamp: new Date("2020-02-25T19:19:00.000Z").toISOString(),
-    origin: "user",
-  },
-  {
-    message: "I'm fine, thank you!",
-    timestamp: new Date("2020-02-25T19:20:00.000Z").toISOString(),
-    origin: "bot",
-  },
-  {
-    message: "Why u asking?",
-    timestamp: new Date("2020-02-25T19:20:00.000Z").toISOString(),
-    origin: "bot",
-  },
-  {
-    message: "I'm bored... :/",
-    timestamp: new Date("2020-02-25T20:36:00.000Z").toISOString(),
-    origin: "user",
-  },
-  {
-    message:
-      "Just play some Elden Ring fellow tarnished, its such a great game you should really try it out!",
-    timestamp: new Date("2020-02-25T20:37:00.000Z").toISOString(),
+    message: "Hello there, Hooman 😎",
+    timestamp: new Date().toISOString(),
     origin: "bot",
   },
   {
     message:
-      "You got me, I am a Malenia simp. Voices in my head won't shut up. Malenia is a good boss yeah yeah, maybe my favorite boss in the game?Yeah sure. THE BEST FROMSOFT BOSS? Fuck it's a good fight why the hell not, the character is cool, the lore too the design as well. The problem is my simp cortex gets activated and thinks 'I could fix her'.",
-    timestamp: new Date("2020-02-25T20:38:00.000Z").toISOString(),
-    origin: "user",
+      "I will be your chatting partner on this page, you can always count on me! 😊",
+    timestamp: new Date().toISOString(),
+    origin: "bot",
+  },
+  {
+    message:
+      "If you have any questions, have a look at my help page on the top. You can also find more information about me on the about page.",
+    timestamp: new Date().toISOString(),
+    origin: "bot",
+  },
+  {
+    message:
+      "In the case there is anything else you need, feel free to contact my creators. Check out the github repository which you can find on the top right.",
+    timestamp: new Date().toISOString(),
+    origin: "bot",
+  },
+  {
+    message: "Now, lets start chatting! 😁",
+    timestamp: new Date().toISOString(),
+    origin: "bot",
   },
 ]

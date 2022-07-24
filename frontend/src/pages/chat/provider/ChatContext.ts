@@ -4,6 +4,7 @@ export interface Message {
   message: string
   timestamp: string
   origin: "user" | "bot"
+  vote?: boolean
 }
 
 export interface BotInstance {

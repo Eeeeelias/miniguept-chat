@@ -162,6 +162,22 @@ export const ChatProvider = (props: ParentProps) => {
 
     if (messages.length)
       feedback({ messages, feedback: vote, model: current.bot })
+
+    setChats(chats =>
+      chats.map(chat => {
+        if (chat.id !== active()) return chat
+        return {
+          ...chat,
+          messages: chat.messages.map(message => {
+            if (message.timestamp !== timestamp) return message
+            return {
+              ...message,
+              vote,
+            }
+          }),
+        }
+      })
+    )
   }
 
   const store = {

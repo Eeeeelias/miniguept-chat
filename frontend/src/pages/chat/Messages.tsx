@@ -43,6 +43,8 @@ export const Messages = () => {
                 onReset={() => resetTo(props.timestamp)}
                 onVote={feedback => vote(props.timestamp, feedback)}
                 align={props.origin === "bot" ? "left" : "right"}
+                vote={props.vote}
+                origin={props.origin}
               >
                 <Message {...props}>{props.message}</Message>
               </Actions>

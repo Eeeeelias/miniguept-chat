@@ -90,6 +90,22 @@ def feedback_chats():
     return
 
 
+def get_negative_examples(chat):
+    bad_examples = []
+    i = 0
+    tmp = []
+    for line in chat:
+        if line[0] == 'index':
+            continue
+        tmp.append(line[3])
+        i += 1
+        if i % 4 == 0:
+            bad_examples.append(tmp)
+            tmp = []
+
+    return bad_examples
+
+
 if __name__ == '__main__':
     args = parser.parse_args()
 
@@ -121,6 +137,22 @@ if __name__ == '__main__':
             convo = open(args.input, 'r', encoding='utf-8')
             chats = whatsapp_chats(convo, index)
             convo.close()
+    elif args.type == 'user':
+        # getting the bad examples so to avoid accidental positive feedback
+        bad_examples = []
+        for path in glob.glob('{}/bad/*.csv'.format(args.input)):
+            convo = csv.reader(open(path, 'r', encoding='utf-8'))
+            bads = get_negative_examples(convo)
+            [bad_examples.append(ex) for ex in bads]
+
+        for path in glob.glob('{}/good/*.csv'.format(args.input)):
+            convo = csv.reader(open(path, 'r', encoding='utf-8'))
+            # append to chats[] and check if it's also in bad_examples, remove if so
+            # write to normal dataset, ready for training
+
+
+
+
     else:
         print('Not implemented yet. Either use \'telegram\' or \'whatsapp\'!')
         exit(0)

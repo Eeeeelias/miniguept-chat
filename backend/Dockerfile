@@ -10,6 +10,6 @@ RUN pip3 install -r requirements.txt
 COPY . .
 
 # Production server, use normally
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:7722", "papi:app"]
+CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:7722", "papi:app"]
 # Development server, port is 5000 (default). Use if you encounter issues
 # CMD ["python3", "papi.py"]

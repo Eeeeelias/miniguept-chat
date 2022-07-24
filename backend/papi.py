@@ -28,11 +28,6 @@ def get_indices(feedback):
     return model_indices
 
 
-# moved here because of gunicorn weirdness
-model_indices_good = get_indices('good')
-model_indices_bad = get_indices('bad')
-
-
 # converting the incoming message array to tokens
 def convert_to_tokens(chat_messages):
     chat_ids = []
@@ -81,15 +76,15 @@ def request_handler(bot):
 @app.route('/feedback', methods=['POST'])
 @cross_origin()
 def feedback_handler():
-    #global model_indices_good
-    #global model_indices_bad
     try:
         content = request.get_json()
 
         model = content['model']
         if content['feedback']:
+            model_indices_good = get_indices('good')
             model_indices_good[model] = write_feedback('good', content, model_indices_good.get(model))
         elif not content['feedback']:
+            model_indices_bad = get_indices('bad')
             model_indices_bad[model] = write_feedback('bad', content, model_indices_bad.get(model))
 
         return "", 201

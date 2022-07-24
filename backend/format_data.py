@@ -85,6 +85,11 @@ def discord_chats():
     return
 
 
+# filter for gay comments
+def feedback_chats():
+    return
+
+
 if __name__ == '__main__':
     args = parser.parse_args()
 

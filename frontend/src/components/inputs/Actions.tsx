@@ -61,13 +61,11 @@ interface AlignProps {
   align: "left" | "right"
 }
 
-interface ActionsProps
-  extends ParentProps,
-    AlignProps,
-    Pick<Message, "origin" | "vote"> {
+export interface ActionsProps extends ParentProps, AlignProps {
   onDelete?: () => void
   onReset?: () => void
   onVote?: (feedback: boolean) => void
+  vote?: boolean
 }
 
 export const Actions = (props: ActionsProps) => (
@@ -77,7 +75,7 @@ export const Actions = (props: ActionsProps) => (
       <Votes vote={props.vote} />
     </Show>
     <ActionBar align={props.align}>
-      <Show when={props.origin === "bot" && props.vote === undefined}>
+      <Show when={props.onVote && props.vote === undefined}>
         <IconButton
           icon={ThumbsUp}
           caption="Upvote this message"
@@ -94,11 +92,13 @@ export const Actions = (props: ActionsProps) => (
         caption="Delete message"
         onClick={props.onDelete}
       />
-      <IconButton
-        icon={RotateCCW}
-        caption="Rewind chat to message"
-        onClick={props.onReset}
-      />
+      <Show when={!!props.onReset}>
+        <IconButton
+          icon={RotateCCW}
+          caption="Rewind chat to message"
+          onClick={props.onReset}
+        />
+      </Show>
     </ActionBar>
   </Layout>
 )

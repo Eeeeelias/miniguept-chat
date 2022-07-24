@@ -49,7 +49,7 @@ const triangle = (args: OriginProp & ThemeProp) =>
 const Layout = styled.div<OriginProp>`
   position: relative;
   width: fit-content;
-  min-width: 9rem;
+  min-width: 7.25rem;
   padding: ${tokens.space.medium};
   border-radius: ${tokens.borderRadius};
   gap: ${tokens.space.small};

@@ -138,18 +138,14 @@ export const ChatProvider = (props: ParentProps) => {
       if (msg?.timestamp === timestamp) message = msg
     }
 
-    const isUser = message?.origin === "user"
-
     setChats(chats =>
       chats.map(chat => {
         if (chat.id !== current.id) return chat
-        if (!message || isUser) return current
-        current.messages.push(message)
         return current
       })
     )
 
-    if (message && message.origin === "user") sendMessage(message.message)
+    if (message) sendMessage(message.message)
   }
 
   const vote = (timestamp: string, vote: boolean) => {

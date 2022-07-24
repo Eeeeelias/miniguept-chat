@@ -12,7 +12,7 @@ const Layout = styled.div`
   display: flex;
   gap: ${tokens.space.medium};
 
-  ${Main.class} {
+  > main {
     height: 100%;
     justify-content: flex-end;
   }

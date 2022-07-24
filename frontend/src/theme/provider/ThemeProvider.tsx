@@ -10,7 +10,7 @@ import {
 import { ThemeProvider as StyledTheme } from "solid-styled-components"
 
 import { Theme } from "../../@types/styled.d"
-import { createStorageSignal } from "../../components/utils"
+import { createStorageSignal } from "../../components"
 import { dark, light, ThemeName } from "../design"
 import { GlobalStyles } from "./GlobalStyles"
 

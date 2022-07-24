@@ -18,7 +18,7 @@ export interface TextProps {
 
 const getFontSize = (args: Pick<TextProps, "size">) => {
   if (args.size === "small") return `calc(${tokens.space.medium} * 0.75)`
-  if (args.size === "large") return `calc(${tokens.space.medium} * 2)`
+  if (args.size === "large") return tokens.space.large
   return tokens.space.medium
 }
 
@@ -27,6 +27,7 @@ export const getTextStyles = (args: ThemeProp & TextProps) => `
   font-weight: ${args.bold ? "700" : "400"};
   color: ${args.muted ? args.theme?.().fg.muted : args.theme?.().fg.base};
   white-space: ${args.noWrap ? "nowrap" : "initial"};
+  word-break: ${args.noWrap ? "keep-all" : "break-word"};
   `
 
 const Font = styled.span<TextProps>`

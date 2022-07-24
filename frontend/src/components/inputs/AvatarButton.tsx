@@ -3,9 +3,10 @@ import { createSignal, ParentComponent, Show } from "solid-js"
 import { styled } from "solid-styled-components"
 
 import { tokens } from "../../theme"
-import { focusOutline, ThemeProp, VisuallyHidden } from "../base"
+import { focusOutline, inputShadow, VisuallyHidden } from "../base"
 import { Tooltip } from "../display"
 import { Icon, Text, X } from "../primitives"
+import { ThemeProp } from "../types"
 
 const CloseButton = styled.button`
   opacity: 0;
@@ -44,32 +45,24 @@ const CloseButton = styled.button`
   }
 `
 
-export interface AvatarButtonProps {
-  active?: boolean
-  tooltip?: boolean
-  name: string
-  src?: string
-  onClick?: () => void
-  onClose?: () => void
-}
-
 const fallbackGradient = (args: ThemeProp) => `
   linear-gradient(135deg, ${args.theme?.().accent.base} 20%, ${
   args.theme?.().accent.special
 } 80%)
 `
 
-const Button = styled.button<AvatarButtonProps>`
+const Button = styled.button<AvatarButtonProps & { as: "button" | "span" }>`
   position: relative;
   z-index: 1;
   overflow: hidden;
-  min-width: 3.5rem;
-  min-height: 3.5rem;
+  min-width: ${args => (args.small ? "2.5rem" : "3.5rem")};
+  min-height: ${args => (args.small ? "2.5rem" : "3.5rem")};
   border-radius: 50%;
   opacity: 0.8;
   cursor: pointer;
   color: inherit;
   border: 2px solid ${args => args.theme?.().fg.base};
+  ${inputShadow}
 
   ${args =>
     args.active
@@ -105,15 +98,23 @@ const Button = styled.button<AvatarButtonProps>`
   }
 `
 
+export interface AvatarButtonProps {
+  small?: boolean
+  active?: boolean
+  tooltip?: boolean
+  name: string
+  src?: string
+  onClick?: () => void
+  onClose?: () => void
+}
+
 export const AvatarButton = (props: AvatarButtonProps) => {
   const [isOpen, setOpen] = createSignal(false)
   const close = () => setOpen(false)
   const open = () => setOpen(true)
 
   const handleKeyEvent = (e: KeyboardEvent) => {
-    if (e.key === "Escape" || e.key === "Delete") {
-      props.onClose?.()
-    }
+    if (e.key === "Escape" || e.key === "Delete") props.onClose?.()
   }
 
   // eslint-disable-next-line solid/reactivity
@@ -137,6 +138,7 @@ export const AvatarButton = (props: AvatarButtonProps) => {
     <ConditionalTooltip>
       <Button
         {...props}
+        as={props.onClick ? "button" : "span"}
         onMouseEnter={open}
         onMouseLeave={close}
         onKeyDown={handleKeyEvent}

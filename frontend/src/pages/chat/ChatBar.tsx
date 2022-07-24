@@ -2,7 +2,6 @@ import { createEffect, createSignal, For } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { bots } from "../../assets/bots"
 import {
   Icon,
   Sidebar,
@@ -13,7 +12,9 @@ import {
   Plus,
   IconButton,
   Text,
+  focusOutline,
 } from "../../components"
+import { bots } from "../../data/bots"
 import { tokens } from "../../theme"
 import { useChat } from "./provider/useChat"
 const Center = styled.div`
@@ -53,15 +54,19 @@ const TooltipContent = styled.div`
   gap: ${tokens.space.small};
 `
 
-const AddAvatar = styled.div`
+const AddAvatar = styled.button`
   display: flex;
   align-items: center;
   gap: ${tokens.space.small};
   padding-right: ${tokens.space.medium};
   border-radius: 50vh;
   cursor: pointer;
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-color: ${args => args.theme?.().bg.highlight};
+  }
+  &:focus-visible {
+    ${focusOutline}
   }
 `
 
@@ -72,7 +77,7 @@ const AllAvatars = () => {
       <For each={bots}>
         {({ avatar, name }) => (
           <AddAvatar onClick={() => addInstance(name)}>
-            <AvatarButton src={avatar} name={name} />
+            <AvatarButton src={avatar} name={name} small={true} />
             <Text.Medium maxWidth="6.5rem" noWrap>
               {name}
             </Text.Medium>

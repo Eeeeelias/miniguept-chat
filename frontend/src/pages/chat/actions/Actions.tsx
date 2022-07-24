@@ -1,8 +1,9 @@
-import { createEffect, createMemo } from "solid-js"
+import { createEffect } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
 import { IconButton, TextInput, Send } from "../../../components"
+import { createCallback } from "../../../components/utils/createCallback"
 import { tokens } from "../../../theme"
 import { useChat } from "../provider/useChat"
 import { Emojis } from "./Emojis"
@@ -17,7 +18,7 @@ const Layout = styled.div`
 
 export const Actions = () => {
   let ref: HTMLInputElement
-  const { sendMessage, instance } = useChat()
+  const { sendMessage, instance, waiting } = useChat()
 
   let instanceId = instance().id
   createEffect(() => {
@@ -28,7 +29,7 @@ export const Actions = () => {
     }
   })
 
-  const send = createMemo(() => () => {
+  const send = createCallback(() => {
     if (ref.value === "") return
     sendMessage(ref.value)
     ref.value = ""
@@ -43,6 +44,7 @@ export const Actions = () => {
       <TextInput
         ref={r => (ref = r)}
         onKeyDown={key => key === "Enter" && send()()}
+        disabled={waiting()}
       />
       <Emojis addEmoji={addEmoji} />
       <IconButton onClick={send()} icon={Send} caption="Send message" />

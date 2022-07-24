@@ -1,12 +1,13 @@
+import { ParentProps, Show } from "solid-js"
+
 import { styled } from "solid-styled-components"
 
 import { Message as MessageData } from "../../pages/chat/provider/ChatContext"
 import { tokens } from "../../theme"
-import { ThemeProp } from "../base"
-import { IconButton } from "../inputs"
-import { Text, Trash } from "../primitives"
+import { Text } from "../primitives"
+import { ThemeProp } from "../types"
 
-const formatTime = (date: string) =>
+const formatTime = (date: string = "") =>
   new Date(date).toLocaleTimeString(undefined, {
     timeStyle: "short",
   })
@@ -47,16 +48,19 @@ const triangle = (args: OriginProp & ThemeProp) =>
 
 const Layout = styled.div<OriginProp>`
   position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+  width: fit-content;
+  min-width: 9rem;
   padding: ${tokens.space.medium};
   border-radius: ${tokens.borderRadius};
   gap: ${tokens.space.small};
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
   filter: ${args =>
     tokens.shadow.low(args.theme?.().bg.surface, { usage: "drop-shadow" })};
 
-  max-width: 70%;
   ${getOriginStyles}
   &::before {
     content: "";
@@ -65,35 +69,18 @@ const Layout = styled.div<OriginProp>`
   }
 `
 
-const Actions = styled.div<OriginProp>`
-  position: absolute;
-  ${args => (args.origin === "user" ? "left: -1.5rem;" : "right: -1.5rem;")}
-
-  bottom: 0px;
-  padding: 0.25rem;
-
-  display: none;
-  :hover > & {
-    display: block;
-  }
-`
-
-interface MessageProps extends MessageData {
-  onDelete?: () => void
+interface MessageProps extends OriginProp, ParentProps {
+  timestamp?: string
 }
 
 export const Message = (props: MessageProps) => (
   <Layout origin={props.origin}>
-    <Text.Medium>{props.message}</Text.Medium>
-    <Text.Small muted noWrap>
-      {formatTime(props.timestamp)}
-    </Text.Small>
-    <Actions origin={props.origin}>
-      <IconButton
-        onClick={props.onDelete}
-        icon={Trash}
-        caption="Delete this message"
-      />
-    </Actions>
+    <Text.Medium>{props.children}</Text.Medium>
+
+    <Show when={props.timestamp}>
+      <Text.Small muted noWrap>
+        {formatTime(props.timestamp)}
+      </Text.Small>
+    </Show>
   </Layout>
 )

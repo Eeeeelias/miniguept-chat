@@ -1,12 +1,10 @@
-import { createEffect, createMemo, ParentProps } from "solid-js"
+import { createEffect, createMemo, createSignal, ParentProps } from "solid-js"
 
-import { bots } from "../../../assets/bots"
-import {
-  createId,
-  createStorageSignal,
-  dummyData,
-} from "../../../components/utils"
+import { createId, createStorageSignal } from "../../../components"
+import { bots } from "../../../data/bots"
+import { dummyData } from "../../../data/dummyData"
 import { chat } from "../../../service/chat"
+import { feedback } from "../../../service/feedback"
 import { BotInstance, ChatContext, Message } from "./ChatContext"
 
 const createInstance = (bot: string): BotInstance => ({
@@ -33,6 +31,7 @@ const createMessage = (
 })
 
 export const ChatProvider = (props: ParentProps) => {
+  const [waiting, setWaiting] = createSignal(false)
   const [chats, setChats] = createStorageSignal("chat", [initialInstance], {
     sync: true,
   })
@@ -97,14 +96,19 @@ export const ChatProvider = (props: ParentProps) => {
     if (!instance) return
     const { bot, messages } = instance
     const context = messages.map(({ message }) => message)
-    chat(bot, [...context, message]).then(reply =>
-      reply.forEach(message => pushChatMessage({ id, message, origin: "bot" }))
-    )
+    chat(bot, [...context, message])
+      .then(reply =>
+        reply.forEach(message =>
+          pushChatMessage({ id, message, origin: "bot" })
+        )
+      )
+      .finally(() => setWaiting(false))
   }
 
   const sendMessage = (message: string) => {
     const current = instance()
     pushChatMessage({ id: current.id, message, origin: "user" })
+    setWaiting(true)
     requestAnswer(current.id, message)
   }
 
@@ -124,14 +128,53 @@ export const ChatProvider = (props: ParentProps) => {
     )
   }
 
+  const resetTo = (timestamp: string) => {
+    const current = { ...instance() }
+    let message: Message | null = null
+
+    while (!message) {
+      const msg = current.messages.pop()
+      if (!msg) break
+      if (msg?.timestamp === timestamp) message = msg
+    }
+
+    const isUser = message?.origin === "user"
+
+    setChats(chats =>
+      chats.map(chat => {
+        if (chat.id !== current.id) return chat
+        if (!message || isUser) return current
+        current.messages.push(message)
+        return current
+      })
+    )
+
+    if (message && message.origin === "user") sendMessage(message.message)
+  }
+
+  const vote = (timestamp: string, vote: boolean) => {
+    const stamp = new Date(timestamp).valueOf()
+    const current = { ...instance() }
+
+    const messages = current.messages.filter(
+      msg => new Date(msg.timestamp).valueOf() <= stamp
+    )
+
+    if (messages.length)
+      feedback({ messages, feedback: vote, model: current.bot })
+  }
+
   const store = {
     chats,
     instance,
+    waiting,
     addInstance,
     removeInstance,
     setInstance: setActive,
     sendMessage,
     deleteMessage,
+    resetTo,
+    vote,
   }
 
   return (

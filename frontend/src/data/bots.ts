@@ -1,6 +1,4 @@
-import MinigueBgi from "./minigue-bgi.webp"
-import Minigue from "./minigue.webp"
-import Rick from "./rick.webp"
+import assets from "../assets"
 
 interface Bot {
   name: string
@@ -13,17 +11,17 @@ const baseApiUrl = "http://localhost:7722"
 export const bots: Bot[] = [
   {
     name: "minigue-bgi",
-    avatar: MinigueBgi,
+    avatar: assets.minigueBgi,
     url: `${baseApiUrl}/minigue-bgi`,
   },
   {
     name: "minigue",
-    avatar: Minigue,
+    avatar: assets.minigue,
     url: `${baseApiUrl}/minigue`,
   },
   {
     name: "rick",
-    avatar: Rick,
+    avatar: assets.rick,
     url: `${baseApiUrl}/rick`,
   },
 ]

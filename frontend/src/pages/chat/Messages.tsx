@@ -1,38 +1,60 @@
-import { createEffect, For, onMount } from "solid-js"
+import { createEffect, For, onMount, Show } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { Message } from "../../components"
+import { Main, Message, Loading } from "../../components"
+import { Actions } from "../../components/inputs/Actions"
 import { tokens } from "../../theme"
 import { useChat } from "./provider/useChat"
 
-const ScrollContainer = styled.div`
+const Alignment = styled.div<{ origin: "user" | "bot" }>`
+  max-width: 70%;
+  align-self: ${args => (args.origin === "bot" ? "flex-start" : "flex-end")};
+`
+
+const ScrollArea = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: ${tokens.space.medium};
-  overflow-y: auto;
-  margin: -0.5rem;
-  padding: 0.5rem;
-  margin-right: -1.5rem;
-  padding-right: 1.5rem;
+  padding: ${tokens.space.medium} 0;
 `
 
 const scrollToBottom = (ref: HTMLElement) => ref.scrollTo(0, ref.scrollHeight)
 
 export const Messages = () => {
   let ref: HTMLDivElement
-  const { instance, deleteMessage } = useChat()
+  const { instance, deleteMessage, waiting, resetTo, vote } = useChat()
   onMount(() => scrollToBottom(ref))
 
   createEffect(() => {
     if (instance()) scrollToBottom(ref)
+    waiting() // triggers waiting animation
   })
 
   return (
-    <ScrollContainer ref={r => (ref = r)}>
-      <For each={instance()?.messages}>
-        {props => <Message {...props} onDelete={() => deleteMessage(props)} />}
-      </For>
-    </ScrollContainer>
+    <Main.ScrollArea ref={r => (ref = r)}>
+      <ScrollArea>
+        <For each={instance()?.messages}>
+          {props => (
+            <Alignment origin={props.origin}>
+              <Actions
+                onDelete={() => deleteMessage(props)}
+                onReset={() => resetTo(props.timestamp)}
+                onVote={feedback => vote(props.timestamp, feedback)}
+                align={props.origin === "bot" ? "left" : "right"}
+              >
+                <Message {...props}>{props.message}</Message>
+              </Actions>
+            </Alignment>
+          )}
+        </For>
+        <Show when={waiting()}>
+          <Message origin="bot">
+            <Loading />
+          </Message>
+        </Show>
+      </ScrollArea>
+    </Main.ScrollArea>
   )
 }

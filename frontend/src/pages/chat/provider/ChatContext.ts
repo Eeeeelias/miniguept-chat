@@ -15,11 +15,14 @@ export interface BotInstance {
 export interface ChatState {
   chats: Accessor<BotInstance[]>
   instance: Accessor<BotInstance>
+  waiting: Accessor<boolean>
   addInstance: (bot: string) => void
   setInstance: (instanceId: string) => void
   removeInstance: (instanceId: string) => void
   sendMessage: (message: string) => void
   deleteMessage: (message: Message) => void
+  resetTo: (timestamp: string) => void
+  vote: (timestamp: string, vote: boolean) => void
 }
 
 const emptyInstance = {
@@ -31,11 +34,14 @@ const emptyInstance = {
 const initialState: ChatState = {
   chats: () => [],
   instance: () => emptyInstance,
+  waiting: () => false,
   addInstance: () => null,
   setInstance: () => null,
   removeInstance: () => null,
   sendMessage: () => null,
   deleteMessage: () => null,
+  resetTo: () => null,
+  vote: () => null,
 }
 
 export const ChatContext = createContext<ChatState>(initialState)

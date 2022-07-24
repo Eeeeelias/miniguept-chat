@@ -13,7 +13,8 @@
     "color": "^4.2.3",
     "solid-app-router": "^0.4.1",
     "solid-js": "^1.4.7",
-    "solid-styled-components": "^0.28.4"
+    "solid-styled-components": "^0.28.4",
+    "wicg-inert": "^3.1.2"
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "^11.7.0",

@@ -2,8 +2,7 @@ import { createSignal, For } from "solid-js"
 
 import { styled } from "solid-styled-components"
 
-import { IconButton, Smile } from "../../../components"
-import { Tooltip } from "../../../components/display/tooltip/Tooltip"
+import { IconButton, Smile, Tooltip } from "../../../components"
 import { tokens } from "../../../theme"
 
 const emojis = [

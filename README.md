@@ -9,8 +9,8 @@ chat data. To use just execute:
 ```bash
 $ python3 backend/format_data.py -i <chats> -t <telegram|whatsapp> [-a]
 ```
-Your `input` can be either a single file or a folder with .txt files (for your exported
-WhatsApp chats). If you use the `-a` option, it will append your input to an existing output file.
+Your `input` can be either a single file or a folder. WhatsApp chats must be in .txt, Telegram
+chats in .json format. If you use the `-a` option, it will append your input to an existing output file.
 With this .csv file you can then move on to train your own chatbot.
 
 # Training a chatbot
@@ -58,6 +58,7 @@ services:
       - '7722:7722'
     volumes:
       - './backend/models:/python-docker/models'
+      - './backend/data:/python-docker/data'
 ```
 
 If you want to try the chatbot for yourself in terminal, you can do that! Just type in
@@ -66,5 +67,5 @@ $ docker exec -it chatty_backend bash
 ```
 and when you're in the container you can execute chatty_cli.py:
 ```bash
-$ python chatty_cli.py [-n <your_name>] [-m <elias-bgi|elias|rick>] [-c <context>] [-k <color>]
+$ python chatty_cli.py [-n <your_name>] [-m <minigue-bgi|minigue|rick>] [-c <context>] [-k <color>]
 ```

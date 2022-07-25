@@ -26,37 +26,51 @@ def message_concat():
     return " # "
 
 
-def telegram_chats(data, i):
+def telegram_chats(data, i, single=True):
     texts = []
-    index = i
-    prev = ""
+    single_person_chat = {}
+    # if there is just one single file for all chats, go over each person like this
+    if single:
+        for person in data['chats']['list']:
+            if person['type'] != 'saved_messages' and person['type'] != 'private_group':
+                for key in person.keys():
+                    single_person_chat[key] = person.get(key)
+                texts += read_single_chat(single_person_chat, i)
+    else:
+        texts = read_single_chat(data, i)
+    return texts
+
+
+# reading a single telegram chat
+def read_single_chat(chat, i):
     curr_text = ""
-    for person in data['chats']['list']:
-        if person['type'] != 'saved_messages' and person['type'] != 'private_group':
-            for message in person['messages']:
-                if message['type'] == 'message':
-                    if message['from'] is None:
-                        message['from'] = 'deleted'
-                    if prev == "":
-                        prev = message['from']
-                    if message['from'] == prev:
-                        if valid_message(message) == 'emoji':
-                            curr_text += message['sticker_emoji'] + message_concat()
-                        elif valid_message(message) == 'normal_text':
-                            curr_text += message['text'] + message_concat()
-                    else:
-                        if len(curr_text) > 0:
-                            texts.append([index, message['date'], prev, curr_text[:-2]])
-                            curr_text = ""
-                        else:
-                            prev = ""
-                        if valid_message(message) == 'emoji':
-                            prev = message['from']
-                            curr_text = message['sticker_emoji'] + message_concat()
-                        elif valid_message(message) == 'normal_text':
-                            prev = message['from']
-                            curr_text = message['text'] + message_concat()
-                    index += 1
+    prev = ""
+    index = i
+    texts = []
+    for message in chat['messages']:
+        if message['type'] == 'message':
+            if message['from'] is None:
+                message['from'] = 'deleted'
+            if prev == "":
+                prev = message['from']
+            if message['from'] == prev:
+                if valid_message(message) == 'emoji':
+                    curr_text += message['sticker_emoji'] + message_concat()
+                elif valid_message(message) == 'normal_text':
+                    curr_text += message['text'] + message_concat()
+            else:
+                if len(curr_text) > 0:
+                    texts.append([index, message['date'], prev, curr_text[:-2]])
+                    curr_text = ""
+                else:
+                    prev = ""
+                if valid_message(message) == 'emoji':
+                    prev = message['from']
+                    curr_text = message['sticker_emoji'] + message_concat()
+                elif valid_message(message) == 'normal_text':
+                    prev = message['from']
+                    curr_text = message['text'] + message_concat()
+            index += 1
     return texts
 
 
@@ -123,10 +137,17 @@ if __name__ == '__main__':
             fp.close()
 
     chats = []
+    # read telegram data
     if args.type == 'telegram':
-        convos = open(args.input, 'r', encoding='utf-8')
-        chats = telegram_chats(json.loads(convos.read()), index)
-        convos.close()
+        if os.path.isdir(args.input):
+            for path in glob.glob(args.input + "/*.json"):
+                convo = open(path, 'r', encoding='utf-8')
+                chats += telegram_chats(json.loads(convo.read()), index, single=False)
+        else:
+            convos = open(args.input, 'r', encoding='utf-8')
+            chats = telegram_chats(json.loads(convos.read()), index)
+            convos.close()
+    # read whatsapp data
     elif args.type == 'whatsapp':
         if os.path.isdir(args.input):
             for path in glob.glob(args.input + "/*.txt"):
@@ -137,6 +158,8 @@ if __name__ == '__main__':
             convo = open(args.input, 'r', encoding='utf-8')
             chats = whatsapp_chats(convo, index)
             convo.close()
+
+    # read feedback data
     elif args.type == 'user':
         # getting the bad examples so to avoid accidental positive feedback
         bad_examples = []

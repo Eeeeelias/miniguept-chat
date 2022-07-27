@@ -40,10 +40,12 @@ def convert_to_tokens(chat_messages):
 def write_feedback(feedback, content, index):
     with open("data/{}/chats-{}.csv".format(feedback, content['model']), 'a') as f:
         if index == 0:
-            f.write("index,time,from,line\n")
+            f.write("index,time,origin,line\n")
         for msg in content['messages']:
             f.write("{},{},{},{}\n".format(index, msg['timestamp'], msg['origin'], msg['message']))
             index += 1
+        f.write("{},{},{},{}\n".format(index, "20XX-XX-XXTXX:XX:XX.XXXZ", "EOC", "N/A"))
+        index += 1
         f.close()
     return index
 

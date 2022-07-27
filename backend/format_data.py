@@ -26,7 +26,7 @@ def message_concat():
     return " # "
 
 
-def telegram_chats(data, i, single=True):
+def telegram_chats(data, single=True):
     texts = []
     single_person_chat = {}
     # if there is just one single file for all chats, go over each person like this
@@ -35,17 +35,18 @@ def telegram_chats(data, i, single=True):
             if person['type'] != 'saved_messages' and person['type'] != 'private_group':
                 for key in person.keys():
                     single_person_chat[key] = person.get(key)
-                texts += read_single_chat(single_person_chat, i)
+                texts += read_single_chat(single_person_chat)
     else:
-        texts = read_single_chat(data, i)
+        texts = read_single_chat(data)
     return texts
 
 
 # reading a single telegram chat
-def read_single_chat(chat, i):
+def read_single_chat(chat):
+    global index
     curr_text = ""
     prev = ""
-    index = i
+    cou = index
     texts = []
     for message in chat['messages']:
         if message['type'] == 'message':
@@ -60,7 +61,7 @@ def read_single_chat(chat, i):
                     curr_text += message['text'] + message_concat()
             else:
                 if len(curr_text) > 0:
-                    texts.append([index, message['date'], prev, curr_text[:-2]])
+                    texts.append([cou, message['date'], prev, curr_text[:-2]])
                     curr_text = ""
                 else:
                     prev = ""
@@ -70,27 +71,28 @@ def read_single_chat(chat, i):
                 elif valid_message(message) == 'normal_text':
                     prev = message['from']
                     curr_text = message['text'] + message_concat()
-            index += 1
+            cou += 1
+    index = cou
     return texts
 
 
-def whatsapp_chats(chat, i):
+def whatsapp_chats(chat):
     global index
     not_first = False
-    cou = i
+    cou = index
     lines = []
     for line in chat.readlines():
         matches = re.search('([0-9]+.+[0-9]+) - (.*): (.*)', line)
         if matches:
             if not re.search('<[A-Za-z ]*>', line):
-                if not_first and matches.group(2) == lines[cou - i - 1][2]:
-                    lines[cou - i - 1][3] = lines[cou - i - 1][3] + message_concat() + matches.group(3)
+                if not_first and matches.group(2) == lines[cou - index - 1][2]:
+                    lines[cou - index - 1][3] = lines[cou - index - 1][3] + message_concat() + matches.group(3)
                 else:
                     not_first = True
                     lines.append([cou, matches.group(1).split(',')[0], matches.group(2), matches.group(3)])
                     cou += 1
         elif not re.search('[0-9]+.+[0-9]+', line):
-            lines[cou - i - 1][3] = lines[cou - i - 1][3] + line.rstrip()
+            lines[cou - index - 1][3] = lines[cou - index - 1][3] + line.rstrip()
     index += len(lines)
     return lines
 
@@ -104,20 +106,46 @@ def feedback_chats():
     return
 
 
-def get_negative_examples(chat):
+def get_all_examples(chat):
     bad_examples = []
-    i = 0
     tmp = []
     for line in chat:
         if line[0] == 'index':
             continue
-        tmp.append(line[3])
-        i += 1
-        if i % 4 == 0:
+        if line[2] == "EOC":
             bad_examples.append(tmp)
             tmp = []
+            continue
+        tmp.append(line[3])
 
     return bad_examples
+
+
+def remove_duplicate(chats, possible_dups):
+    global index
+    clean_chats = []
+    tmp = []
+    tmp_full = []
+    chats = iter(chats)
+    i = index
+    # skip first line
+    next(chats)
+    for snippet in chats:
+        if snippet[2] == "EOC":
+            # extend this such that only 3 matching contexts also trigger this
+            if tmp not in possible_dups:
+                # adjust indices
+                for j in range(len(tmp)):
+                    tmp_full[j][0] = i
+                    i += 1
+                clean_chats.extend(tmp_full)
+            tmp = []
+            tmp_full = []
+            continue
+        tmp.append(snippet[3])
+        tmp_full.append(snippet)
+    index = i
+    return clean_chats
 
 
 if __name__ == '__main__':
@@ -142,37 +170,35 @@ if __name__ == '__main__':
         if os.path.isdir(args.input):
             for path in glob.glob(args.input + "/*.json"):
                 convo = open(path, 'r', encoding='utf-8')
-                chats += telegram_chats(json.loads(convo.read()), index, single=False)
+                chats += telegram_chats(json.loads(convo.read()), single=False)
         else:
             convos = open(args.input, 'r', encoding='utf-8')
-            chats = telegram_chats(json.loads(convos.read()), index)
+            chats = telegram_chats(json.loads(convos.read()))
             convos.close()
     # read whatsapp data
     elif args.type == 'whatsapp':
         if os.path.isdir(args.input):
             for path in glob.glob(args.input + "/*.txt"):
                 convo = open(path, 'r', encoding='utf-8')
-                chats += whatsapp_chats(convo, index)
+                chats += whatsapp_chats(convo)
                 convo.close()
         else:
             convo = open(args.input, 'r', encoding='utf-8')
-            chats = whatsapp_chats(convo, index)
+            chats = whatsapp_chats(convo)
             convo.close()
-
     # read feedback data
     elif args.type == 'user':
         # getting the bad examples so to avoid accidental positive feedback
         bad_examples = []
         for path in glob.glob('{}/bad/*.csv'.format(args.input)):
             convo = csv.reader(open(path, 'r', encoding='utf-8'))
-            bads = get_negative_examples(convo)
-            [bad_examples.append(ex) for ex in bads]
+            bads = get_all_examples(convo)
+            bad_examples.extend(bads)
 
         for path in glob.glob('{}/good/*.csv'.format(args.input)):
             convo = csv.reader(open(path, 'r', encoding='utf-8'))
-            # append to chats[] and check if it's also in bad_examples, remove if so
-            # write to normal dataset, ready for training
-
+            goods = remove_duplicate(convo, bad_examples)
+            chats.extend(goods)
 
 
 

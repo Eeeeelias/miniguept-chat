@@ -8,6 +8,7 @@ import blobLeftLight from "./assets/blob-left-light.svg"
 import blobRightDark from "./assets/blob-right-dark.svg"
 import blobRightLight from "./assets/blob-right-light.svg"
 import { Header, getTextStyles } from "./components"
+import { Disclaimer } from "./Disclaimer"
 import { Routes } from "./pages/Routes"
 import { ThemeProvider, tokens, useThemeMode } from "./theme"
 
@@ -75,6 +76,7 @@ export const App = () => (
         </Layout>
       </Router>
       <Blobs />
+      <Disclaimer />
     </Wrapper>
   </ThemeProvider>
 )

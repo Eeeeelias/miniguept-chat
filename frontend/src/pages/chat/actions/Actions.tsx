@@ -7,7 +7,6 @@ import { createCallback } from "../../../components/utils/createCallback"
 import { tokens } from "../../../theme"
 import { useChat } from "../provider/useChat"
 import { Emojis } from "./Emojis"
-import { More } from "./More"
 
 const Layout = styled.div`
   display: flex;
@@ -48,7 +47,7 @@ export const Actions = () => {
       />
       <Emojis addEmoji={addEmoji} />
       <IconButton onClick={send()} icon={Send} caption="Send message" />
-      <More />
+      {/*<More />*/}
     </Layout>
   )
 }

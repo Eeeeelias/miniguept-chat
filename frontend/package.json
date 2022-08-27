@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "color": "^4.2.3",
+    "inert-polyfill": "^0.2.5",
     "solid-app-router": "^0.4.1",
     "solid-js": "^1.4.7",
     "solid-styled-components": "^0.28.4",

@@ -51,6 +51,9 @@ const Button = styled.button<IconSizeProp>`
     inset: 0;
     opacity: 0.3;
   }
+  &:active::before {
+    background-color: ${args => args.theme?.().fg.base};
+  }
 `
 
 export interface IconButtonProps extends IconProp, CaptionProp, IconSizeProp {

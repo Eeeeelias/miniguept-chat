@@ -1,7 +1,7 @@
 import { Show } from "solid-js"
 
 import { Router } from "solid-app-router"
-import { styled } from "solid-styled-components"
+import { styled, useTheme } from "solid-styled-components"
 
 import blobLeftDark from "./assets/blob-left-dark.svg"
 import blobLeftLight from "./assets/blob-left-light.svg"
@@ -66,6 +66,19 @@ const Blobs = () => {
   )
 }
 
+const BodyBackground = () => {
+  const theme = useTheme()
+  return (
+    <style>
+      {`
+        body {
+          background-color: ${theme?.().bg.base}
+        }
+      `}
+    </style>
+  )
+}
+
 export const App = () => (
   <ThemeProvider>
     <Wrapper>
@@ -77,6 +90,7 @@ export const App = () => (
       </Router>
       <Blobs />
       <Disclaimer />
+      <BodyBackground />
     </Wrapper>
   </ThemeProvider>
 )
